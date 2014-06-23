@@ -1,0 +1,258 @@
+%% Conclusion
+\section{Conclusion}
+
+Traditional networks have always been complex and hard to manage.  One
+of the reasons is that the control and data planes are vertically
+integrated and vendor specific. Another, concurring reason, is that
+typical networking devices are also tightly tied to line products and
+versions.  In other words, each line of product may have its own
+particular configuration and management interfaces, implying long
+cycles for producing product updates (e.g., new firmware) or upgrades
+(e.g., new versions of the devices). All this has given rise to vendor
+lock-in problems for network infrastructure owners, as well as posing
+severe restrictions to change and innovation.
+
+Software-Defined Networking (SDN) created an opportunity for solving
+these long-standing problems.  Some of the key ideas of SDN are the
+introduction of dynamic programmability in forwarding devices through
+open southbound interfaces, the decoupling of the control and data
+plane, and the global view of the network by logical centralization of
+the ``network brain''.  While data plane elements became dumb, but
+highly efficient and programmable packet forwarding devices, the
+control plane elements are now represented by a single entity, the
+controller or network operating system.  Applications implementing the
+network logic run on top of the controller and are much easier to
+develop and deploy when compared to traditional networks. Given the
+global view, consistency of policies is straightforward to enforce.
+SDN represented a major paradigm shift in the development and
+evolution of networks, introducing a whole new world of possibilities
+and a new pace of innovation in networking infrastructures.
+
+In spite of recent and interesting attempts to survey this new chapter
+in the history of networks~\cite{lara2014,jarraya2014,nunes2014}, the
+literature was still lacking, to the best of our knowledge, a single
+extensive and comprehensive overview of the building blocks, concepts
+and challenges of SDNs.
+%
+%% , such as network operating systems, network hypervisors,
+%% programming languages, scalability and security challenges,
+%% debugging and troubleshooting, challenges and open roads.
+%
+Trying to address this gap, the present paper used a layered approach
+to methodically dissect the state of the art in terms of concepts,
+ideas and components of software-defined networking, covering a broad
+range of existing solutions, as well as future directions.
+
+We started by comparing this new paradigm with traditional networks
+and discussing how academy and industry helped shape software-defined
+networking.  Following a bottom-up approach, we provided an in-depth
+overview of what we consider the eight fundamental facets of the SDN
+problem: 1) hardware infrastructure, 2) southbound interfaces, 3)
+network virtualization (hypervisor layer between the forwarding
+devices and the network operating systems), 4) network operating
+systems (SDN controllers and control platforms), 5) northbound
+interfaces (common programming abstractions offered to network
+applications), 6) virtualization using slicing techniques provided by
+special purpose libraries and/or programming languages and compilers,
+7) network programming languages, and finally, 8) management
+applications.
+
+%%PJV:  please someone clarify content of (6) w.r.t. ``virtualization'' in (3) but is a more concise way
+
+SDN has successfully managed to pave the way towards next generation
+networking, spawning an innovative research and development
+environment, promoting advances in several areas: switch and
+controller platform design, evolution of scalability and performance
+of devices and architectures, promotion of security and dependability.
+
+We will continue to witness extensive activity around SDN in the near
+future. Emerging topics requiring further research are, for example:
+the migration path to SDN, extending SDN towards carrier transport networks, realization of the
+network-as-a-service cloud computing paradigm, or software-defined
+environments (SDE).
+
+
+
+
+\begin{comment}
+
+Traditional networks have always been complex and hard to manage.  One
+of the reasons is that the control and data planes are vertically
+integrated and vendor specific, potentializing vendor lock-in problems
+for network infrastructure owners and posing severe restrictions to
+change and innovation.  Another reason is that typical networking
+devices are also tightly tied to line products and versions.  In other
+words, each line of product may have its own particular configuration
+and management interfaces.  Notwithstanding, innovation and
+flexibility are hard to achieve due to long cycles for producing
+product updates (e.g., new firmware) and upgrades (e.g., new versions
+of the devices), which are many times dependent on hardware
+modifications.
+
+Software-Defined Networking (SDN) was born as a new way for solving
+long standing problems, such as lack of flexibility and unacceptable
+innovation cycles.  Some of the key ideas of SDN are the introduction
+of dynamic programmability in forwarding devices through open
+southbound interfaces, the decoupling of the control and data plane,
+and the global view of the network by a logical centralization of the
+``network brain''.  While data plane elements became dummy, highly
+efficient and programmable packet forwarding devices, the control
+plane elements is now represented by a simple entity, the controller
+or network operating system.  Applications implementing the network
+logic run on top of the controller and are much easier to develop and
+deploy when compared to traditional network.  This flexibility
+introduced a new world of possibilities and a new pace of innovation
+in networking infrastructures, i.e., a major paradigm shift on the
+development and evolution of networks.
+
+In spite of different attempts to depict the big picture and building
+up a thorough survey of this new chapter on the history of
+networks~\cite{lara2014,jarraya2014,nunes2014}, there is yet no single
+extensive and comprehensive overview of the building blocks, concepts
+and challenges of SDNs, such as network operating systems, network
+hypervisors, programming languages, scalability and security
+challenges, debugging and troubleshooting, challenges and open roads.
+To try to cover SDN in-deep, we used a layered approach to extensively
+and comprehensively dissect the state of the art in terms of concepts,
+ideas and elements of software-defined networking, covering a broad
+range of existing solutions, challenges and future directions.
+
+By rendering the roots of SDN and its history, we started by comparing
+this new paradigm with traditional networks and introducing a
+broadening industry-driven definition of software-defined networking.
+Following a bottom up approach, we provided an in-deep overview of
+what we considered the eight part of the SDN problem: 1) hardware
+infrastructure, 2) southbound interfaces, 3) network virtualization
+(hypervisor layer between the forwarding devices and the network
+operating systems), 4) network operating systems (SDN controllers and
+control plat- forms), 5) northbound interfaces (to offer a common
+program- ming abstraction to the upper layers, mainly the network
+applications), 6) virtualization using slicing techniques provided by
+special purpose libraries and/or programming languages and compilers,
+7) network programming languages, and finally 8) management
+applications.
+
+The two first layers introduce the forwarding devices and southbound
+interfaces, which represent the early driving forces of this paradigm
+shift in networking.  OpenFlow is clearly the most widely deployed and
+accepted southbound interfaces, with several dizen of commercial
+product and free software available in the market.  Despite of that,
+it is not the only southbound API.  Other examples include POF,
+ForCES, and OpFlex.
+
+Going up on the layered approach, network hypervisors and network
+operating systems are thoroughly discussed.  This is certainly one of
+our major contributions compared to previous attempts of introducing
+SDN.  Both network hypervisor and network operating systems are
+fundamental and critical pieces of the SDN puzzle.  Therefore, we have
+carefully dissected their essential properties, system design
+requirements and challenges.
+
+Network operating systems are connected to forwarding devices through
+the southbound API and provide a northbound API for network
+applications.  Beyond that, they provide essential services for higher
+level control applications, such as shortest path forwarding, topology
+manager, statistics manager, device manager, notification manager, and
+security mechanisms.  It is also worth emphasizing that controllers
+provide a global view of the network topology and make it easy for
+network applications to control the network infrastructure.
+
+As northbound APIs we have programming languages or other simpler interfaces such as REST APIs.
+%The main advantage of programming languages is their capability of abstracting low level instruction set' (e.g., OpenFlow) to simplify the development of network applications.
+%More than that, programming languages are important tools for solving different kinds of problems and challenges, such as access control rules, security policies, fault tolerance, consistent updates, sequential and parallel application composition, decoupled multi-tasks for correct network operation, long-term software evolution and maintenance, application state management.
+High level network programming languages can be utilized to simplify
+the programming of forwarding devices by creating a proper higher
+level of abstraction. These languages can help programmers to become
+more productive and focus on the problem solving rather than low level
+networking details. Initiation of network application developers,
+modular software engineering, code reuse, and new opportunities for
+research and industry are key benefits of network programming
+languages. Most of the existing proposed programming languages focus
+on OpenFlow. The predominant programming paradigm is the declarative,
+with few exceptions (e.g. Pyretic) based on interpretive
+languages. Traffic engineering, mobility and wireless networks,
+measurement and monitoring, security and dependability, and data
+center networking are representative types of management applications
+were deeply treated.
+
+Without exception, debugging and troubleshooting has always been an
+important topic in computing infrastructures, parallel and distributed
+systems, and computer networks.  However, networks were still in the
+``stone age'' before SDN.  Hopefully, this as been changing rapidly
+with the several SDN/OpenFlow driven debugging, troubleshooting,
+testing and verification suites, and simulation and emulation
+platforms.  These tools have a significant impact on the development
+and evolution of networks since developers are now armed with
+resources and techniques similar to traditional computing systems,
+while on the past (tradicional networks) it was really challenging to
+debug, verity or have emulation platforms to enable the off-line
+development of new protocols and applications that can be easily
+deployed on a production network without requirement any modification.
+
+In addition to many outcomes that we discussed in our layered
+approach, SDN has successfully managed to pave the way towards an
+innovative research and development environment.  Switch designs,
+controller platforms, scalability of SDN, performance evaluation of
+devices and architectures, security and dependability, organizational
+and migration barriers, and finally extending SDN towards carrier
+transport networks, cloud computing providers and software-defined
+environments (SDEs) are some of the areas that need more attention
+with respect to further research and investigations.  In particular,
+software-defined environments are emerging as one key strategy for
+changing the way IT infrastructures and build and operated.  SDEs
+focus on the business requirements and needs rather than the business
+being restricted due to a diversity of constraints (e.g., static
+nature of network, lack of knowledge of IT operators, excessive or
+unnecessary complexity, restrictive IT grounded rules) such as those
+created by technology or IT teams (e.g., network operation, system
+administration, development, security) with no common interface to
+promote interoperability and innovative solutions required by the
+enterprise.
+
+\end{comment}
+
+%In addition, we also look at cross-layer problems such as debugging and troubleshooting mechanisms. The discussion in Section V on ongoing research efforts, challenges, future work and opportunities concludes this paper..
+
+
+
+%SDN has emerged as an approach for doing network experimentation in campus Networks. Once its potential was explored, SDN has grown into a new way of thinking about and  deploying networks. SDN has revolutionized networking through two main contributions. The first one is the concept of a network operating system (NOS), that will make the life of application developers much easier by providing network support, allowing innovation to happen not only at the edge, but within the network. The second contribution of SDN is the development of open and standardized APIs, truly opening the network to the application logic. As an emerging area in networking, much ongoing work and challenges are still to be faced by SDN. As shown in this survey, SDN is reshaping the networking  world and opening a myriad of new opportunities, both from a technical as well as from a business perspective.
+
+%\newpage
+
+%\section{MISC}
+%
+%\subsection{Taming your network infrastructure with SDN}
+%
+%\subsection{A clear and separated control plane}
+%
+%One of the keys for the SDN success in the clear separation between control and data plane.
+%Further, the abstraction of a centralized controller is fundamental to simplify network development and operation.
+%It is much easier to write applications without having to care about distributed data gathering and updates.
+%
+%Remove the control plane from the devices to software-based servers (controller instances) gives much more freedom, flexibility and can seen as a highway without speed limits anymore.
+%Before, the speed was limited to 40 miles per hours due to design and control complexities. 
+%Now, with design and control improvements, it looks like a free-style highway, fostering innovation and new services deployment at faster speeds.
+%It is now up to the car drivers (i.e. application developers, business, etc.) to decide at which speed they are going to drive their networks and innovations.
+%
+%The control plane is responsible for the distributed state and specification abstractions.
+%Only the forwarding abstraction is left to network devices.
+%This removes the complexity from the network equipments to the control software.
+%As software is much easier to develop, change and adapt, new network features, protocols, services and architectures can be delivered at software speed, and not anymore at hardware speed, which is very slow and costly.
+%
+%\subsection{Management applications: smart network brains}
+%
+%% Implementation and analysis of control and forwarding plane for SDN~\cite{risdianto2012}
+%%FIXME
+%
+%While controllers can be viewed as the network nervous system, management applications represent the network brain.
+%A controller only transports control messages between data plane devices and management applications.
+%When receiving a new message, an application will analyze its content and choose what to do next.
+%It can be an action such as forwarding the message to a second management application or send a response to the device with some configuration information (brain telling what the specific body member should do in reaction to this specific stimulation).
+%
+%There are already many management applications for SDN as can be seen in section~\ref{sec:whatisoutthere}.
+%However, there is still a lack of more advanced and intelligent applications to foster autonomic network management, for instance.
+%With SDN, a network can more easily adjust itself in different ways without requiring human intervention.
+%Redundancy, recovery actions, aggregated links for augmented throughput, among many other things, are less costly and more flexible to deploy in SDN.
+%Thus, it looks to be a good time to push the development of smarter brains for future networks.
+
+%% EOF: 8_conclusion.tex

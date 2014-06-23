@@ -1,0 +1,358 @@
+\subsection{History of Software-Defined Networking}
+
+Albeit a fairly recent concept, SDN leverages on networking ideas with a longer history~\cite{feamster2013-2}.
+In particular, it builds on work made on programmable networks, such as active networks~\cite{tennenhouse1997}, and on proposals for control and data plane separation, such as NCP~\cite{sheinbein1982} and RCP~\cite{caesar2005}.
+
+In order to present an historical perspective, we summarize in Table~\ref{tab:history} different instances of SDN-related work prior to SDN, splitting it into five categories.
+Along with the categories we defined, the second and third columns of the table mention past initiatives (pre-SDN, i.e., before the OpenFlow-based initiatives that sprung into the SDN concept), and recent developments that led to the definition of SDN.
+
+
+\newcommand{\fcwidth}{3.2cm}
+\newcommand{\scwidth}{9.2cm}
+\newcommand{\tcwidth}{4.6cm}
+{\renewcommand{\arraystretch}{1.4}
+\begin{table*}[!htp]
+\caption{Summarized overview of the history of programable networks}
+\label{tab:history}
+\begin{center}
+\footnotesize
+\begin{tabularx}{\linewidth}{p{\fcwidth}p{\scwidth}p{\tcwidth}}
+\hline
+\textbf{Category} & \textbf{Pre-SDN initiatives} & \textbf{More recent SDN developments} \\
+\hline
+\multirow{2}{*}{\begin{minipage}{\fcwidth}
+		Data plane programmability
+	\end{minipage}} 
+& \multirow{2}{*}{\begin{minipage}{\scwidth}
+		Tennenhouse Wetherall~\cite{tennenhouse2007},
+		smart packets~\cite{schwartz1999},
+		ANTS~\cite{wetherall1998},
+		SwitchWare~\cite{alexander1998},
+		Calvert~\cite{calvert1998},
+		high performance router~\cite{wolf2000},
+		NetScript~\cite{silva2001},
+		IEEE P1520~\cite{biswas1998}
+	\end{minipage}} 
+& \multirow{2}{*}{
+	\begin{minipage}{\tcwidth}
+		ForCES~\cite{doria2010},
+		OpenFlow~\cite{mckeown2008},
+		POF~\cite{song2013}
+	\end{minipage}} \\
+& & \\
+\hline
+\multirow{2}{*}{\begin{minipage}{\fcwidth}
+		Control and data plane \\decoupling
+	\end{minipage}} 
+& \multirow{2}{*}{\begin{minipage}{\scwidth}
+		NCP~\cite{sheinbein1982},
+		Tempest~\cite{merwe1998},
+		%Click~\cite{morris1999},
+		ForCES~\cite{doria2010},
+		RCP~\cite{caesar2005},
+		SoftRouter~\cite{lakshman2004},
+		PCE~\cite{vasseur2009},
+		4D~\cite{greenberg2005},
+		IRSCP~\cite{merwe2006}
+	\end{minipage}} 
+& \multirow{2}{*}{
+	\begin{minipage}{\tcwidth}
+		SANE~\cite{casado2006},
+		Ethane~\cite{casado2007-1},
+		OpenFlow~\cite{mckeown2008},
+		NOX~\cite{gude2008},
+		POF~\cite{song2013}
+	\end{minipage}} \\
+& & \\
+\hline
+\multirow{2}{*}{\begin{minipage}{\fcwidth}
+		Network virtualization
+	\end{minipage}} 
+& \multirow{2}{*}{\begin{minipage}{\scwidth}
+		Tempest~\cite{merwe1998},
+		MBone~\cite{macedonia1994},
+		6Bone~\cite{fink2004},
+		RON~\cite{andersen2001},
+		Planet Lab~\cite{chun2003},
+		Impasse~\cite{anderson2005},
+		GENI~\cite{peterson2006},
+		VINI~\cite{bavier2006-1}
+	\end{minipage}} 
+& \multirow{2}{*}{
+	\begin{minipage}{\tcwidth}
+		Open vSwitch~\cite{pfaff2009},
+		Mininet~\cite{lantz2010},
+		FlowVisor~\cite{sherwood2010},
+		NVP~\cite{koponen}
+	\end{minipage}} \\
+& & \\
+\hline
+\multirow{1}{*}{\begin{minipage}{\fcwidth}
+		Network operating systems
+	\end{minipage}} 
+& \multirow{1}{*}{\begin{minipage}{\scwidth}
+		Cisco IOS~\cite{bollapragada2000},
+		JUNOS~\cite{junipernetworks2012}.
+		ExtremeXOS~\cite{extremenetworks2014},
+		SR OS~\cite{alcatellucent2014}
+	\end{minipage}} 
+& \multirow{1}{*}{
+	\begin{minipage}{\tcwidth}
+		NOX~\cite{gude2008},
+		Onix~\cite{koponen-1},
+		ONOS~\cite{krishnaswamy2013}
+	\end{minipage}} \\
+\hline
+\multirow{1}{*}{\begin{minipage}{\fcwidth}
+		Technology pull initiatives
+	\end{minipage}} 
+& \multirow{1}{*}{\begin{minipage}{\scwidth}
+	Open Signaling~\cite{campbell1999}
+	\end{minipage}} 
+& \multirow{1}{*}{
+	\begin{minipage}{\tcwidth}
+	ONF~\cite{onf2013-3}
+	\end{minipage}} \\
+\hline
+\end{tabularx}
+\end{center}
+\end{table*}
+}
+
+Data plane programmability has a long history. Active networks~\cite{tennenhouse1997} 
+represent one of the early attempts on building new network architectures based on this concept.
+The main idea behind active networks is for each node to have the capability to perform computations 
+on, or modify the content of, packets. To this end, active networks propose two distinct approaches: 
+programmable switches and capsules. The former does not imply changes in the existing packet or cell 
+format. It assumes that switching devices support the downloading of programs with specific instructions 
+on how to process packets. The second approach, on the other hand, suggests that packets should be 
+replaced by tiny programs, which are encapsulated in transmission frames and executed at each node 
+along their path.
+
+ForCES~\cite{doria2010}, OpenFlow~\cite{mckeown2008} and POF~\cite{song2013}  represent recent approaches for designing and deploying programmable data plane devices.
+In a manner different from active networks, these new proposals rely essentially on modifying forwarding devices to support flow tables, which can be dynamically configured by remote entities through simple operations such as adding, removing or updating flow rules, i.e., entries on the flow tables.
+
+The earliest initiatives on separating data and control signalling date back to the 80s and 90s.
+The network control point (NCP)~\cite{sheinbein1982} is probably the first attempt to separate 
+control and data plane signalling. NCPs were introduced by AT\&T to improve the management and control 
+of its telephone network. This change promoted a faster pace of innovation of the network and provided 
+new means for improving its efficiency, by taking advantage of the global view of the network provided 
+by NCPs. Similarly, other initiatives such as Tempest~\cite{merwe1998}, ForCES~\cite{doria2010},
+RCP~\cite{caesar2005}, and PCE~\cite{vasseur2009} proposed the separation of the control 
+and data planes for improved management in ATM, Ethernet, BGP, and MPLS networks, respectively.
+
+More recently, initiatives such as SANE~\cite{casado2006}, Ethane~\cite{casado2007-1},
+OpenFlow~\cite{mckeown2008}, NOX~\cite{gude2008} and POF~\cite{song2013} proposed the decoupling of the control and data planes 
+for Ethernet networks. Interestingly, these recent solutions do not require significant modifications 
+on the forwarding devices, making them attractive not only for the networking research community, but 
+even more to the networking industry. OpenFlow-based devices~\cite{mckeown2008}, 
+for instance, can easily co-exist with traditional Ethernet devices, enabling a progressive adoption 
+(i.e., not requiring a disruptive change to existing networks).
+
+Network virtualization has gained a new traction with the advent of SDN. Nevertheless, network virtualization 
+also has its roots back in the 90s. The Tempest project~\cite{merwe1998} is one of the first initiatives to 
+introduce network virtualization, by introducing the concept of switchlets in ATM networks. The core idea 
+was to allow multiple switchlets on top of a single ATM switch, enabling multiple independent ATM networks 
+to share the same physical resources. Similarly, MBone~\cite{macedonia1994} was one of the early initiatives that 
+targeted the creation of virtual network topologies on top of legacy networks, or overlay networks. This work 
+was followed by several other projects such as Planet Lab~\cite{chun2003}, GENI~\cite{peterson2006} 
+and VINI~\cite{bavier2006-1}. It is also worth mentioning FlowVisor~\cite{sherwood} as one of the first recent initiatives to promote a 
+hypervisor-like virtualization architecture for network infrastructures, resembling the hypervisor model 
+common for compute and storage.
+More recently, Koponen et al. proposed a Network Virtualization Platform (NVP~\cite{koponen}) for multi-tenant datacenters using SDN as a base technology.
+
+The concept of a network operating system was reborn with the introduction of OpenFlow-based network 
+operating systems, such as NOX~\cite{gude2008}, Onix~\cite{koponen-1} 
+and ONOS~\cite{krishnaswamy2013}. Indeed, network operating systems have been in existence for decades.
+One of the most widely known and deployed is the Cisco IOS~\cite{bollapragada2000}, which was originally 
+conceived back in the early 90s. Other network operating systems worth mentioning are JUNOS~\cite{junipernetworks2012},
+ExtremeXOS~\cite{extremenetworks2014} and SR OS~\cite{alcatellucent2014}. Despite being more specialized 
+network operating systems, targeting network devices such as high-performance core routers, these NOSs abstract 
+the underlying hardware to the network operator, making it easier to control the network infrastructure as well 
+as simplifying the development and deployment of new protocols and management applications.
+
+Finally, it is also worth recalling initiatives that can be seen as ``technology pull'' drivers.
+Back in the 90s, a movement towards open signalling~\cite{campbell1999} started 
+to happen. The main motivation was to promote the wider adoption of the ideas proposed by projects 
+such as NCP~\cite{sheinbein1982} and Tempest~\cite{merwe1998}. The open signalling movement worked 
+towards separating the control and data signalling, by proposing open and programmable interfaces.
+Curiously, a rather similar movement can be observed with the recent advent of OpenFlow and SDN, with 
+the lead of the Open Networking Foundation (ONF)~\cite{onf2013-3}. This type of movement is crucial 
+to promote open technologies into the market, hopefully leading equipment manufacturers to support 
+open standards and thus fostering interoperability, competition, and innovation.
+
+For a more extensive intellectual history of programmable networks and SDN we forward the reader to 
+the recent paper by Feamster et al.~\cite{feamster2013-2}.
+
+%\subsection*{Separating control and data signaling}
+%
+%Network control point (NCP)~\cite{sheinbein1982} is the first attempt to separate control and data plane signaling.
+%NCPs were introduced to improve the management view and control over the AT\&T telephony network.
+%This change intrinsically promoted a faster pace of innovation and provided new means to advance the resources utilization efficiency through a global view of the network that was available at the NCPs.
+%A global view of the network helps to foster the development of better monitoring and call routing solutions, as was the case of AT\&T, for instance.
+%
+%One decade later, on the 90s, a movement towards open signaling~\cite{campbell1999} started to happen.
+%The core motivation was to remove the network control capabilities from the data plane, i.e., separate control and data signaling through open and programmable interfaces.
+%
+%The idea of the open signaling movement was to explore avenues to use open and programmable interfaces to have access and manage network hardware.
+%This would allow the development and deployment of new services in a more flexible and interoperable way.
+%Hence, it can be seen as the next step after the advent of network control points.
+%Curiously, a similar movement can be observed with the arriving of SDNs, the open networking, which is leaded by the Open Networking Foundation (ONF)~\cite{onf2013-3}.
+%This kind of movement is important to promote open technologies into the market, lead equipment manufacturers to support open standards, foster interoperability, competition, and innovation.
+%
+
+%\subsection*{Programmable data plane}
+%
+%Active networks~\cite{tennenhouse1997} represent one of the early attempts to build new network architectures.
+%An active network node can perform computations on or modify the content of packets.
+%Additionally, computations can be defined and executed in a per user or per application basis.
+%
+%Two distinct approaches for active networks were proposed.
+%First, programmable switches that do not change the existing packet or cell format.
+%These devices should support the downloading of programs with specific instructions on how to process packets.
+%The second approach is based on the concept of a capsule.
+%It suggests that packets are replaced by tiny programs, which are encapsulated in transmission frames and executed at each node along their path.
+%
+%%Both programmable switches and capsules were proposed to develop the same key idea: add programmability to the network for customized services.
+%%While the former proposes separating the data transfer and management channels, the latter copes with the idea of inserting program fragments in the messages, which are interpreted and executed by routers.
+%
+%The developments on active networks led to architectural frameworks that define elements such as Node Operating System (NodeOS), Execution Environments (EEs), and Active Applications (AAs)~\cite{calvert1999}.
+%A NodeOS is like an operating system, providing basic functionality to manage shared resources, which are leveraged by EEs to build abstractions that can be used by AAs.
+%An EE is an encapsulated virtual environment for packet operations and AAs are associated to EEs to provide end-to-end services.
+%
+%The main motivation for active networks was the challenges of integrating and changing existing technologies and standards in shared networks.
+%However, challenges for industry adoption such as practical security and performance helped to close the chapter of active networks.
+%Notwithstanding, this still is one of the main motivations of current software defined networks.
+%Yet, differently from active networks, performance and scalability were the main initial threats of the SDN success.
+%Therefore, as we will show later on, a lot of effort has been spent to demonstrate that software defined networks can scale up to the enterprise class needs, such as data center networks.
+%Tackle these first threats was one of the important strategies to open a broader acceptance of SDN  both on market and academic environments.
+%
+%It is worth noting that programmability on the data plane by itself is not enough to drive a wide adoption of a new technology.
+%Standard programming interfaces to abstract the complexity of the network represent a key ingredient to foster a long-standing and widely acceptable way of taking over the network.
+%With this in mind, initiatives such as the IEEE P1520~\cite{biswas1998} started to propose new programmable interfaces.
+%The IEEE P1520 Project proposed five layers of programming interfaces for networks, (1) network physical elements, (2) software abstractions of physical elements, (3) signaling and control algorithms, (4) value-added service intelligence, (5) application semantics and intelligence.
+%The key insight of this project was to promote the advancement of networks by leveraging the benefits of software engineering (e.g., modularity, reusability, scalability, reliability) to reduce the development and deployment cycles, of distributed computing (e.g., resource location transparency and dynamic binding), and of programming interfaces that allow the development of management applications with a clearer separation between software and hardware.
+%
+%Following the idea of programmable networks, other initiatives such as Click~\cite{morris1999} proposed software architectures for building flexible and configurable forwarding devices.
+%Click provides a set of fine-grained components, named as elements, which are specialized packet processing modules.
+%These elements can be combined or extended in different ways to design personalized routers.
+%Along these lines, one could build a router for each of the approaches proposed by active networks.
+%A programmable router could act similarly to a programmable switch, while a second kind of router could provide the needed capabilities to deal with capsules.
+%
+%Another important issue in the design of programmable data planes is scalability~\cite{yeganeh2013}.
+%The most common requirement for forwarding devices is high performance, i.e., efficiently accomplish their task of forwarding packets.
+%There are different approaches for designing data plane devices such as custom software, custom hardware, and programmable hardware.
+%Custom software provides higher flexibility and is easy to program.
+%However, it results in slower forwarding speeds.
+%Custom hardware has long development cycles and is rigid (hard to change), but provides an excellent performance.
+%Lastly, programmable hardware is flexible and fast, but programming it is difficult.
+%Therefore, the fundamental challenge in designing data plane is to achieve at the same time programmability, flexibility and performance.
+%OpenFlow-based SDNs try to combine control and data plane approaches to achieve this goal.
+%Albeit the data plane devices are based on custom hardware and programmable flow tables, the control plane is based on customizable software, leveraging characteristics such as flexibility and programmability.
+%
+%\note{DK:
+%SideCar: Building Programmable Datacenter Networks Without Programmable Switches~\cite{shieh2010}
+%}
+%
+%\subsection*{Network virtualization}
+%
+%Overlay networks such as Mbone (for multicast)~\cite{macedonia1994} the 6bone (for IPv6)~\cite{fink2004}, and the X-Bone ~\cite{touch2000} are commonly used to create virtual network topologies and communication channels on top of legacy networks.
+%Howbeit, these networks add an extra cost to the network infrastructure due to the re-encapsulation of packets send through the overlay network (e.g., GRE tunnels transporting IP packets inside Ethernet frames on top of an IP network), resulting in an significant overhead on the communication channels (i.e., IP/Ethernet over IP more than doubles the overhead of the protocol headers).
+%Normally, overlay networks have no control of the network infrastructure, which means that there are no (or hard to enforce) end-to-end QoS guarantees (e.g., bandwidth, forwarding device resources usage, latency).
+%On fully virtualized networks, similarly to full virtualization in PCs, one of the key ideas is to directly share physical resources with QoS guarantees on the elements of the network infrastructure.
+%
+%Full network virtualization capabilities were first introduced in ATM networks by The Tempest project~\cite{merwe1998-1}.
+%The prime idea was to share physical resources of ATM switches through switchlets.
+%Conceptually, each of these units encapsulates a subset of physical resources of the ATM switch.
+%A group of switchlets, on different ATM switches, forms a virtual network.
+%
+%The Tempest project explores the potentials of partitioning the resources of a switch, allowing different controllers to manage distinct partitions of the switch at the same time.
+%This empowers an operator with the possibility of having multiple (virtual) network architectures over the same physical infrastructure.
+%Similarly, FlowVisor~\cite{sherwood2009}, in OpenFlow based networks, resembles this idea by slicing the network and allowing multiple controllers (one per slice) to co-exist in a controlled and isolated way.
+%
+%More recently, solutions such as VINI~\cite{bavier2006} have been developed to create and manage virtual networking infrastructures.
+%VINI tries to address issues such as the capability of running real routing software, expose realistic network conditions, allow the control of network events and carry real network traffic.
+%Its main idea is to have more realistic experimentation environments, where new algorithms can be deployed and evaluated under real network conditions.
+%
+%VINI is a virtualization platform supported by a set of protocols and tools like XORP~\cite{handley2003} for routing, Click~\cite{morris1999} for packet forwarding and network address translation, OpenVPN~\cite{feilner2006} servers to connect with end users, and rcc~\cite{and2004} for parsing router configuration data of operational networks used as reference to drive the experiments.
+%By also leveraging the resources of virtualization platforms provided by testbeds like PlanetLab, VINI is capable of providing virtual network in a per experiment basis, with resource (e.g., CPU, memory, bandwidth) allocation guarantees.
+%
+%Network virtualization is an important and extensible research area.
+%Recent surveys ~\cite{chowdhury2010,bari2013} give a good idea of different technologies that can be used to achieve diverse goals in virtualized network infrastructures, such as low overhead, QoS guarantees, and high scalability.
+%While some technologies can be more suitable for data center infrastructures ~\cite{bari2013}, others are of general purpose strategies for network virtualization.
+%
+%Lastly, there is a clear new market trend towards network virtualization.
+%Commercial solutions such as Nicira's Network Virtualization Platform (NVP) ~\cite{vmware2013} are available for acquisition and deployment.
+%The idea of NVP is to provide each tenant a view of a single forwarding device, where all virtual machines are connected to.
+%However, instead of relying purely on traditional overlay networks, NVP uses a software switch that is actually an extension of the physical network.
+%This virtual device uses a GRE tunnel to encapsulate traffic between virtual machines running on different servers.
+%The main advantage of this approach is that the underlying infrastructure need zero change.
+%It works with both legacy and OpenFlow-enabled physical networks.
+%Moreover, one of the major breaking news of 2012 for the SDN community was the acquisition of Nicira by VMware~\cite{vmware2012}.
+%This means that network virtualization is going to be a common thing in real world infrastructure deployments once the biggest computer platform virtualization company is finally embracing the virtualization of the network.
+%
+%\subsection*{Logically-centralized controllers}
+%
+%A logically centralized control of the network is one of the core ideas of architectures such as SoftRouter~\cite{lakshman2004} and Routing Control Platform (RCP)~\cite{caesar2005}, and protocols like the Path Computation Element (PCE)~\cite{vasseur2009}.
+%These solutions add programmability in the control plane and provide a better network visibility and control logic.
+%
+%RCP~\cite{caesar2005} is an extension of 4D~\cite{greenberg2005}, which proposes a clean slate design by separating Decision, Dissemination, Discovery and Data (4D) modules.
+%Therefore, RCP advocates a clear separation between control logic (e.g., routing decision logic) and the remaining protocols (e.g., BGP) responsible for providing the interaction between network elements.
+%It introduces a logically-centralized controller that can be deployed in existing infrastructures without introducing new protocols or architectural changes.
+%
+%RCP is designed as a central control platform to perform route selection and distribution to routers using iBGP protocol.
+%To take routing decisions, it collects information about the internal network topology and external destinations, using a centralized control logic to perform the computations.
+%The RCP controller can be used to configure iBGP routers in a similar way to a full-mesh iBGP topology configuration, but with the scalability of route reflectors.
+%Consequently, RCP gets the best of two worlds, full-mesh iBGP and route reflectors.
+%While the former provides correctness, the later allows the routing topology to scale.
+%By doing so, RCP tries to address problems still unsolved on iBGP full-mesh (e.g., scalability limitations~\cite{yu2000} and management costs to create and manage connections with all iBGP routers) and configurations of iBGP route reflectors (e.g., protocol oscillation ~\cite{basu2002,mcpherson2002} and persistent forwarding loops~\cite{griffin2002}).
+%%The main motivation to this approach was the cost of upgrading routers.
+%
+%Nevertheless, solutions such as RCP can more easily suffer from hot-potato routing changes, for instance.
+%By centralizing the routing decisions, extra delays for path setup are added in the system.
+%Although one can try to mitigate such problems using diverse strategies, it is unlikely to have the same efficiency of highly optimized local decision makers.
+%Yet, global decision makers have a broader network view, being able to faster react and take measures to avoid problems caused by congestion or network disruption, for example.
+%After all, it is clear that there are different trade-offs to be considered in the design and deployment of decoupled and logically-centralized control platforms.
+%
+%It is also worth to note that controllers such as SoftRouter~\cite{lakshman2004} were created before the advent of SDN.
+%The SoftRouter architecture proposes something quite similar to SDN/OpenFlow, where control and data plane functionalities are well-defined and separated.
+%Network elements are comprised of control elements (CEs) and forwarding elements (FEs), as in current SDN definition.
+%However, the implemented functionalities are limited to forwarding with MAC, prefix and header TCP/IP and MPLS labels verification.
+
+%\subsection*{Controlling packet switched networks}
+%
+%The recent history of controlling packet switched networks, in the context of software defined networks, can be divided in at least five evolutionary initiatives.
+%We can say that it starts with ForCES in the early 2000's, followed by RCP, SANE, Ethane and OpenFlow.
+%
+%%** ForCES (2003)
+%The Forwarding and Control Element Separation (ForCES)~\cite{doria2010} proposes to separate the control and data plane functionalities of networking devices.
+%Differently from OpenFlow, ForCES advocates that both control and forwarding elements should be kept in a single entity.
+%The idea is to allow third-party control elements in the networking devices, but without a stronger decoupling between control and data plane, like is the case of OpenFlow.
+%In essence, control elements are deployed and operated closely to the forwarding elements.
+%Therefore, one could think that ForCES does not remove some of the complexities and difficulties that are inherent to a distributed or vertically integrated control plane of traditional networks.
+%It essentially provides a greater flexibility in the control plane by enabling the download of software to the control elements.
+%Nonetheless, ForCES requires more modifications on hardware devices when compared to OpenFlow, which is something that can be seen as a potential barrier for the industry.
+%
+%%** RCP (2004)
+%RCP~\cite{caesar2005}, differently from ForCES, creates a stronger separation between the control and data plane elements of routing systems without requiring any modification on the forwarding devices.
+%Namely, RCP is compatible with existing iBGP and IGP routing infrastructures.
+%Yet, it is not designed to be a general purpose solution for deploying new network protocols or architectures, like is the case of ForCES and OpenFlow.
+%
+%%** SANE (2006) and Ethane (2007)
+%SANE~\cite{casado2006}, similarly to RCP, incorporates the idea of a centralized controller to provide a single point of security policy enforcement in the network.
+%Things such as access control, typically done through a complicated combination of services and technologies, can be done in a single software-based controller.
+%The controller decides whether packets/flows should be forwarded or not by the data plane devices.
+%
+%Ethane~\cite{casado2007-1} is the first tentative to generalize the idea of the SANE's security policy enforcement centralized architecture by proposing flow-based control of Ethernet switches.
+%These devices should be considered as simple dummy forwarding elements containing flow tables, which are filled with rules used to decide what should be done with ingress flows.
+%Once a new flow arrives, the Ethane switch does a lookup to find a matching rule in the flow tables.
+%If there is no match, the packet can be sent to the controller system.
+%The controller analyzes the packet, based on network policies defined by operators, and generates flow rules that are send back to the device.
+%These rules tell the switch what to do with the flow, such as forward to a specific port, clone it to multiple ports, or simply drop the packets.
+%
+%%** OpenFlow (2008)
+%Moreover, Ethane was the cradle of birth of OpenFlow~\cite{mckeown2008}.
+%It started as an open protocol that lies between Ethernet switches and controllers.
+%Hence, it defines the requirements for the design of forwarding devices.
+%Besides its inherently simplicity, it can be applied to solve different networking problems and challenges such as routing protocols, security policy enforcement, load balancing, middlebox placement, and the deployment of new network architectures without disrupting or changing the current ones.
+%Furthermore, OpenFlow can also be seen as the first open standard that provides a clear and precise separation between data and control plane, allowing software developers to dynamically program the network through management applications running on top of logically-centralized controllers.

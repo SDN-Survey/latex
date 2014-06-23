@@ -1,0 +1,127 @@
+
+
+Hi Diego,
+
+my name is Carmelo Cascone and i'm a first-year PhD student at Politecnico di Milano, Italy.
+
+I'm writing you because you're the first author of "Software-Defined Networking: A Comprehensive Survey". I have to say that i really appreciate your work, it really helps in getting an all-round idea of present and future of SDN.
+
+I wanted to present you the work i'm doing with my group and ask you to consider it for inclusion in a future version of your survey.
+
+We recently published a paper on SIGCOMM CCR:
+
+OpenState: Programming Platform-independent Stateful OpenFlow Applications Inside the Switch
+http://www.sigcomm.org/sites/default/files/ccr/papers/2014/April/0000000-0000005.pdf
+
+I think this work might be related to section V "ONGOING RESEARCH EFFORTS AND CHALLENGES", A "Switch Design".
+
+We consider the eventuality of shifting from a stateless flow-based forwarding abstraction (i.e. OpenFlow) to a stateful one by introducing a new state machine abstraction and primitives for flow-state matching/transition. Main benefit of this approach is that controllers would be allowed to offload some of their logic to switches, thus reducing the need to rely on constant intervention of a controller for any required change. We believe that a number of applications would benefit from this improved stateful forwarding abstraction, especially those affected by slow controller reactions and mainly related to resource management (e.g. load balancing), fault tolerance and security (e.g. DDoS mitigation at the edge).
+
+I hope this will be helpful for your survey.
+
+Thanks for your availability,
+
+
+
+=============================================================================
+
+
+
+Hi Diego,
+
+i just had a quick view over your paper. It looks great - seems you have put a lot of work into it. Very nice! Tomorrow i am traveling back from a conference so i hope to find enough time to read it completely.
+
+I already have some small tweak for your paper in updating the emulation environment section:
+I just published a paper on a distributed mininet version that we called MaxiNet. You can find the paper here [1]. It is basically the same as the "mininet CE" that you cited in your survey but with the difference that MaxiNet is much more mature and user friendly. In addition, we conducted a lot of experiments to "proof" that the process of distribution does not distort the outcome of an experiment. Thus, in a sense our environment can be trusted. In addition we are using a vanilla mininet version in MaxiNet which means whenever a new mininet version is released, you can use that version in MaxiNet. This is not the case in "mininet CE". 
+
+Another upcomming work in the area of network emulation is DOT [2]. It is also a distributed emulation environment. It was presented at a conference two weeks ago. The difference between DOT and Maxinet is that MaxiNet is based on mininet and thus uses network namespaces and process-based emulation. DOT on the other hand uses real virtual machines to emulate hosts. These VMs are hosted using a normal hypervisor such as vmware, xen or lxc. Thus, DOT gives you perfect separation of the different hosts but only supports a handful of virtual hosts per physical worker whereas Maxinet supports hundreds of virtual hosts per worker but these share the same linux kernel instance. 
+
+
+See you!
+
+Philip
+
+
+[1]: http://www.cs.uni-paderborn.de/uploads/tx_sibibtex/maxinet_networking14.pdf
+[2]: http://dothub.org/downloads/DOT_CR_FINAL.pdf
+
+
+
+
+Dear Diego, Fernando, Paulo, Christian, Siamak and Steve,
+I read with interest your comprehensive survey on Software-Defined Networking.
+I used to be active in the field of programmable networks some 20 years ago (!!!)
+but switched fields more than 10 years ago.
+
+Since you have written a serious “comprehensive” survey, I thought that you may
+be interested in some of the history I actively participated in. Sadly, a lot of early
+fundamental work seem to have been forgotten. I hope that you can set the record
+straight.
+
+Here are a couple of research activities that are still accessible
+through the web. I started in the mid 90s a series of workshops
+called “OPENSIG” and an IEEE Conference “OPENARCH”.
+You can find some pointers to participants and talks below.
+Have also a look at my old webpage for further details:
+http://www.ee.columbia.edu/~aurel/networking.html
+in particular, see the section “Programmable Networks”.
+
+
+
+OPENSIG Workshops:
+------------------------------
+
+Open Signalling for ATM, Internet and Mobile Networks (OPENSIG Fall'96),
+Columbia University, New York, October 14-15, 1996;
+http://comet.columbia.edu/opensig/activities/fall.96.html
+
+Open Signalling for Middleware and Service Creation (OPENSIG Spring'96),
+Columbia University, New York, April 29-30, 1996;
+http://comet.columbia.edu/opensig/activities/spring.96.html
+
+OPENARCH Conferences:
+IEEE Conference on Open Architectures and Network Programming
+-------------------------------------------------------------------------------------------
+
+First IEEE Conference on
+Open Architectures and Network Programming
+San Francisco, CA, USA, April 3-4, 1998
+http://comet.columbia.edu/activities/openarch98/
+
+The Second IEEE Conference on
+Open Architectures and Network Programming
+New York, N.Y. USA, March 26-27, 1999
+http://comet.columbia.edu/activities/openarch99/
+
+The Third IEEE Conference on
+Open Architectures and Network Programming
+Tel-Aviv, Israel, March 26-27, 2000
+http://comet.columbia.edu/activities/openarch2000/
+
+
+On IEEExplore you can find all (1998-2003) of the OPENARCH proceedings at:
+https://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=8518
+
+I am also enclosing two of my early papers entitled:
+
+Lazar, A.A., Lim, K.S and Marconcini, F.,
+"Realizing a Foundation for Programmability of ATM Networks with the Binding Architecture”,
+Journal of Selected Areas in Communications, Vol.14, No.7, September 1996, pp. 1214-1227.
+
+
+
+
+
+Lazar, A.A., "Programming Telecommunication Networks", IEEE Network,
+September/October 1997, pp. 8-18.
+
+
+
+
+Hope that you will find this historical information useful.
+If I can be of any further help just let me know.
+Best,
+Aurel
+http://www.bionet.ee.columbia.edu
+
+
