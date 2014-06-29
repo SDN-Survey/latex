@@ -1002,7 +1002,7 @@ Similarly, programmability in networks is starting to move from low level machin
 Assembly-like machine languages, such as OpenFlow~\cite{mckeown2008} and POF~\cite{song2013,song2013-1}, essentially mimic the behavior of forwarding devices, forcing developers to spend too much time on low-level details
 rather than on the problem solve.
 Raw OpenFlow programs have to deal with hardware behavior details such as overlapping rules, the priority ordering of rules, and data-plane inconsistencies that arise from in-flight packets whose flow rules are under installation~\cite{foster2011,monsanto2012,ferguson2012}.
-The use of these low-level languages makes it difficult to reuse software, to create modular and extensive code, and leads to a more error-prone development process~\cite{monsanto2013,nelson2013,katta2012}.
+The use of these low-level languages makes it difficult to reuse software, to create modular and extensive code, and leads to a more error-prone development process~\cite{monsanto2013,nelson2014,katta2012}.
 
 Abstractions provided by high level programming languages can significantly help address many 
 of the challenges of these lower-level instruction sets~\cite{foster2011,hinrichs2009,voellmy2011-1,monsanto2012,voellmy2012,monsanto2013}.
@@ -1098,7 +1098,7 @@ development of network control logic.
 \textbf{Name} & \textbf{Programming paradigm} & \textbf{Short description/purpose} \\\hline
 FatTire~\cite{reitblatt2013}  & declarative (functional) & Uses regular expressions to allow programmers to describe network paths and respective fault-tolerance requirements. \\\hline
 Flog~\cite{katta2012}  & declarative (logic), event-driven & Combines ideas of FML and Frenetic, providing an event-driven and forward-chaining logic programming language. \\\hline
-FlowLog~\cite{nelson2013} & declarative (functional) & Provides a finite-state language to allow different analysis, such as model-checking.\\\hline
+FlowLog~\cite{nelson2014} & declarative (functional) & Provides a finite-state language to allow different analysis, such as model-checking.\\\hline
 FML~\cite{hinrichs2009} & declarative (dataflow, reactive) & High level policy description language (e.g., access control).  \\\hline
 Frenetic~\cite{foster2011} & declarative (functional) & Language designed to avoid race conditions through well defined high level programming abstractions.  \\\hline
 HFT~\cite{ferguson2012}  & declarative (logic, functional) & Enables hierarchical policies description with conflict-resolution operators, well suited for decentralized decision makers. \\\hline
@@ -1158,7 +1158,7 @@ as a traditional regular expression, but translated into alternative traversing 
 %to pass any path (*) leading to the DPI system. Consequently, if the primary path fails, alternative paths will 
 %be available and ready to thwart the problem.
 
-Programming languages such as FlowLog~\cite{nelson2013} and Flog~\cite{katta2012} bring 
+Programming languages such as FlowLog~\cite{nelson2014} and Flog~\cite{katta2012} bring 
 different features, such as model checking, dynamic verification and stateful middleboxes. For instance, using a programming language such as Flog, it is possible to build a 
 stateful firewall application with only five lines of code~\cite{katta2012}.
 
