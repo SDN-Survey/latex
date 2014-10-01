@@ -1261,11 +1261,12 @@ Table~\ref{tab:managementapplications} summarizes several applications categoriz
 & ViAggre SDN~\cite{skoldstrom2013-1} & divide and spread forwarding tables & NOX & OpenFlow\\
 \hline
 \multirow{9}{*}{\begin{minipage}{2cm}Mobility \\\& \\Wireless\end{minipage}} 
+& AeroFlux~\cite{schulz-zander2014-ons,schulz-zander2014-hotsdn} & scalable hierarchical WLAN control plane & Floodlight & OpenFlow, Odin \\
 & CROWD~\cite{ali-ahmad2013} & overlapping of LTE and WLAN cells & --- & OpenFlow \\
 & CloudMAC~\cite{vestin2013} & outsourced processing of WLAN MACs & --- & OpenFlow \\
 & FAMS~\cite{yamasaki2011} & flexible VLAN system based on OpenFlow & ProgrammableFlow & OpenFlow \\
 & MobileFlow~\cite{pentikousis2013} & flow-based model for mobile networks & MobileFlow & SDMN API\\
-& Odin~\cite{suresh2012} & smooth hand-off and load balancing & Floodlight & OpenFlow \\
+& Odin~\cite{schulz-zander2014-atc} & programmable virtualized WLANs & Floodlight & OpenFlow, Odin \\
 & OpenRAN~\cite{yang2013} & vertical programmability and virtualization & --- & --- \\
 & OpenRoads~\cite{yap2010-1} & control of the data path using OpenFlow & FlowVisor & OpenFlow \\
 & SoftRAN~\cite{gudipati2013} & load balancing and interference management & --- & Femto API~\cite{smallcellforum2013,Chandrasekhar2008} \\
@@ -1376,13 +1377,13 @@ schedulers~\cite{ishimori2013} and other techniques~\cite{kim2010,jeong2012,egil
 The current distributed control plane of wireless networks is suboptimal for managing the limited 
 spectrum, allocating radio resources, implementing handover mechanisms, managing interference, and performing efficient load-balancing between cells.
 SDN-based approaches represent an opportunity for making it easier to deploy and manage different types of wireless networks, such as WLANs and cellular 
-networks~\cite{suresh2012,yap2010-1,ali-ahmad2013,gudipati2013,li2012,jin2013}.
+networks~\cite{schulz-zander2014-atc,yap2010-1,ali-ahmad2013,gudipati2013,li2012,jin2013}.
 Traditionally hard-to-implement but desired features are indeed becoming a reality with the SDN-based wireless networks. 
-These include seamless mobility through efficient hand-overs~\cite{suresh2012,dely2011,li2012}, load balancing~\cite{suresh2012,gudipati2013}, creation of on-demand virtual access points (VAPs)~\cite{suresh2012,vestin2013}, downlink scheduling (e.g., an OpenFlow switch can do a rate shaping or time division) ~\cite{vestin2013}, dynamic spectrum usage~\cite{vestin2013}, enhanced inter-cell 
+These include seamless mobility through efficient hand-overs~\cite{schulz-zander2014-atc,dely2011,li2012}, load balancing~\cite{schulz-zander2014-atc,gudipati2013}, creation of on-demand virtual access points (VAPs)~\cite{schulz-zander2014-atc,vestin2013}, downlink scheduling (e.g., an OpenFlow switch can do a rate shaping or time division) ~\cite{vestin2013}, dynamic spectrum usage~\cite{vestin2013}, enhanced inter-cell 
 interference coordination~\cite{vestin2013,li2012}, device to device offloading (i.e., decide in when and how LTE transmissions should be offloaded to users adopting the D2D paradigm~\cite{yang2013d2d})~\cite{ali-ahmad2013}, per client and/or base station resource block allocations (i.e.,  time and frequency slots in LTE/OFDMA networks, which are known as resource blocks)~\cite{gudipati2013,ali-ahmad2013,jin2013}, control and assign 
 transmission and power parameters in devices or in a group basis (e.g., algorithms to optimize the transmission and power parameters of
-transmission and power parameters of WLAN devices, define and assign transmission power values to each resource block, at each base station, in LTE/OFDMA networks) ~\cite{ali-ahmad2013,gudipati2013}, simplified administration~\cite{suresh2012,yap2010-1,gudipati2013}, easy management of heterogenous network technologies~\cite{yap2010-1,gudipati2013,yap2010-2}, interoperability between different networks~\cite{yap2010-2,jin2013}, shared wireless infrastructures~\cite{yap2010-2}, seamless subscriber mobility and cellular networks~\cite{li2012}, QoS and access control policies made feasible and easier~\cite{li2012,jin2013}, and easy deployment of new applications 
-~\cite{suresh2012,gudipati2013,yap2010-2}. 
+transmission and power parameters of WLAN devices, define and assign transmission power values to each resource block, at each base station, in LTE/OFDMA networks) ~\cite{ali-ahmad2013,gudipati2013}, simplified administration~\cite{schulz-zander2014-atc,yap2010-1,gudipati2013}, easy management of heterogenous network technologies~\cite{yap2010-1,gudipati2013,yap2010-2}, interoperability between different networks~\cite{yap2010-2,jin2013}, shared wireless infrastructures~\cite{yap2010-2}, seamless subscriber mobility and cellular networks~\cite{li2012}, QoS and access control policies made feasible and easier~\cite{li2012,jin2013}, and easy deployment of new applications 
+~\cite{schulz-zander2014-atc,gudipati2013,yap2010-2}. 
 
 %The current distributed control plane of wireless networks is suboptimal for managing the limited 
 %spectrum, allocating radio resources, implementing handover mechanisms, managing interference, and performing efficient load-balancing between cells.
@@ -1405,14 +1406,15 @@ optimize algorithms for better hand-overs, fine-grained control of transmit powe
 among other management tasks.
 
 Light virtual access points (LVAPs) is another interesting way of improving the management capabilities of 
-wireless networks, as proposed by Odin~\cite{suresh2012}. Differently from OpenRadio, 
-it works with existing wireless hardware and does not impose any change on IEEE 802.11 standards. An LVAP is 
-implemented as a unique BSSID associated with a specific client, which means that there is a one-to-one mapping 
-between LVAPs and clients. This empowers infrastructure operators to provide seamless mobility, load balancing 
-and hidden terminal mitigation. For instance, when a user moves from one access point (AP) to another, the 
-network mobility management application can automatically and proactively act and move the client LVAP from 
+wireless networks, as proposed by the Odin~\cite{schulz-zander2014-atc} framework. Differently from OpenRadio, 
+it works with existing wireless hardware and does not impose any change on IEEE 802.11 standards. 
+An LVAP is implemented as a unique BSSID associated with a specific client, which means that there is a one-to-one mapping 
+between LVAPs and clients. This per-client access point (AP) abstraction simplifies the handling of client associations, authentication, handovers, and unified slicing of both the wired and wireless portions of the network. Odin achieves control logic isolation between slices, since LVAPs are the primitive type upon which applications make control decisions, and applications do not have visibility of LVAPs from outside their slice.
+This empowers infrastructure operators to provide services through Odin applications, such as a mobility manager, client-based load balancer, channel selection algorithm, and wireless troubleshooting application within different network slices. For instance, when a user moves from one AP to another, the 
+network mobility management application can automatically and proactively act and move the client LVAP from one 
 AP to the other. In this way, a wireless client will not even notice that it started to use a different AP 
 because there is no perceptive hand-off delay, as it would be the case in traditional wireless networks.
+
 
 %In~\cite{dely2011} the authors propose and demonstrate an OpenFlow based approach to settle the problem of client mobility in a wireless mesh network.
 %The main challenge is on handling the fast migration of client addresses between mesh access points.
