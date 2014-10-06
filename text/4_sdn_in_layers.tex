@@ -168,11 +168,7 @@ These devices range from equipment for small businesses (e.g., GbE switches) to 
 & contrail-vrouter~\cite{networks2013} & vrouter &  Juniper Networks & v1.0 & Data-plane function to interface with a VRF.\\\cline{2-6}
 & LINC~\cite{flowforwarding2013,rutka2013} & switch &  FlowForwarding & v1.4 & Erlang-based soft switch with OF-Config 1.1 support.\\\cline{2-6}
 & ofsoftswitch13~\cite{cpqd2013} & switch & Ericsson, CPqD & v1.3 & OF 1.3 compatible user-space software switch implementation. \\\cline{2-6}
-<<<<<<< HEAD
 & Open vSwitch~\cite{listofcontributors2013,pfaff2009} & switch & Open Community & v1.0-1.3  & Switch platform designed for virtualized server environments.  \\\cline{2-6}
-=======
-& Open vSwitch~\cite{listofcontributors2013,pfaff2009} & switch & Open Community & v1.3  & Switch platform designed for virtualized server environments.  \\\cline{2-6}
->>>>>>> cf0efb14a6b582e806c087b3fa412b9afb5290e3
 & OpenFlow Reference~\cite{openflowcommunity2009} & switch & Stanford & v1.0 & OF Switching capability to a Linux PC with multiple NICs. \\\cline{2-6}
 & OpenFlowClick~\cite{mundada2009} & vrouter & Yogesh Mundada & v1.0 & OpenFlow switching element for Click software routers.\\\cline{2-6}
 & Switch Light~\cite{bigswitchnetworks2013} & switch & Big Switch & v1.0  & Thin switching software platform for physical/virtual switches. \\\cline{2-6}
@@ -644,7 +640,7 @@ In fact, some platforms have very specific niche markets, such as telecom compan
 
 \textbf{Management Interfaces} & GUI/CLI, REST API & GUI/CLI & REST API Shell / GUI Shell & \textit{---} & Web \\\hline
 
-\textbf{Northbound APIs}           & REST, RESTCONF~\cite{bierman2014restconf}, Java APIs & REST APIs (configuration, operational, and analytic) & REST API, GUI Shell & Onix API (general \hfill {\color{white}x} purpose) & API (based on \hfill {\color{white}x} OpenFlow events) \\\hline
+\textbf{Northbound APIs}           & REST, REST-\hfill {\color{white}x} CONF~\cite{bierman2014restconf}, Java \hfill {\color{white}x} APIs & REST APIs (configuration, operational, and analytic) & REST API, GUI Shell & Onix API (general \hfill {\color{white}x} purpose) & API (based on \hfill {\color{white}x} OpenFlow events) \\\hline
 
 \textbf{Service abstraction layers} & Service Abstraction\hfill {\color{white}x} Layer (SAL) & \textit{---} & Device Abstraction API & Network Information \hfill{\color{white}x} Base (NIB) Graph \hfill{\color{white}x} with Import/Export\hfill {\color{white}x} Functions & \textit{---} \\\hline
 
@@ -1448,11 +1444,7 @@ Tables~\ref{tab:managementapplications1} and~\ref{tab:managementapplications2} s
 & ViAggre SDN~\cite{skoldstrom2013-1} & divide and spread forwarding tables & NOX & OpenFlow\\
 
 \hline
-<<<<<<< HEAD
 \multirow{10}{*}{\begin{minipage}{2cm}Mobility \\\& \\Wireless\end{minipage}} 
-=======
-\multirow{9}{*}{\begin{minipage}{2cm}Mobility \\\& \\Wireless\end{minipage}} 
->>>>>>> cf0efb14a6b582e806c087b3fa412b9afb5290e3
 & AeroFlux~\cite{schulz-zander2014-ons,schulz-zander2014-hotsdn} & scalable hierarchical WLAN control plane & Floodlight & OpenFlow, Odin \\
 & CROWD~\cite{ali-ahmad2013} & overlapping of LTE and WLAN cells & --- & OpenFlow \\
 & CloudMAC~\cite{vestin2013} & outsourced processing of WLAN MACs & --- & OpenFlow \\
@@ -1639,16 +1631,10 @@ spectrum, allocating radio resources, implementing handover mechanisms, managing
 SDN-based approaches represent an opportunity for making it easier to deploy and manage different types of wireless networks, such as WLANs and cellular 
 networks~\cite{schulz-zander2014-atc,yap2010-1,ali-ahmad2013,gudipati2013,li2012,jin2013}.
 Traditionally hard-to-implement but desired features are indeed becoming a reality with the SDN-based wireless networks. 
-These include seamless mobility through efficient hand-overs~\cite{schulz-zander2014-atc,dely2011,li2012}, load balancing~\cite{schulz-zander2014-atc,gudipati2013}, creation of on-demand virtual access points (VAPs)~\cite{schulz-zander2014-atc,vestin2013}, downlink scheduling (e.g., an OpenFlow switch can do a rate shaping or time division) ~\cite{vestin2013}, dynamic spectrum usage~\cite{vestin2013}, enhanced inter-cell 
-<<<<<<< HEAD
-interference coordination~\cite{vestin2013,li2012}, device to device offloading (i.e., decide when and how LTE transmissions should be offloaded to users adopting the D2D paradigm~\cite{yang2013d2d})~\cite{ali-ahmad2013}, per client and/or base station resource block allocations (i.e.,  time and frequency slots in LTE/OFDMA networks, which are known as resource blocks)~\cite{gudipati2013,ali-ahmad2013,jin2013}, control and assign 
-transmission and power parameters in devices or in a group basis (e.g., algorithms to optimize the transmission and power parameters of WLAN devices, define and assign transmission power values to each resource block, at each base station, in LTE/OFDMA networks) ~\cite{ali-ahmad2013,gudipati2013}, simplified administration~\cite{schulz-zander2014-atc,yap2010-1,gudipati2013}, easy management of heterogenous network technologies~\cite{yap2010-1,gudipati2013,yap2010-2}, interoperability between different networks~\cite{yap2010-2,jin2013}, shared wireless infrastructures~\cite{yap2010-2}, seamless subscriber mobility and cellular networks~\cite{li2012}, QoS and access control policies made feasible and easier~\cite{li2012,jin2013}, and easy deployment of new applications~\cite{schulz-zander2014-atc,gudipati2013,yap2010-2}. 
-=======
-interference coordination~\cite{vestin2013,li2012}, device to device offloading (i.e., decide in when and how LTE transmissions should be offloaded to users adopting the D2D paradigm~\cite{yang2013d2d})~\cite{ali-ahmad2013}, per client and/or base station resource block allocations (i.e.,  time and frequency slots in LTE/OFDMA networks, which are known as resource blocks)~\cite{gudipati2013,ali-ahmad2013,jin2013}, control and assign 
+These include seamless mobility through efficient hand-overs~\cite{schulz-zander2014-atc,dely2011,li2012}, load balancing~\cite{schulz-zander2014-atc,gudipati2013}, creation of on-demand virtual access points (VAPs)~\cite{schulz-zander2014-atc,vestin2013}, downlink scheduling (e.g., an OpenFlow switch can do a rate shaping or time division) ~\cite{vestin2013}, dynamic spectrum usage~\cite{vestin2013}, enhanced inter-cell interference coordination~\cite{vestin2013,li2012}, device to device offloading (i.e., decide in when and how LTE transmissions should be offloaded to users adopting the D2D paradigm~\cite{yang2013d2d})~\cite{ali-ahmad2013}, per client and/or base station resource block allocations (i.e.,  time and frequency slots in LTE/OFDMA networks, which are known as resource blocks)~\cite{gudipati2013,ali-ahmad2013,jin2013}, control and assign 
 transmission and power parameters in devices or in a group basis (e.g., algorithms to optimize the transmission and power parameters of
 transmission and power parameters of WLAN devices, define and assign transmission power values to each resource block, at each base station, in LTE/OFDMA networks) ~\cite{ali-ahmad2013,gudipati2013}, simplified administration~\cite{schulz-zander2014-atc,yap2010-1,gudipati2013}, easy management of heterogenous network technologies~\cite{yap2010-1,gudipati2013,yap2010-2}, interoperability between different networks~\cite{yap2010-2,jin2013}, shared wireless infrastructures~\cite{yap2010-2}, seamless subscriber mobility and cellular networks~\cite{li2012}, QoS and access control policies made feasible and easier~\cite{li2012,jin2013}, and easy deployment of new applications 
 ~\cite{schulz-zander2014-atc,gudipati2013,yap2010-2}. 
->>>>>>> cf0efb14a6b582e806c087b3fa412b9afb5290e3
 
 %The current distributed control plane of wireless networks is suboptimal for managing the limited 
 %spectrum, allocating radio resources, implementing handover mechanisms, managing interference, and performing efficient load-balancing between cells.
@@ -1670,25 +1656,14 @@ the radio access layer of current LTE infrastructures. Its main goal is to allow
 optimize algorithms for better hand-overs, fine-grained control of transmit powers, resource block allocation, 
 among other management tasks.
 
-Light virtual access points (LVAPs) is another interesting way of improving the management capabilities of 
-<<<<<<< HEAD
-wireless networks, as proposed by the Odin~\cite{schulz-zander2014-atc} framework. 
-In contrast to OpenRadio, 
-it works with existing wireless hardware and does not impose any change to IEEE 802.11 standards. An LVAP is implemented as a unique BSSID associated with a specific client, which means that there is a one-to-one mapping between LVAPs and clients. This per-client access point (AP) abstraction simplifies the handling of client associations, authentication, handovers, and unified slicing of both the wired and wireless portions of the network. Odin achieves control logic isolation between slices, since LVAPs are the primitive type upon which applications make control decisions, and applications do not have visibility of LVAPs from outside their slice.
- This empowers infrastructure operators to provide services through Odin applications, such as a mobility manager, client-based load balancer, channel selection algorithm, and wireless troubleshooting application within different network slices. For instance, when a user moves from one AP to another, the
- network mobility management application can automatically and proactively act and move the client LVAP from one
-AP to the other. In this way, a wireless client will not even notice that it started to use a different AP
-=======
-wireless networks, as proposed by the Odin~\cite{schulz-zander2014-atc} framework. Differently from OpenRadio, 
+Light virtual access points (LVAPs) is another interesting way of improving the management capabilities of wireless networks, as proposed by the Odin~\cite{schulz-zander2014-atc} framework. Differently from OpenRadio, 
 it works with existing wireless hardware and does not impose any change on IEEE 802.11 standards. 
 An LVAP is implemented as a unique BSSID associated with a specific client, which means that there is a one-to-one mapping 
 between LVAPs and clients. This per-client access point (AP) abstraction simplifies the handling of client associations, authentication, handovers, and unified slicing of both the wired and wireless portions of the network. Odin achieves control logic isolation between slices, since LVAPs are the primitive type upon which applications make control decisions, and applications do not have visibility of LVAPs from outside their slice.
 This empowers infrastructure operators to provide services through Odin applications, such as a mobility manager, client-based load balancer, channel selection algorithm, and wireless troubleshooting application within different network slices. For instance, when a user moves from one AP to another, the 
 network mobility management application can automatically and proactively act and move the client LVAP from one 
 AP to the other. In this way, a wireless client will not even notice that it started to use a different AP 
->>>>>>> cf0efb14a6b582e806c087b3fa412b9afb5290e3
 because there is no perceptive hand-off delay, as it would be the case in traditional wireless networks.
-
 
 %In~\cite{dely2011} the authors propose and demonstrate an OpenFlow based approach to settle the problem of client mobility in a wireless mesh network.
 %The main challenge is on handling the fast migration of client addresses between mesh access points.
