@@ -19,23 +19,24 @@ data plane executes it by forwarding data accordingly.
 \label{fig:currentnetplanes}
 \end{figure}
 
-In traditional IP networks, the control and data planes are tightly coupled, and 
-embedded in the same networking devices, and the whole structure is highly decentralized.
+In traditional IP networks, the control and data planes are tightly coupled, embedded in the same networking devices, and the whole structure is highly decentralized.
 This was considered important for the design of the Internet in the early days: it seemed 
 the best way to guarantee network resilience, which was a crucial design goal. In fact, 
 this approach has been quite effective in terms of network performance, with a rapid 
 increase of line rate and port densities.
 
-However, the outcome is a very complex and relatively static architecture. It is also the 
+\coloredtext{However, the outcome is a very complex and relatively static architecture, as has been often reported in the networking literature (e.g.,~\cite{benson2009,ghodsi2011,raghavan2012,kim2013,pan2011a})}. %
+% removed: liu2010rnl, feamster2005, tao2012an, edwards2011ash, naudts2012
+It is also the 
 fundamental reason why traditional networks are rigid, and complex to manage and control.
 These two characteristics are largely responsible for a vertically-integrated industry where 
 innovation is difficult.
 
 Network misconfigurations and related errors are extremely common in today's networks. 
 For instance, more than 1000 configuration errors have been observed in BGP 
-routers~\cite{feamster2005}. A single misconfigured device can be a big 
-headache for network operators and may have extremely severe consequences. Indeed, while
-rare, a single misconfigured router is able to compromise the correct operation of the 
+routers~\cite{feamster2005}. 
+\coloredtext{From a single misconfigured device may result very undesired network behavior (including, among others, packet losses, forwarding loops, setting up of unintended paths, or service contract violations).} 
+Indeed, while rare, a single misconfigured router is able to compromise the correct operation of the 
 whole Internet for hours~\cite{barrett1997,butler2010}. 
 
 To support network management, a small number of vendors offer proprietary solutions of 

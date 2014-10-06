@@ -40,19 +40,18 @@ bears witness to this challenge, while in fact IPv6 represented \textit{merely}
 a protocol update. Due to the inertia of current IP networks, a new 
 routing protocol can take 5 to 10 years to be fully designed, evaluated and deployed.
 Likewise, a clean-slate approach to change the Internet architecture (e.g., 
-replacing IP), is regarded as a tantalizing task -- simply not feasible in practice~\cite{raghavan2012},~\cite{ghodsi2011}. 
+replacing IP), is regarded as a \coloredtext{daunting task} -- simply not feasible in practice~\cite{raghavan2012},~\cite{ghodsi2011}. 
 Ultimately, this situation has inflated the capital and operational expenses of 
 running an IP network.
 
-% Defining SDN
+% Defining SDN 
 Software-Defined Networking (SDN)~\cite{mckeown2011,schenker2011} 
  is an emerging networking paradigm that gives hope to change the limitations of current
  network infrastructures. First, it breaks the vertical integration by separating the network's 
 control logic (the control plane) from the underlying routers and switches that 
 forward the traffic (the data plane). Second, with the separation of the control
 and data planes, network switches become simple forwarding devices and
-the control logic is implemented in a \textit{logically centralized}
-controller (or network operating system\footnote{We will use these two
+the control logic is implemented in a \textit{logically centralized} controller (or network operating system\footnote{We will use these two
 terms interchangeably.}), simplifying policy enforcement and network 
 (re)configuration and evolution~\cite{kim2013}. A simplified view of this 
 architecture is shown in Figure~\ref{fig:sdn_simple}.  It is important
@@ -61,7 +60,9 @@ postulate a physically centralized system~\cite{koponen-1}.  In fact, the need t
 guarantee adequate levels of performance, scalability, and reliability
 would preclude such a solution.  Instead,
 production-level SDN network designs resort to physically distributed
-control planes~\cite{jain2013-1,koponen-1}.
+control planes~\cite{koponen-1,jain2013-1}.
+
+
 
 \begin{figure}[t!]
 \centering
@@ -102,7 +103,7 @@ experiments~\cite{mckeown2008}, they gained significant traction in the
 industry over the past few years.  Most vendors of commercial switches
 now include support of the OpenFlow API in their equipment. The SDN momentum 
 was strong enough to make Google, Facebook, Yahoo, Microsoft, Verizon, and Deutsche Telekom fund Open Networking Foundation~(ONF)~\cite{onf2013-3} with the main
-goal of promotion and adoption of SDN through open standards development driven by the users (i.e., equipment buyers) rather than the vendors (i.e., equipment manufacturers). 
+goal of promotion and adoption of SDN through open standards development. %driven by the users (i.e., equipment buyers) rather than the vendors (i.e., equipment manufacturers). 
   As the initial concerns with SDN scalability were addressed~\cite{yeganeh2013}
 -- in particular the myth that logical centralization implied a
 physically centralized controller, an issue we will return to later on
@@ -120,8 +121,27 @@ equipment manufacturers to cloud providers and financial-services
 companies) have recently joined SDN consortia such as the ONF  and the OpenDaylight initiative~\cite{opendaylight2013}, 
 another indication of the importance of SDN from an industrial perspective.
 
+\coloredtext{A few recent papers have surveyed specific architectural aspects of SDN~\cite{lara2014,nunes2014,jarraya2014}.
+An overview of OpenFlow and a short literature review can be found in~\cite{lara2014} and~\cite{nunes2014}.
+These OpenFlow-oriented surveys present a relatively simplified three-layer stack composed of high-level network services, controllers, and the controller/switch interface.
+In~\cite{jarraya2014}, the authors go a step further by proposing a taxonomy for SDN.
+However, similarly to the previous works, the survey is limited in terms of scope and it does not provide an in-depth treatment of fundamental aspects of SDN. 
+In essence, existing surveys lack a thorough discussion of the essential building blocks of an SDN such as the network operating systems, programming languages, and interfaces.
+They also fall short on the analysis of cross-layer issues such as scalability, security, and dependability.
+A more complete overview of ongoing research efforts, challenges, and related standardization activities  is also missing.}
+
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/fig12_survey_condensed_overview.pdf}
+\caption{Condensed overview of this survey on SDN.}
+\label{fig:conclusion}
+\end{figure*}
+
+
 %This paper
-In this paper, we present a comprehensive literature survey on SDN organized as depicted in Figure~\ref{fig:conclusion}.  We start, in the next two sections, by explaining the context,
+\coloredtext{In this paper, we present, to the best of our knowledge, the most comprehensive literature survey on SDN to date.
+We organize this survey} as depicted in Figure~\ref{fig:conclusion}.  We start, in the next two sections, by explaining the context,
 introducing the motivation for SDN and explaining the main concepts
 of this new paradigm and how it differs from traditional networking.
 Our aim in the early part of the survey is also to explain that SDN 
@@ -135,9 +155,11 @@ to program the network -- are not novel by themselves~\cite{feamster2013-2}.
 However, the integration of already tested concepts with recent trends 
 in networking -- namely the availability of merchant switch silicon and
 the huge interest in feasible forms of network virtualization -- are
-leading to this paradigm shift in networking.
+leading to this paradigm shift in networking. 
+\coloredtext{As a result of the high industry interest and the potential to 
+change the status quo of networking from multiple perspectives, a number of standardization efforts around SDN are ongoing, as we also discuss in Section~\ref{fig:sec-sdn-what}.}
 
-Section~\ref{sec:layeredapproach} comes next and is the core of this
+\coloredtext{Section~\ref{sec:layeredapproach} is the core of this}
 survey, presenting an extensive and comprehensive
 analysis of the building blocks of an SDN infrastructure using a
 bottom-up, layered approach.  The option for a layered approach is
@@ -148,22 +170,8 @@ Our layered, bottom-up approach divides the networking problem into eight parts:
 the forwarding devices and the network operating systems), 4) network operating 
 systems (SDN controllers and control platforms), 5) northbound interfaces 
 (to offer a common programming abstraction to the upper layers, mainly the network applications), 6) virtualization using slicing techniques provided by special purpose 
-libraries and/or programming languages and compilers, 7) network 
-programming languages, and finally 8) management applications. In addition, 
+libraries or programming languages and compilers, 7) network 
+programming languages, and finally 8) network applications. In addition, 
 we also look at cross-layer problems such as debugging and troubleshooting 
 mechanisms. The discussion in Section~\ref{sec:challenges} on ongoing research efforts, challenges, future work and opportunities concludes this paper.
 
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=0.95\textwidth]{figures/fig12_survey_condensed_overview.pdf}
-\caption{Condensed overview of this survey on SDN.}
-\label{fig:conclusion}
-\end{figure*}
-
-%(in short: scalability, security and dependability), several
-%use cases and deployment scenarios, and finally we discuss open roads
-%in SDN research, trying to foretell how this new paradigm will evolve.
-%We pay particular attention to use case scenarios that are considered
-%of crucial importance to network operators, such as optical and
-%transport networks, datacenters, and wide area networks.

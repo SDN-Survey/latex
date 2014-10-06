@@ -1,12 +1,14 @@
 \section{What is Software-Defined Networking?}
+\label{fig:sec-sdn-what}
 
 The term SDN (Software-Defined Networking)  was originally coined to represent 
 the ideas and work around OpenFlow at Stanford University~\cite{greene2009}. 
 As originally defined, SDN refers to a network architecture where the forwarding 
 state in the data plane is managed by a remote control plane decoupled from the former.
 The networking industry has on many occasions shifted from this original view of SDN, 
-by referring to anything that involves software as being SDN. We therefore attempt, 
-in this section, to provide a much less ambiguous definition of software-defined 
+by referring to anything that involves software as being SDN. 
+%\coloredtext{One of the main reasons behind this confusing 'noise' around SDN is that every player has something to gain or to lose, so vested interests cannot be ignored~\cite{Reinecke2014}.} 
+We therefore attempt, in this section, to provide a much less ambiguous definition of software-defined 
 networking.
 
 %SDN: key characteristics.
@@ -16,10 +18,15 @@ We define an SDN as a network archi\-te\-cture with four pillars:\\
 removed from network devices that will become simple (packet) forwarding elements.
 \item  Forwarding decisions are flow-based, instead of des\-ti\-na\-tion-based. A flow is 
 broadly defined by a set of packet field values acting as a match (filter) criterion 
-and a set of actions (instructions). The flow abstraction allows unifying the behavior of 
-different types of network devices, including routers, switches, firewalls, and middleboxes. 
+and a set of actions (instructions).
+\coloredtext{In the SDN/OpenFlow context, a flow is a sequence of packets between a source and a destination.
+All packets of a flow receive identical service policies at the forwarding devices~\cite{newman1998IP,gude2008}.}
+%In other words, once control has been applied on one packet, all following packets with the same header are handled in the same way~\cite{gude2008}.}
+The flow abstraction allows unifying the behavior of 
+different types of network devices, including routers, switches, firewalls, and \coloredtext{middleboxes~\cite{Jamjoom2014_4}}. 
 Flow programming enables unprecedented flexibility, limited only to the capabilities of 
-the implemented flow tables~\cite{mckeown2008}.
+the implemented flow tables~\cite{mckeown2008}. 
+%\coloredtext{For instance, firewalls and middleboxes can become middlepipes~\cite{Jamjoom2014_4} and dynamically move, as logical entities opposed to physical devices, to where the services are.}
 \item Control logic is moved to an external entity, the so-called SDN controller or Network 
 Operating System (NOS). The NOS is a software platform that runs on commodity server technology 
 and provides the essential resources and abstractions to facilitate the programming of forwarding 
@@ -38,7 +45,7 @@ network state and thus maintain the high-level policies intact. Third, the centr
 the control logic in a controller with global knowledge of the network state simplifies the
 development of more sophisticated networking functions, services and applications.
 
-Following the SDN concept~\cite{schenker2011}, an SDN can be defined by 
+Following the SDN concept introduced in~\cite{schenker2011}, an SDN can be defined by 
 three fundamental abstractions: (\textit{i}) forwarding, (\textit{ii}) distribution, and 
 (\textit{iii}) specification.
 In fact, abstractions are essential tools of research in computer science and information technology, being already an ubiquitous feature of many computer architectures and systems~\cite{alkhatib2014}.
@@ -46,7 +53,7 @@ In fact, abstractions are essential tools of research in computer science and in
 
 Ideally, the \textit{forwarding abstraction} should allow any forwarding behavior desired 
 by the network application (the control program) while hiding details of the underlying hardware.
-OpenFlow is a practical realization of one such abstraction, which can be seen as the equivalent 
+\coloredtext{OpenFlow is one realization of such abstraction}, which can be seen as the equivalent 
 to a ``device driver'' in an operating system.
 
 The \textit{distribution abstraction} should shield SDN applications from the vagaries 
@@ -74,12 +81,15 @@ building blocks.
 \end{figure}
 
 As previously mentioned, the strong coupling between control and data planes has made it difficult 
-to add new functionality to traditional networks. The introduction of new features requires the 
-inclusion of expensive and hard-to-configure equipment in the network -- load balancers, intrusion detection systems and firewalls 
-are common examples. These middleboxes need to be placed strategically in the network, making it 
-even harder to later change the network topology, configuration and functionality. 
-This can be observed in Figure~\ref{fig:traditionalversusSDN}.
-For instance, an intrusion detection system might need to receive a cloned copy of the traffic of all switching devices of the network through specific physical and or logical links.
+to add new functionality to traditional networks, \coloredtext{
+a fact illustrated in Figure~\ref{fig:traditionalversusSDN}.
+The coupling of the control and data planes (and its physical embedding in the network elements) makes the development and deployment of new networking features (e.g., routing algorithms) very hard since 
+it would imply a modification of the control plane of all network devices -- through the installation of new firmware and, in some cases, hardware upgrades.
+Hence, the new networking features are commonly introduced via expensive, specialized and hard-to-configure equipment (aka middleboxes) such as load balancers, intrusion detection systems (IDS), and firewalls, among others.  
+%are common examples.
+ These middleboxes need to be placed strategically in the network, making it 
+even harder to later change the network topology, configuration, and functionality.}
+%For instance, an intrusion detection system might need to receive a cloned copy of the traffic of all switching devices of the network through specific physical and or logical links.
 %Moreover, these specialized devices have usually to be configured in a standalone or specific way because each of them has its own (most of time proprietary) interface and configuration protocols.
 %On the former we have a strong coupling between control and data planes.
 %Appliances such as firewalls and load balancers have to be installed in specific physical spots of the network.
@@ -88,12 +98,16 @@ For instance, an intrusion detection system might need to receive a cloned copy 
 \begin{figure}[t!]
 \centering
 \includegraphics[width=0.95\columnwidth]{figures/fig4_traditional_and_sdn.pdf}
-\caption{Traditional networks versus Software-Defined Networks (SDNs). With SDN, management becomes simpler and traditional middleboxes can be removed.}
+\caption{Traditional networking versus Software-Defined Networking (SDN). With SDN, management becomes simpler and middleboxes services can be delivered as SDN controller applications.}
 \label{fig:traditionalversusSDN}
 \end{figure}
 
-In contrast, introducing new functionality in SDN is made simply by adding a new software 
-application to run on top of the NOS. This approach has several advantages:
+\coloredtext{In contrast, SDN decouples the control plane from the network devices and becomes an external entity: the network operating system or SDN controller.}
+%In other words, the control plane complexity of traditional networks is assembled in a 'single' software-based entity, the controller, which gives move flexibility and speed in terms of changes (e.g., updates and upgrades) and innovation.
+%Decoupling devices and programs from the physical topology simplifies applications and allows different programs to co-exist on the same network without interference~\cite{Casado2014_4}.
+%Moreover, introducing new functionality in SDN is made simply by adding a new software application to run on top of the NOS.
+%For instance, a firewall becomes a simple software application running on top of the NOS and the security policies can be spread across the network devices, i.e., the firewall rules do not need to be applied in a single point or only in a specific device.}
+This approach has several advantages:
 \begin{itemize}
 \item It becomes easier to program these applications since the abstractions provided by the 
 control platform and/or the network programming languages can be shared.
@@ -103,7 +117,7 @@ software modules.
 \item These applications can take actions (i.e., reconfigure forwarding devices) from any part of 
 the network. There is therefore no need to devise a precise strategy about the location of the new 
 functionality.
-\item The integration of different applications becomes more straightforward. For instance, load 
+\item The integration of different applications becomes more straightforward~\cite{Casado2014_4}. For instance, load 
 balancing and routing applications can be combined sequentially, with load balancing decisions having 
 precedence over routing policies.
 \end{itemize}
@@ -133,12 +147,16 @@ precedence over routing policies.
 %\note{CH: May be include a discussion on what is NOT SDN. Introduce the SDN taxonomy by Srini here and/or defer the discussion to the Section on History of SDN?}
 %\note{DK: Yes, that could be interesting. I think it fits better in the history section.}
 
+%\coloredtext{It is also worth mentioning that the development and evolution of SDN is bringing into the arena new programming models and abstractions for network-wide structures, distributed updates, modular composition, virtualization, formal verification~\cite{Casado2014_4}.
+%In fact, a variety of abstractions, in different levels, will be required to fruitfully build the future network operating systems, similarly to what happened with traditional operating systems.
+%}
+
 \subsection{Terminology}
 
 To identify the different elements of an SDN as unequivocally as possible, we now present the 
 essential terminology used throughout this work.
 
-\noindent \textit{Fowarding Devices (FD)}: Hardware- or software-based data plane devices that perform 
+\noindent \textit{Forwarding Devices (FD)}: Hardware- or software-based data plane devices that perform 
 a set of elementary operations. The forwarding devices have well-defined instruction sets (e.g., flow 
 rules) used to take actions on the incoming packets (e.g., forward to specific ports, drop, forward to 
 the controller, rewrite some header). These instructions are defined by southbound interfaces (e.g., 
@@ -168,12 +186,12 @@ to program forwarding devices.
 
 \noindent \textit{Management Plane (MP)}: The management plane is the set of applications that leverage 
 the functions offered by the NI to implement network control and operation logic.
-This includes applications such as routing, firewalls, load balancers, monitoring, and so on.
+This includes applications such as routing, firewalls, load balancers, monitoring, and so forth.
 %In other words, the MP accommodates management applications which are responsible for programming, configuring and monitoring the network operation.
 Essentially, a management application defines the policies, which are ultimately translated to 
 southbound-specific instructions that program the behavior of the forwarding devices.
 
-\subsection{Alternative/Broadening SDN Definitions}
+\subsection{Alternative and Broadening Definitions}
 \label{sec:alt-SDN}
 
 
@@ -189,12 +207,12 @@ and clarity, we acknowledge alternative SDN definitions~\cite{nadeau2013}, inclu
 %\item
 \noindent \textit{Control Plane / Broker SDN}: A networking approach that retains existing distributed 
 control planes but offers new APIs that allow applications to interact (bidirectionally) with the network. 
-An SDN controller -- often called orchestration platform -- acts as a broker between the applications and 
+An SDN controller --often called orchestration platform-- acts as a broker between the applications and 
 the network elements. This approach effectively presents control plane data to the application and allows 
 a certain degree of network programmability by means of ``plug-ins'' between the orchestrator function and 
 network protocols. This API-driven approach corresponds to a hybrid model of SDN, since it enables the broker 
 to manipulate and directly interact with the control planes of devices such as routers and switches. Examples 
-of this view on SDN include recent IETF efforts (e.g., ALTO~\cite{alimi2013}, I2RS~\cite{ietfi2rsworkinggroup2014}, ABNO~\cite{king2014}) and the design philosophy behind the OpenDaylight project~\cite{opendaylight2013} that goes beyond the OpenFlow split control mode.
+of this view on SDN include recent standardization efforts at IETF \coloredtext{(see Section~\ref{sec:standardization})} and the design philosophy behind the OpenDaylight project~\cite{opendaylight2013} that goes beyond the OpenFlow split control mode.
 
 %\item 
 \noindent \textit{Overlay SDN}: A networking approach where the (software- or hardware-based) network edge 
@@ -203,12 +221,148 @@ overlay network. In this hybrid networking approach, the distributed control pla
 remains untouched. The centralized control plane provides a logical overlay that utilizes the underlay 
 as a transport network. This flavor of SDN follows a proactive model to install the overlay tunnels. The overlay
 tunnels usually terminate inside virtual switches within hypervisors or in physical devices acting as gateways 
-to the existing network. This approach is very popular in recent data center network virtualization \cite{chowdhury2010}, and are based on a variety of tunneling technologies (e.g., STT, NVGRE, VXLAN,
-LISP)~\cite{jain2013}.
+to the existing network. This approach is very popular in recent data center network virtualization \cite{chowdhury2010}, and are based on a variety of tunneling technologies \coloredtext{(e.g., STT~\cite{davie2014stt}, VXLAN~\cite{mahalingam2013}, NVGRE~\cite{sridharan2013}, LISP~\cite{maino2013lisp,hertoghs2014lisp}, GENEVE~\cite{Gross2014_4})}~\cite{jain2013}.
 
-%\end{itemize}
+\coloredtext{Recently, other attempts to define SDN in a layered approach have appeared~\cite{haleplidis2014layers,jarraya2014}.
+From a practical perspective and trying to keep backward compatibility with existing network management approaches, one  initiative at IRTF SDNRG~\cite{haleplidis2014layers} proposes a management plane at the same level of the control plane, i.e., it classifies solutions in two categories: control logic (with control plane southbound interfaces) and management logic (with management plane southbound interfaces).
+In other words, the management plane can be seen as a control platform that accommodates traditional network management services and protocols, such as SNMP~\cite{presuhn2002}, BGP~\cite{rekhter2006}, PCEP~\cite{vasseur2009}, and NETCONF~\cite{enns2011-1}.
+}
 
-In addition, the term SDN is often used to define extensible network management planes (e.g., OpenStack~\cite{corradi2014}), 
-whitebox switches and open-source dataplanes (e.g., Pica8 Xorplus~\cite{shang2014}, Quagga~\cite{jakma2014}), specialized programmable hardware devices (e.g., 
-NetFPGA~\cite{netfpga2014}), virtualized software-based appliances (e.g., Network Function Virtualization - NFV~\cite{martins2014}), in spite of 
-lacking a decoupled control and data plane or common interface along its API. Hybrid SDN models will be further discussed in Section~\ref{sec:hybrid}. 
+In addition the broadening definitions above, the term SDN is often used to define extensible network management planes (e.g., OpenStack~\cite{corradi2014}), \coloredtext{
+whitebox / bare-metal switches with open operating systems (e.g., Cumulus Linux),} open-source dataplanes (e.g., Pica8 Xorplus~\cite{shang2014}, Quagga~\cite{jakma2014}), specialized programmable hardware devices (e.g., 
+NetFPGA~\cite{netfpga2014}), virtualized software-based appliances \coloredtext{(e.g., Open Platform for Network Functions Virtualization - OPNFV~\cite{opnfv})}, in spite of 
+lacking a decoupled control and data plane or common interface along its API. Hybrid SDN models are further discussed in Section~\ref{sec:hybrid}. 
+
+
+\coloredtext{
+
+\subsection{Standardization Activities}
+\label{sec:standardization}
+
+The standardization landscape in SDN (and SDN-related issues) is already wide and is expected to keep evolving over time. 
+While some of the activities are being carried out in Standard Development Organizations (SDOs), other related efforts are ongoing at industrial or community consortia (e.g., OpenDaylight, OpenStack, OPNFV), delivering results often considered candidates for \textit{de facto} standards.
+These results often come in the form of open source implementations that have become the common strategy towards accelerating SDN and related cloud and networking technologies~\cite{floss-meets-sdn}.
+The reason for this fragmentation is due to SDN concepts spanning different areas of IT and networking, both from a network segmentation point of view (from access to core) and from a technology perspective (from optical to wireless).
+
+Table~\ref{tab:standardization} presents a summary of the main SDOs and organizations contributing to the standardization of SDN, as well as the main outcomes produced to date.
+ 
+The Open Networking Foundation (ONF) was conceived as a member-driven organization to promote the adoption of SDN through the development of the OpenFlow protocol as an open standard to communicate control decisions to data plane devices. 
+The ONF is structured in several working groups (WGs). Some WGs are focused on either defining extensions to the OpenFlow protocol in general, such as the Extensibility WG, or tailored to specific technological areas. 
+Examples of the latter include the Optical Transport (OT) WG, the Wireless and Mobile (W\&M) WG, and the Northbound Interfaces (NBI) WG. Other WGs center their activity in providing new protocol capabilities to enhance the protocol itself, such as the Architecture WG or the Forwarding Abstractions (FA) WG.
+
+%The Internet Engineering Task Force (IETF), arguably the most relevant SDO related to Internet protocols, is structured in eight different areas, each comprised of WGs producing technical documents known as Request For Comment (RFC). %, which usually become the norm followed by the industry for specific topics
+Similar to how network programmability ideas have been considered by several Working Groups (WGs) of the Internet Engineering Task Force (IETF) in the past, the present SDN trend is also influencing a number of activities. 
+A related body that focuses on research aspects for the evolution of the Internet, the Internet Research Task Force (IRTF), has created the Software Defined Networking Research Group (SDNRG).
+This group investigates SDN from various perspectives with the goal of identifying the approaches that can be defined, deployed and used in the near term, as well as identifying future research challenges.
+%For the sake of completeness, Table~\ref{tab:standardization} includes outcomes related contributions of these WGs, either in the form of stable RFCs, working group accepted documents or individual submissions for discussion.
+
+%The International Telecommunications Union's Telecommunication sector (ITU-T) is an organism of the United Nations, structured in distinct Study Groups (SG) and in charge of developing international standards, in the form of recommendations.
+In the International Telecommunications Union's Telecommunication sector (ITU-T), some Study Groups (SGs) have already started to develop recommendations for SDN, 
+%including the SG 11 (Signaling requirements, protocols and test specifications), SG 13  (Future networks including cloud computing, mobile and next-generation networks), SG 15 (Networks, Technologies and Infrastructures for Transport, Access and Home), and SG17 (Security). On top of that, the ITU-T has established 
+and a Joint Coordination Activity on SDN (JCA-SDN) has been established to coordinate the SDN standardization work.% on SDN and related technical topics within ITU-T.
+
+The Broadband Forum (BBF) is working on SDN topics through the Service Innovation \& Market Requirements (SIMR) WG. The objective of the BBF is to release recommendations for supporting SDN in multi-service broadband networks, including hybrid environments where only some of the network equipment is SDN-enabled.
+
+The Metro Ethernet Forum (MEF) is approaching SDN with the aim of defining service orchestration with APIs for existing networks. %to accommodate NFV and Network-as-a-Service. %This initiative will be called The Third Network, and has been publicly announced in September 2014.
+
+At the Institute of Electrical and Electronics Engineers (IEEE), the 802 LAN/MAN Standards Committee has recently started some activities to standardize SDN capabilities on access networks based on IEEE 802 infrastructure through the P802.1CF project, for both wired and wireless technologies to embrace new control interfaces.% on top of the IEEE 802 infrastructure. 
+
+The Optical Internetworking Forum (OIF) Carrier WG released a set of requirements for Transport Software-Defined Networking. The initial activities have as main goal to describe the features and functionalities needed to support the deployment of SDN capabilities in carrier transport networks.
+
+The Open Data Center Alliance (ODCA) is an organization working on unifying data center in the migration to cloud computing environments through interoperable solutions. Through the documentation of usage models, specifically one for SDN, the ODCA is defining new requirements for cloud deployment. 
+
+The Alliance for Telecommunication Industry Solutions (ATIS) created a Focus Group for analyzing operational issues and opportunities associated with the programmable capabilities of network infrastructure. %The result of this competed activity was the release of a report covering such analysis.
+
+At the European Telecommunication Standards Institute (ETSI), efforts are being devoted to Network Function Virtualization (NFV) through a newly defined Industry Specification Group (ISG). 
+NFV and SDN concepts are considered complementary, sharing the goal of accelerating innovation inside the network by allowing programmability, and altogether changing the network operational model through automation and a real shift to software-based platforms.
+%Architectural work at ETSI NFV ISG defines the presence of orchestration capabilities including computing, storage and networking, tightly linked to SDN concepts.
+
+Finally, the mobile networking industry 3GPP consortium is studying the management of virtualized networks, an effort aligned with the ETSI NFV architecture and, as such, likely to leverage from SDN.
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{table*}[!htp]
+\caption{\coloredtext{OpenFlow standardization activities}}
+\label{tab:standardization}
+\begin{center}
+\footnotesize
+%\rowcolors{1}{lightgray}{white}
+%\rowcolors{1}{red!45}{red!45}
+\begin{tabularx}{\linewidth}{p{0.8cm}p{3.8cm}Xp{4.6cm}}
+\hline
+%\rowstyle{\color{red}}
+%\colorrows{\color{red}}
+\textbf{SDO} & \textbf{Working Group} & \textbf{Focus}  & \textbf{Outcomes} \\
+\hline
+%\rowstyle{\color{red}}
+\multirow{16}{*}{ONF} 
+& Architecture \& Framework & SDN architecture, defining architectural components and interfaces & SDN Architecture~\cite{SDNARCH}  \\\cline{2-4}
+
+& Northbound Interfaces & Definition of standard NBIs for SDN controllers	& \\\cline{2-4}
+
+& Testing and Interoperability	& Specification of OpenFlow conformance test suites	& Conformance tests~\cite{CTSOSS} \\\cline{2-4}
+
+& Extensibility	& Development of extensions to OpenFlow protocol, producing specifications of the OpenFlow switch (OF-WIRE) protocol &	OF-WIRE 1.4.0~\cite{OSS} \\\cline{2-4}
+
+& Configuration \& Management	& OAM (operation, administration, and management) capabilities for OF protocol, producing specifications of the OF Configuration and Management (OF-CONFIG) protocol & OF-CONFIG 1.2~\cite{OFCONFIG} \par OpenFlow Notifications Framework~\cite{onf2013-2} \\\cline{2-4}
+
+& Forwarding Abstractions & Development of hardware abstractions and simplification of behavioral descriptions mapping & OpenFlow Table Type Patterns~\cite{OTTP} \\\cline{2-4}
+
+& Optical Transport	& Specification of SDN and control capabilities for optical transport networks by means of OpenFlow & Use cases~\cite{OTUC} \par Requirements~\cite{RATOSDN} \\\cline{2-4}
+
+& Wireless \& Mobile & Specification of SDN and control capabilities for wireless and mobile networks by means of OpenFlow & \\\cline{2-4}
+
+& Migration	& Methods to migrate from conventional networks to SDN-based networks based on OpenFlow & Use cases~\cite{MUCM} \\\cline{2-4}
+
+& Market Education	& Dissemination of ONF initiatives in SDN and OpenFlow by releasing White Papers and Solution Briefs	& SDN White Paper~\cite{SDN_NNN} \\
+\hline
+\multirow{15}{*}{IETF} 
+& Application-Layer Traffic Optimization (ALTO) &  Provides applications with network state information  &    Architectures for the coexistence of SDN and ALTO~\cite{xie2012} \\\cline{2-4}
+
+& Forwarding and Control Element Separation (ForCES) & Protocol specifications for the communication between control and forwarding elements. & Protocol specification~\cite{doria2010} \\\cline{2-4}
+
+& Interface to the Routing System (I2RS) & Real-time or event driven interaction with the routing system in an IP routed network	& Architecture~\cite{AIRS} \\\cline{2-4}
+
+& Network Configuration (NETCONF) & Protocol specification for transferring configuration data to and from a device & NETCONF protocol~\cite{enns2004} \\\cline{2-4}
+
+& Network Virtualization Overlays (NVO3) & Overlay networks for supporting multi-tenancy in the context of data center communications (i.e., VM communication) & Control plane requirements~\cite{NVENVA} \\\cline{2-4}
+
+& Path Computation Element (PCE) & Path computation for traffic engineering and path selection based on constrains & ABNO framework~\cite{PCE} \par Cross stratum path computation~\cite{CSOPC} \\\cline{2-4}
+
+& Source Packet Routing in Networking (SPRING) & Specification of a forwarding path at the source of traffic	 & OpenFlow interworking~\cite{khasnabish2014} \par SDN controlled use cases~\cite{kim2014} \\\cline{2-4}
+
+& Abstraction and Control of Transport Networks (ACTN) BoF & Facilitate a centralized virtual network operation	 &   Virtual network controller framework~\cite{ceccarelli2014} \\
+\hline
+IRTF & Software-Defined Networking Research Group (SDNRG) & Prospection of SDN for the evolution of Internet & SDN operator perspective~\cite{boucadair2014} \par SDN Architecture~\cite{haleplidis2014} \par
+ Service / Transport separation~\cite{contreras2014} \\
+ \hline
+\multirow{7}{*}{ITU-T} 
+& SG 11 & Signalling requirements using SDN technologies in Broadband Access Networks & Q.Supplement-SDN~\cite{itutqsup2014} \par Q.SBAN~\cite{itutqsban2014} \\\cline{2-4}
+
+& SG 13 & Functional requirements and architecture for SDN and networks of the future & Recommendation Y.3300~\cite{ituty33002014} \\\cline{2-4}
+
+& SG 15 & Specification of a transport network control plane architecture to support SDN control of transport networks & \\\cline{2-4}
+
+& SG 17 & Architectural aspects of security in SDN and security services using SDN & \\
+\hline
+BBF & Service Innovation and Market Requirements & Requirements and impacts of deploying SDN in broadband networks & SD-313~\cite{bforum2014}\\
+\hline
+MEF & The Third Network & Service orchestration in Network as a Service and NFV environments & \\
+\hline
+IEEE & 802 & Applicability of SDN to IEEE 802 infrastructure & \\
+\hline
+OIF & Carrier WG & Transport SDN networks & Requirements for SDN enabled transport networks~\cite{oif2013}\\
+\hline
+ODCA & SDN/Infrastructure  & Requirements for SDN in cloud environments & Usage model~\cite{odc2014}\\
+\hline
+ETSI & NFV ISG & Orchestration of network functions, including the combined control of computing, storage and networking resources & NFV Architecture~\cite{etsi2013}\\
+\hline
+ATIS & SDN Focus Group & Operational aspects of SDN and NFV & Operation of SDN~\cite{atis2014}\\
+\hline
+\end{tabularx}
+\end{center}
+\end{table*}
+}
+
+
+
+} % coloredtext

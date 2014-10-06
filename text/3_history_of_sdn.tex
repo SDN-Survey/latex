@@ -1,7 +1,7 @@
 \subsection{History of Software-Defined Networking}
 
 Albeit a fairly recent concept, SDN leverages on networking ideas with a longer history~\cite{feamster2013-2}.
-In particular, it builds on work made on programmable networks, such as active networks~\cite{tennenhouse1997}, and on proposals for control and data plane separation, such as NCP~\cite{sheinbein1982} and RCP~\cite{caesar2005}.
+In particular, it builds on work made on programmable networks, such as active networks~\cite{tennenhouse1997}\coloredtext{, programmable ATM networks~\cite{lazar1996,lazar1997} }, and on proposals for control and data plane separation, such as NCP~\cite{sheinbein1982} and RCP~\cite{caesar2005}.
 
 In order to present an historical perspective, we summarize in Table~\ref{tab:history} different instances of SDN-related work prior to SDN, splitting it into five categories.
 Along with the categories we defined, the second and third columns of the table mention past initiatives (pre-SDN, i.e., before the OpenFlow-based initiatives that sprung into the SDN concept), and recent developments that led to the definition of SDN.
@@ -24,14 +24,15 @@ Along with the categories we defined, the second and third columns of the table 
 		Data plane programmability
 	\end{minipage}} 
 & \multirow{2}{*}{\begin{minipage}{\scwidth}
-		Tennenhouse Wetherall~\cite{tennenhouse2007},
+		\coloredtext{xbind~\cite{lazar1996},}
+		IEEE P1520~\cite{biswas1998},
 		smart packets~\cite{schwartz1999},
 		ANTS~\cite{wetherall1998},
 		SwitchWare~\cite{alexander1998},
 		Calvert~\cite{calvert1998},
 		high performance router~\cite{wolf2000},
 		NetScript~\cite{silva2001},
-		IEEE P1520~\cite{biswas1998}
+		Tennenhouse~\cite{tennenhouse2007}
 	\end{minipage}} 
 & \multirow{2}{*}{
 	\begin{minipage}{\tcwidth}
@@ -46,6 +47,7 @@ Along with the categories we defined, the second and third columns of the table 
 	\end{minipage}} 
 & \multirow{2}{*}{\begin{minipage}{\scwidth}
 		NCP~\cite{sheinbein1982},
+		\coloredtext{GSMP~\cite{rfc1987,rfc3294}},
 		Tempest~\cite{merwe1998},
 		%Click~\cite{morris1999},
 		ForCES~\cite{doria2010},

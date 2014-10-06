@@ -1,10 +1,10 @@
 \section{Ongoing Research Efforts and Challenges}
 \label{sec:challenges}
 
-The research efforts we have surveyed so far seek to overcome the challenges of realizing the vision and fulfilling the potential of SDN.
-While Section~\ref{sec:layeredapproach} provided a perspective structured across the layers of the ``SDN stack'', this
-section highlights research we consider of particular importance for unleashing the full potential of SDN, and that therefore deserves a specific coverage in this survey.
 
+The research \coloredtext{developments} we have surveyed so far seek to overcome the challenges of realizing the vision and fulfilling the \coloredtext{promises} of SDN.
+While Section~\ref{sec:layeredapproach} provided a perspective structured across the layers of the ``SDN stack'', this
+section highlights research \coloredtext{efforts} we consider of particular importance for unleashing the full potential of SDN, and that therefore deserves a specific coverage in this survey.
 
 \begin{comment}
 
@@ -57,11 +57,11 @@ other performance metrics~\cite{rotsos2012-1}. One approach to accommodate such 
 is through NOSIX, a portable API that separates the application expectations from the switch heterogeneity~\cite{wundsam2012}. To do so, NOSIX provides a pipeline of multiple virtual flow 
 tables and switch drivers. Virtual flow tables are intended to meet the expectations of applications and 
 are ultimately translated by the drivers into actual switch flow tables. 
-Towards taming the  complexity of multiple OpenFlow protocol versions with different sets of required and optional capabilities -- a roadblock for SDN practitioners --, tinyNBI~\cite{casey2014} has been proposed as a  simple API providing a unifying set of core abstractions of five OpenFlow protocol versions (from 1.0 to 1.4).
+Towards taming the  complexity of multiple OpenFlow protocol versions with different sets of required and optional capabilities, a roadblock for SDN practitioners, tinyNBI~\cite{casey2014} has been proposed as a  simple API providing a unifying set of core abstractions of five OpenFlow protocol versions (from 1.0 to 1.4).
 Ongoing efforts to introduce a new Hardware Abstraction Layer  (HAL) for non-OpenFlow capable devices~\cite{alienfp7}  include the development of open source artifacts like ROFL (Revised OpenFlow Library) and the xDPd (eXtensible DataPath daemon), a framework for creating new OpenFlow datapath implementations based on a diverse set of hardware and software platforms.
 A related open source effort to develop a common library to implement OpenFlow 1.0 and 1.3 protocol endpoints (switch agents and controllers) is libfluid~\cite{libfluid}, winner of the OpenFlow driver competition organized by the ONF.
 
-Within the ONF, the Forwarding Abstraction Working Group (FAWG) is pursuing another solution to the heterogenity problem, through Table Type Patterns 
+Within the ONF, the Forwarding Abstraction Working Group (FAWG) is pursuing another solution to the heterogeneity problem, through Table Type Patterns 
 (TTPs)~\cite{onf2013}. A TTP is a standards-based and negotiated switch-level behavioral abstraction. 
 It consists of the relationships between tables forming a graph structure, the types of tables in the graph, 
 a set of the parameterized table properties for each table in the graph, the legal \texttt{flow-mod} and \texttt{table-mod} commands for 
@@ -86,12 +86,21 @@ thereby adding extra flexibility and scalability. Indeed, OpenFlow 1.0 implied s
 its flat table model~\cite{onf2013}. However, supporting multiple tables in hardware is challenging 
 and limited -- yet another motivation for the ongoing ONF FAWG work on TTPs~\cite{onf2013}.
 
+\coloredtext{Some efforts focus on compression techniques to reduce the number of flow entries in TCAMs~\cite{Braun2014,Agarwal2014_42,Rudell1987espresso}.
+The Espresso heuristic~\cite{Rudell1987espresso} can be used to compress wildcards of OpenFlow-based inter-domain routing tables, reducing the forwarding information base (FIB) by 17\% and, consequently, saving up to 40,000 flow table entries~\cite{Braun2014}. 
+Shadow MACs~\cite{Agarwal2014_42} propose label switching for solving two problems, consistent updates and rule space exhaustion, by using opaque values (similar to MPLS labels) to encode fine-grained paths as labels. 
+A major benefit of fixed-size labels is relying on exact-math lookups which can be easily and cost-effectively implemented by simple hardware tables instead of requiring rules to be encoded in expensive TCAM tables.
+
+%As an example, large L2 forwarding tables (e.g., 100,000+ entries), which are common in forwarding devices, can be used to install shadow MAC forwarding rules.
+%Such solutions represent promising opportunities for further investigation towards solving the problem of TCAM size by a variety of means.
+}
+
 %\subsubsection{Performance}
 \vspace{2mm}
 \noindent \textit{Performance}
 
- Commercial OpenFlow switches today support only around 200 control events (e.g., 
-\texttt{packet-in}, \texttt{flow-mod}) per second~\cite{stephens2012-1}. This is clearly a limiting 
+\coloredtext{Today, the throughput of commercial OpenFlow  switches varies from 38 to 1000 \texttt{flow-mod} per second, with most devices achieving a throughput lower than 500 \texttt{flow-mod} per second~\cite{Bifulco2014, stephens2012-1}.}
+This is clearly a limiting 
 factor that shall be addressed in the switch design process -- support of OpenFlow in existing product 
 lines has been more a retrofitting activity than a clean feature planning and implementation activity. Deployment experiences~\cite{Kobayashi2014151} have pointed to a series of challenges stemming from the limited embedded CPU power of current commercial OpenFlow switches. 
 One approach to handle the problem consists of adding more powerful CPUs into the switches, as proposed 
@@ -102,13 +111,16 @@ consistent with the evolution of the southbound API standardization activities~\
 
 % Note: NetVM~\cite{hwang2014} is an approach for high performance, line rate, within new technologies such as DPDK~\cite{intelcorporation2014}.
 
+\coloredtext{
 %\subsubsection{Evolving Switch Designs}
 \vspace{2mm}
-\noindent \textit{Evolving Switch Designs}
+\noindent \textit{Evolving Switch Designs \& Hardware Enhancements}
 
-New SDN switch designs are expected to appear in a myriad of hardware 
+As in any soft\-wa\-re/hard\-wa\-re innovation cycle, a number of advancements are to be expected from the hardware 
+perspective to improve SDN capabilities and performance. 
+New SDN switch designs are appearing in a myriad of hardware 
 combinations to efficiently work together with TCAMs, such as SRAM, RLDRAM, DRAM, GPU, FPGA, NPs, CPUs, 
-among other specialized network processors~\cite{ferkouss2011,naous2008,memon2013,luo2009,rostami2012,pongracz2013}. These early works suggest the need for additional efforts into new hardware architectures for future 
+among other specialized network processors~\cite{ferkouss2011,naous2008,memon2013,luo2009,rostami2012,pongracz2013}.} These early works suggest the need for additional efforts into new hardware architectures for future 
 SDN switching devices. For instance, some proposals target technologies such as GPUs that have demonstrated 
 20 Gbps with flow tables of up to 1M exact match entries and up to 1K wildcard entries~\cite{memon2013}. 
 Alternatives to TCAM-based designs include new hardware architectures and components, as well as new and more 
@@ -120,50 +132,81 @@ in SDN hardware implementations. Many counters already exists, and they could le
 plane monitoring overhead~\cite{curtis2011}. Software-defined counters 
 (SDC)~\cite{mogul2012} have been proposed to provide both scalability and flexibility.
 
-%\subsubsection{Hardware Enhancements/Support}
-\vspace{2mm}
-\noindent \textit{Hardware Enhancements \& Support}
+%As most of the current SDN switches and protocols are limited to inspect header fields of layers 2, 3 and 4, customized handling, requiring information of higher layers, has to be done in the control plane.
+%To overcome this limitation, 
+\coloredtext{
+Application-aware SDN architectures are being proposed to generalize the standard OpenFlow forwarding abstractions by including stateful actions to allow processing information from layers 4 to 7~\cite{Mekky2014-4}.
+%However, this implies redesigning the data plane devices. 
+%, as has already been demonstrated using an extended version of the Open vSwitch.
+%Instead of having only traditional flow tables, 
+%in order to support stateful application-aware actions, 
+%forwarding devices should support kernel flow tables, user flow tables, and application flow tables~\cite{Mekky2014-4}.
+To this end, application flow tables are proposed as data plane application modules that require only local state, i.e., do not depend on a global view of the network. Those tiny application modules run inside the forwarding devices (and can be installed on-demand), alleviating the overhead on the control plane and augmenting the efficiency of certain tasks, which can be kept in the data plane. 
+Similarly, other initiatives propose solutions based on pre-installed state machines.
+FAST (Flow-level State Transitions)~\cite{Moshref2014_4} allows controllers to proactively program state transitions in forwarding devices, allowing switches to run dynamic actions that require only local information.
+%Such solutions reduce the burden of the control plane and give more power to application developers to decide what actions should be kept in the data plane in order to improve the network efficiency regarding the task of processing flows.
 
-As in any soft\-wa\-re/hard\-wa\-re innovation cycle, a number of advancements can be expected from the hardware 
-perspective to improve SDN capabilities and performance~\cite{intelprocessors2012,brebner2012,appelman2012,matsumoto2012,naous2008,bianco2010}.
-Microchip companies such as Intel are already shipping processors with flexible SDN capabilities to the 
-market~\cite{intelprocessors2012}. Recent advances in Intel general-purpose CPU technology include a 
+Other approaches towards evolving switch designs include CAching in Buckets (CAB), a reactive wildcard caching proposal that uses a geometric representation of the rule set, which is divided into small logical structures (buckets)~\cite{Yan2014CAB}. 
+Through this technique CAB is able to solve the rule dependency problem and achieve efficient usage of control plane resources, namely bandwidth, controller processing load, and flow setup latency.
+ 
+New programmable Ethernet switch chips, such as XPliant Ethernet~\cite{McGillicuddy2014_4}, are emerging into this new market of programmable networks.
+Its main aim is enabling new protocol support and the addition of new features through software updates, increasing flexibility.
+%This means that it introduces a remarkable flexibility into the market, fostering innovation at a faster pace.
+One example of such flexibility is the support of GENEVE~\cite{Gross2014_4}, a recent effort towards generic network virtualization encapsulation protocols, and OpenFlow.
+% which allows switch vendors to add support to new protocols through software updates. % and make it rapidly available for its customers.
+The throughput of the first family of XPliant Ethernet chip varies from 880 Gbps to 3.2 Tbps, supporting up to 64 ports of 40 GbE or 50 GbE, for instance. 
+%Such kind of new technologies, coming into the market, have the potential of boosting the research and development of new switching devices with several features that allow the development and deployment of new generations of SDN-enabled forwarding devices.
+}
+
+
+%\subsubsection{Hardware Enhancements/Support}
+%\vspace{2mm}
+%\noindent \textit{Hardware Enhancements \& Support}
+
+%As in any soft\-wa\-re/hard\-wa\-re innovation cycle, a number of advancements can be expected from the hardware 
+%perspective to improve SDN capabilities and performance~%\cite{intelprocessors2012,brebner2012,appelman2012,matsumoto2012,naous2008,bianco2010}.
+Microchip companies like Intel are already shipping processors with flexible SDN capabilities to the 
+market~\cite{intelprocessors2012}. Recent advances in general-purpose CPU technology include a
 data-plane development kit~(DPDK)~\cite{intelcorporation2014} that allows high-level programming of how data 
-packets shall be processed directly within network interface cards. Prototype implementations of an Intel 
-DPDK accelerated switch shows the potential to deliver high-performance SDN software switches without 
-giving up the flexibility of programmable data planes~\cite{pongracz2013}. This trend is likely to 
+packets shall be processed directly within network interface cards. Prototype implementations of Intel 
+DPDK accelerated switch shows the potential to deliver high-performance SDN software switches~\cite{pongracz2013}. This trend is likely to 
 continue since high-speed and specialized hardware is needed to boost SDN performance and scalability for 
 large, real-world networks. Hardware-programmable technologies such as FPGA are widely used to reduce time 
 and costs of hardware-based feature implementations. NetFPGA, for instance, has been a pioneering technology 
 used to implement OpenFlow 1.0 switches~\cite{naous2008}, providing a commodity 
 cost-effective prototyping solution. Another line of work on SDN data planes proposes to augment switches 
-with FPGA to (remotely) define the queue management and scheduling behaviour of packet 
+with FPGA to (remotely) define the queue management and scheduling behaviour of packet 	
 switches~\cite{sivaraman2013}.
+\coloredtext{
+Finally, recent developments have shown that state-of-the-art System-on-chip (SoC) platforms, such as the Xilinx Zynq ZC706 board, can be used to implement OpenFlow devices yielding 88 Gpbs throughput for 1K flow supporting dynamic updates~\cite{Zhou2014-4}. 
+%This is undoubtedly another example of a research direction for overcoming some of the challenges faced by current OpenFlow-enabled forwarding devices.
+}
 
 %\subsubsection{Native SDN Switch Designs}
 \vspace{2mm}
 \noindent \textit{Native SDN Switch Designs}
 
-Most of the SDN switch (re)design efforts so far follow an evolutionary approach, to retrofit 
+Most of the SDN switch (re)design efforts so far follow an evolutionary approach to retrofit 
 OpenFlow-specific programmable features into existing hardware layouts, following common wisdom 
-on switch/router designs and consolidated technologies (e.g., SRAM, TCAM). One departure from 
+on switch/router designs and consolidated technologies (e.g., SRAM, TCAM, FPGA). One departure from 
 this approach is the ongoing work on \textit{forwarding metamorphosis}~\cite{bosshart2013-1}, 
-a reconfigurable match table model inspired from RISC-like pipelined architecture applied to switching 
+a reconfigurable match table model inspired from RISC-like pipeline architecture applied to switching 
 chips. This work illustrates the feasibility of realizing a minimal set of action primitives for flexible 
 header processing in hardware, at almost no additional cost or power. Also in line with the core SDN goals 
-of highly flexible and programmable (hardware-based) dataplanes, Protocol-Oblivious Forwarding (POF)~\cite{song2013-1} aims at overcoming some of the limitations of OpenFlow (e.g., expressiveness, 
+of highly flexible and programmable (hardware-based) data planes, Protocol-Oblivious Forwarding (POF)~\cite{song2013-1} aims at overcoming some of the limitations of OpenFlow (e.g., expressiveness, 
 support of user-defined protocols, memory efficiency), through generic flow instruction sets.
 Open-source prototypes are available~\cite{song2013} as well as evaluation 
-results showing the line-speed capabilities using a network processing unit (NPU)-based~\cite{Hauger2009} proof of 
-concept implementation. 
+results showing the line-speed capabilities using a network processing unit (NPU)-based~\cite{Hauger2009} proof of concept implementation. 
+\coloredtext{In this line, we already mentioned OpenState~\cite{bianchi2014}, another initiative that aims to augment the capability and flexibility of forwarding devices. 
+By taking advantage of eXtended Finite State Machines (XFSM)~\cite{bianchi2012,tinnirello2012}, OpenState proposes an abstraction -- as a super set of OpenFlow primitives -- to enable stateful handling of OpenFlow rules inside forwarding devices. 
+%Speaking differently, this is an example of how alternative approaches can be further explored to provide powerful capabilities to the forwarding devices without impairing on the  decoupling of the control and data planes. 
+}
 
-
-Pretty much as TTPs allow controllers to compile the right set of low-lever instructions known to be supported by the switches, a new breed of switch referred to as P4 (programmable, protocol-independent packet
+In the same way as TTPs allow controllers to compile the right set of low-lever instructions known to be supported by the switches, a new breed of switch referred to as P4 (programmable, protocol-independent packet
 processor)~\cite{bosshart2013} suggests an evolution path for OpenFlow, based on a high-level compiler. 
- The proposed flexibility would allow the functionality of programmable switches (i.e., pipeline, header parsing, field matching) to be not only specified by the controller but also changed in the field. In this model, 
-programmers are able to decide how the forwarding plane processes packets without caring about implementation details due to  a compiler that transforms an imperative program into a control flow graph that can be mapped to different specific target switches. 
-
-
+This proposal would allow the functionality of programmable switches (i.e., pipeline, header parsing, field matching) to be not only specified by the controller but also changed in the field.
+In this model, programmers are able to decide how the forwarding plane processes packets without caring about implementation details.
+It is then the compiler that transforms the imperative program into a control flow graph that can be mapped to different target switches. 
 
 % http://conferences.sigcomm.org/sigcomm/2013/papers/hotsdn/p127.pdf
 
@@ -211,7 +254,15 @@ programmers are able to decide how the forwarding plane processes packets withou
 
 In the SDN model, the controller platform is a critical pillar of the architecture, and, as such, 
 efforts are being devoted to turn SDN controllers into high-performance, scalable, distributed, 
-modular, and high-available pieces of programming-friendly software.
+modular, and highly-available programmer-friendly software.
+\coloredtext{Distributed controller platforms, in particular, have to address a variety of challenges. 
+Deserving special consideration are the latency between forwarding devices and controller instances,  fault-tolerance, load-balancing, consistency and synchronization,  
+%SDN providers with a geographically local footprint, 
+among other issues~\cite{koponen-1,schmid2013,Berde2014ONOS}.
+Operators should also be able to observe and understand how the combination of different functions and modules can impact their network~\cite{Volpano2014_4}.
+%This concern is regarding all control platforms, i.e., different mixing of functions and modules can result in unexpected network behaviors, ranging from simple things such as an overhead on control plane latency to the disruption of certain functionalities (i.e., introduce bugs in the network).
+%In spite of the importance of those issues, most of them are still open avenues, requiring further investigation and development.
+}
 
 %\begin{itemize}
 %\item Distribution:
@@ -221,12 +272,18 @@ modular, and high-available pieces of programming-friendly software.
 %\item Modularity:
 %\end{itemize}
 
-%
+%\vspace{2mm}
+%\noindent \textit{Performance}
 
-\vspace{2mm}
-\noindent \textit{Performance}
-
-As the SDN community learns from the development and operational experiences with OpenFlow controllers (e.g., Beacon~\cite{erickson2013-1}), further advancements are expected in terms of raw performance of controller implementations~\cite{azodolmolky2013-2}, including the exploitation of hierarchical designs and optimized buffer sizing~\cite{azodolmolky2013-2}. A more detailed discussion on performance evaluation will be presented in Section~\ref{sec:performance-eval}. 
+As the SDN community learns from the development and operational experiences with OpenFlow controllers (e.g., Beacon~\cite{erickson2013}), further advancements are expected in terms of raw performance of controller implementations, including the exploitation of hierarchical designs and optimized buffer sizing~\cite{azodolmolky2013-2}.  
+\coloredtext{One approach to increase the performance of controllers is the IRIS IO engine~\cite{Park2014}, enabling  significant increases %(e.g., 26\%)
+in the flow-setup rate of SDN controllers. 
+Another way of reducing the control plane overhead is by keeping a compressed copy of the flow tables in the controller's memory~\cite{zhang2014-4}.
+%However, one of the major challenges of such approaches is to reduce the flow table size in memory.
+%Early experimental results show that model-based compression methods can help to efficiently store, compress (up to 98\%) and keep a copy of flow tables in memory~\cite{zhang2014-4}, which helps to reduce the number of messages between controllers and forwarding devices, as well as improve the recovery efficiency in case of failures.
+%Once the controller knows the flow table state of all forwarding devices, on case of any data plane disruption, configurations can be rapidly and straightforward reseted on the devices, when even necessary.
+}
+%A more detailed discussion on performance evaluation will be presented in Section~\ref{sec:performance-eval}. 
 %While the first commercially available controllers supporting OpenFlow 1.3 are capable of handling up to 200 physical switches per controller and/or 10.000 ports~\cite{little2013}, we expect these numbers to be transient
 
 %Performance Evaluation of a Scalable Software-Defined Networking Deployment
@@ -234,9 +291,28 @@ As the SDN community learns from the development and operational experiences wit
 
 % Modularity
 %\subsubsection{Modularity}
-\vspace{2mm}
-\noindent \textit{Modularity}
+\vspace{2mm}\coloredtext{
+\noindent \textit{Modularity \& Flexibility}}
 
+\coloredtext{A series of ongoing research efforts target the modular and flexible composition of controllers. 
+RAON~\cite{Park2014-1} proposes a recursive abstraction of OpenFlow controllers where each controller sees the controllers below as OpenFlow switches. %, i.e., not implying in major changes or adaptations on the current SDN/OpenFlow model. 
+%While major changes or adaptations on the current SDN/OpenFlow model. 
+%Concerns such as the overhead in terms of control messages, overall flexibility and simplicity have still to be further investigated.
+Open research issues include the definition of suitable interfaces between the different layers in such a hierarchy of controllers. % have not yet been deeply enough researched or understood. 
+%Approaches similar to RAON~\cite{Park2014-1} are considering the current southbound APIs as the main means for communicating between levels of controllers. 
+
+Other open issues to be further investigated in this context are the East/westbound APIs, and their use in enabling suitable hierarchical designs to achieve scalability, modularity, and security~\cite{ONF2014SDNarch}. 
+For instance, each level of a hierarchy of controllers can offer different abstractions and scopes for either intra- and inter-data center routing, thus increasing scalability and modularity.
+%Yet, this can be hard to achieve with low-level southbound APIs, like OpenFlow, as the main communication interface between different levels of controllers.
+Similarly, from a security perspective, each hierarchical level may be part of a different trust domain.
+Therefore, east/westbound interfaces between the different layers of controllers should be capable of enforcing both intra- and inter-domain security policies.
+%These are some of the open issues to be further investigated on the context of hierarchies of controllers, in both intra- and inter-domain use cases
+
+Another important observation is that, currently, the lack of modularity in most SDN controllers forces developers to re-implement basic network services from scratch in each new application~\cite{Casado2014_4}. 
+%Consequently, modularity is becoming one of the major requirements in SDN for the future development and sustainability of the controllers' ecosystem.
+%Application developers need to be able to easily build applications from existing services and functions, implementing only new services.
+%Composition and isolation (e.g., applications running as processes similarly to what happens in traditional operating systems) will play important rules on the development of the new generations of network operating systems.
+} 
 As in software engineering in general, lack of modularity results in controller 
 implementations that are hard to build, maintain, and extend -- and ultimately become resistant to further 
 innovations, resembling traditional ``hardware-defined'' networks. As surveyed in Section~\ref{sec:programminglanguages}, 
@@ -247,19 +323,6 @@ contributions towards achieving modular controllers can be expected from other a
 (e.g., principles from Operating System~\cite{monaco2013}) and best practices of modern 
 cloud-scale software applications.
 
-%\subsubsection{High Availability}
-% Production quality, HA
-\vspace{2mm}
-\noindent \textit{High Availability}
-
-In production, SDN controllers need to sustain healthy operation 
-under the pressure of different objectives from the applications they
-host. Many advances are called for in order
-to deal with potential risk vectors of controller-based solutions~\cite{kreutz2013}. Certainly, 
-many solutions will leverage on results from the distributed systems and security communities made over the last decade. 
-Recent efforts are evolving towards consistent, fault-tolerant data stores~\cite{botelho2013}. 
-
-%%% autoscaling paper
 
 %\subsection{Data Plane Performance}
 %
@@ -274,11 +337,119 @@ and ForCES Intra-NE mechanisms~\cite{ogawa2013}.
 However, these efforts are yet far from fully realizing controller interoperability and application portability.
 %The next chapters of SDN will give a better idea of what is going to happen regarding these important issues for the heathy development of an open market of paramount importance, i.e., the control platform ecosystem.
 
+\coloredtext{
+In contrast to Pyretic~\cite{reich2013}, PANE~\cite{ferguson2013},
+Maple~\cite{voellmy2013}, and Corybantic~\cite{auyoung2013}, which are
+restricted to traffic engineering applications and/or impose
+network state conflict resolution at the application level (making
+application design and testing more complicated),
+Statesman~\cite{Sun2014nms} proposes a framework to enable a
+variety of loosely-coupled network applications to co-exist on the
+same control plane without compromising network safety and
+performance.
+This framework makes application development simpler by automatically and transparently resolving conflicts.
+In other words, Statesman allows a safe composition of uncoordinated
+or conflicting application's actions. 
+%through an abstraction of three distinct views of the network, observed state, proposed state and target state. 
+%While applications read the observed state and propose a new value for
+%state variables, the Statesman framework uses a dependency model to
+%merge the proposed states into a reliable target state.
+%In case of conflicts, Statesman supports two mechanisms,
+%last-writer-wins and highest-priority-wins.
+%Experimental results have shown that last-writer-wins mechanisms is
+%good enough since corner cases are unlikely to happen, i.e., two
+%applications (with distinct priorities) competing for the same state
+%variable at the same time.
+%Therefore, Statesman is a good example of a solution, as well as a research
+%direction, to foster the development of control platforms capable of
+%supporting a wider variety of loosely-coupled applications without
+%impairing safety and performance.
+}
+
+\coloredtext{
+Another recent approach to simplify network management is the idea of compositional SDN hypervisors~\cite{Jin2014_4}.
+Its main feature is allowing applications written in different languages, or on different platforms, to work together in processing the same traffic.
+The key integration component is a set of simple prioritized lists of OpenFlow rules, which can be generated by different programming languages or applications. 
+%This is one of the early examples of how hypervisors can also become useful tools for promoting interoperability and portability in this rather diverse ecosystem of control platforms.
+}
+
+%\subsubsection{High Availability}
+% Production quality, HA
+\vspace{2mm}
+\noindent \textit{High-Availability}
+
+In production, SDN controllers need to sustain healthy operation 
+under the pressure of different objectives from the applications they
+host. Many advances are called for in order
+to deal with potential risk vectors of controller-based solutions~\cite{kreutz2013}. Certainly, 
+many solutions will leverage on results from the distributed systems and security communities made over the last decade. 
+\coloredtext{For instance, recent efforts propose consistent, fault-tolerant data stores for building reliable distributed controllers~\cite{botelho2013,Botelho2014,Berde2014ONOS}.
+}
+
+\coloredtext{Another possible approach towards building low latency, highly available SDN controllers is to exploit controller locality~\cite{schmid2013,levin2012}.
+Classical models of distributed systems, such as LOCAL and CONGEST~\cite{Peleg2000}, can be explored to solve this problem.
+Those models can be used to develop coordination protocols that enable each controller to take independent actions over events that take place in its local neighborhood~\cite{schmid2013}. 
+}
+
+\coloredtext{Another core challenge relates to the fundamental trade-offs between the consistency model of state distribution in distributed SDN controllers, the consistency requirements of control applications, and performance~\cite{levin2012}.
+%These trade-offs results in challenges associated to the complexity of the application logic and the persistency and robustness of the state kept by the NOS. 
+%The main issue is related to applications that are unaware of the potential effects of its own logic according to the state provided by the underlying SDN controller. 
+%In an ideal scenario, 
+To ease development, the application should ideally not be aware of the vagaries of distributed state.
+This implies a strong consistency model, which can be achieved with distributed data stores as proposed recently~\cite{botelho2013}.
+However, keeping all control data in a consistent distributed data store is unfeasible due to the inherent performance penalties.
+Therefore, hybrid solutions are likely to co-exist requiring application developers to be aware of the trade-offs and penalties of using, or not, a strong consistency model, a tenet of the distributed Onix controller~\cite{koponen-1}. 
+%While it can be very useful in many situations, it might not be necessary in other cases, where decisions can be make by applications without necessarily having a consistent global network view.
+}
+
+\coloredtext{High availability can also be achieved through improved southbound APIs and controller placement heuristics and formal models~\cite{Ros2014_4,philip2014cross, Borokhovich2014_4}. These aim to maximize resilience and scalability by allowing forwarding devices to connect to multiple controllers in a cost-effective and efficient way~\cite{philip2014cross}.
+Early efforts in this direction have already shown that forwarding devices connecting to two or three controllers can typically achieve high availability (up to five nines) and robustness in terms of control plane connectivity~\cite{Ros2014_4,Borokhovich2014_4}.
+It has also been shown that the number of required controllers is more dependent on the topology than on network size~\cite{Ros2014_4}.
+Another finding worth mentioning is the fact that for most common topologies and network sizes fewer than ten controllers seem to be enough~\cite{Ros2014_4}. 
+%Nevertheless, in this direction there is still room for further investigation and developments.
+%Currently, SDN control planes and most control platforms still lack mechanisms and architectural enhancements for achieving the practical availability and reliability levels required for enterprise deployments.
+}
+
+%%% autoscaling paper
+
+
+
+%\coloredtext{
+%\vspace{2mm}
+%\noindent \textit{Heterogeinity \& Diversity}
+%
+%The ecosystem of controllers needs also another important ingredient, which is heterogeneity in the sense that different controller architectures may be necessary to fulfill the specific requirements of different environments and legacy infrastructures.
+
+\coloredtext{
+\vspace{2mm}
+\noindent \textit{Delegation of control}
+
+To increase operational efficiency, SDN controllers can delegate control functions to report state and attribute value changes, threshold crossing alerts, hardware failures, and so forth.
+These notifications typically follow a publish/subscribe model, i.e., controllers and applications subscribe (on-demand) to the particular class of notifications they are interested in.
+In addition, these subsystems may provide resilience and trustworthiness properties~\cite{Kreutz2012_fit}. 
+
+Some reasons for delegating control to the data plane include~\cite{ONF2014SDNarch}:
+\begin{itemize}
+\item Low latency response to a variety of network events;
+\item The amount of traffic that must be processed in the data plane, in particular in large-scale networks such as data centers;
+\item Low level functions such as those (byte- or bit-oriented) required by repetitive SDH (Synchronous Digital Hierarchy)~\cite{tesink2003sdh} multiplex section overhead;
+\item Functions well-understood and standardized, such as encryption, BIP~\cite{Prasanna2002bip}, AIS~\cite{swallow2011rfc} insertion, MAC learning, and CCM (Codec Control Messages)~\cite{whiting2003ccm} exchanges;
+\item Controller failure tolerance, i.e., essential network functions should be able to keep a basic network operation even when controllers are down;
+\item Basic low-level functions usually available in data plane silicon, such as protection switching state machines, CCM counters and timers;
+\item All those functions that do not add any value when moved from the data to the control plane.
+\end{itemize}
+
+Strong candidates for execution in the forwarding devices instead of being implemented in the control platforms thus include OAM, ICMP processing, MAC learning, neighbor discovery, defect recognition and integration~\cite{ONF2014SDNarch}.
+This would not only reduce the overhead (traffic and computing) of the control plane, but also improve network efficiency by keeping basic networking functions in the data plane.
+
+%Such kind of delegated control functions and programmable state reports are important aspects to augment the data plane efficiency and significantly reduce the overhead of the control plane.
+}
+
 \subsection{Resilience}
 \label{sec:resiliency}
 
 Achieving resilient communication is a top purpose of networking.
-As such, SDNs are expected to yield the same levels of availability as legacy and new alternative technologies. 
+As such, SDNs are expected to yield the same levels of availability as legacy and any new alternative technology. 
 Split control architectures as SDN are commonly questioned~\cite{desai2010} about their
 actual capability of being resilient to faults that may compromise
 the control-to-data plane communications and thus result in
@@ -292,29 +463,38 @@ The resilience of an OpenFlow network depends on fault-tolerance in the data pla
 
 As noted in~\cite{kim2012}, there is a lack of sufficient research and experience in building and operating fault-tolerant SDNs.
 Google B4~\cite{jain2013-1} may be one of the few examples that have proven that SDN can be resilient at scale. 
-A number of related efforts~\cite{kempf2012,sharma2013-1,panda2013,reitblatt2013,ku'zniar2013,dixit2013,ramos2013,araujosoftware}  have started to tackle the concerns around control plane split architectures. 
+A number of related \coloredtext{efforts~\cite{kempf2012,sharma2013-1,panda2013,reitblatt2013,ku'zniar2013,dixit2013,ramos2013,araujosoftware,Krishnamurthy2014_4}} have started to tackle the concerns around control plane split architectures. 
 The distributed controller architectures surveyed in Section~\ref{sec:controllers} are examples of approaches towards resilient SDN controller platforms with different tradeoffs in terms of consistency, durability and scalability. 
 
-On a detailed discussion on whether the CAP theorem~\cite{Brewer2012CAP} applies to networks, by Panda et al.~\cite{panda2013}, the authors argue that the trade-offs in building consistent, available and
-partition-tolerant distributed databases (i.e., CAP theorem) may apply
-to SDN.
-The CAP theorem demonstrated that it is impossible for
+On a detailed discussion on whether the CAP theorem~\cite{Brewer2012CAP} applies to networks, Panda et al.~\cite{panda2013} argue that the trade-offs in building consistent, available and
+partition-tolerant distributed databases (i.e., CAP theorem) are applicable
+to SDN. 
+The CAP theorem demonstrates that it is impossible for
 datastore systems to simultaneously achieve strong consistency,
 availability and partition tolerance.
 While availability and partition tolerance problems are similar in both distributed databases and networks, the problem of consistency in SDN relates to the consistent application of policies.
 %Promising approaches~\cite{panda2013} consist of labeling packets with control information and combining both in-band and out-of-band network control. 
 
-Taking the example of an OpenFlow network, when a switch detects that a link failure (\texttt{port-down} event), a notification is sent to the controller, which then takes the required actions (re-route computation, pre-computed back-up path lookups) and installs updated flow entries in the required switches to redirect the affected traffic. Such reactive strategies imply (1) high restoration time due to the necessary interaction with the controller; and (2) additional
+Considering an OpenFlow network, when a switch detects a link failure (\texttt{port-down} event), a notification is sent to the controller, which then takes the required actions (re-route computation, pre-computed back-up path lookup) and installs updated flow entries in the required switches to redirect the affected traffic. Such reactive strategies imply (1) high restoration time due to the necessary interaction with the controller; and (2) additional
 load on the control channel. 
-One experimental work on OpenFlow for carrier-grade networks investigated the restoration process and measured a restoration times in the order of 100 ms~\cite{sharma2013-1}. The delay introduced by the controller may, in some cases, be prohibitive. In order to meet carrier grade requirements (i.e., 50 ms recovery time),  protection schemes are required to mitigate the effects of a separated control plane.
-Suitable protection mechanisms (e.g., installation of pre-established  backup paths in the switches) are possible in the most recent versions of the OpenFlow protocol, by means of OpenFlow group table entries using ``fast-failover'' actions. 
+One experimental work on OpenFlow for carrier-grade networks investigated the restoration process and measured a restoration times in the order of 100 ms~\cite{sharma2013-1}. The delay introduced by the controller may, in some cases, be prohibitive. 
 
-An OpenFlow fault management approach~\cite{kempf2012} similar to MPLS global path protection could be a viable solution, provided that OpenFlow switches are extended with end-to-end path monitoring capabilities in the spirit of Bidirectional Forwarding Detection (BFD). Such protection schemes are a critical design choice for larger scale networks and may also required considerable additional flow space. 
+\coloredtext{In order to meet carrier grade requirements (e.g., 50 ms of recovery time),  protection schemes are required to mitigate the effects of a separate control plane.
+Suitable protection mechanisms (e.g., installation of pre-established  backup paths in the forwarding devices) can be implemented by means of OpenFlow group table entries using ``fast-failover'' actions. 
+An OpenFlow fault management approach~\cite{kempf2012} similar to MPLS global path protection could also be a viable solution, provided that OpenFlow switches are extended with end-to-end path monitoring capabilities similarly to those specified by Bidirectional Forwarding Detection (BFD)~\cite{katz2010bfd}. 
+Such protection schemes are a critical design choice for larger scale networks and may also require considerable additional flow space. 
 %On a related effort, fast failure recovery in OpenFlow networks~\cite{sharma2013-1} has  been investigated along automatic bootstrapping capabilities of that allow the deployment of reliable in-band OpenFlow networks. Further efforts are %expected on enabling resilient in-band OpenFlow control designs in contrast to the commonly accepted out-of-band OpenFlow control model which may not be feasible or economically appealing in long distance network scenarios. 
+By using primary and secondary path pairs programmed as OpenFlow fast failover group table entries, a path restoration time of 3.3 ms has been reported~\cite{Adrichem2014} using BFD sessions to quickly detect link failures.
+}
 
-Another related line of work is SlickFlow~\cite{ramos2013}, leveraging the idea of using packet header space to carry alternative path information to implement resilient source routing in OpenFlow networks. Under the presence of failures along a primary path, packets can be rerouted to alternative paths by the switches themselves without involving the controller. 
+On a related line of data plane resilience, SlickFlow~\cite{ramos2013} leverages the idea of using packet header space to carry alternative path information to implement resilient source routing in OpenFlow networks. Under the presence of failures along a primary path, packets can be rerouted to alternative paths by the switches themselves without involving the controller.  
 Another recent proposal that uses in-packet information is INFLEX~\cite{araujosoftware}, an SDN-based architecture
 for cross-layer network resilience which provides on-demand path fail-over by having end-points tag packets with virtual routing plane information that can be used by egress routers to re-route by changing tags upon failure detection.
+
+\coloredtext{Similarly to SlickFlow, OSP~\cite{sgambelluri2013opt} proposes a protection approach for data plane resilience. It is based on protecting individual segments of a path avoiding the intervention of the controller upon
+failure. The recovery time depends on the failure detection time, i.e., a few tens of milliseconds in the proposed scenarios.
+In the same direction, other proposals are starting to appear for enabling fast failover mechanisms for link 
+protection and restoration in OpenFlow-based networks~\cite{Sahri2014fast}.}
 
 Language-based solutions to the data plane fault-tolerance problem have also been proposed~\cite{reitblatt2013}. In this work the authors propose a language that compiles regular expressions into OpenFlow rules to express what network paths packets may take and what degree of (link level) fault tolerance is required. Such abstractions around fault tolerance allow developers to build fault recovery capabilities into applications without huge coding efforts.
 %In addition, there is open research work on systems~\cite{ku'zniar2013} that provide automatic failure recovery on behalf of failure-agnostic controller modules have been proposed. 
@@ -326,7 +506,7 @@ Language-based solutions to the data plane fault-tolerance problem have also bee
 \label{sec:scaling}
 
 Scalability has been one of the major concerns of SDNs from the outset.
-This is a problem that needs to addressed in any system -- e.g., in traditional networks -- and is obviously also a matter of much discussion in the context of SDN~\cite{yeganeh2013}.
+This is a problem that needs to be addressed in any system -- e.g., in traditional networks -- and is obviously also a matter of much discussion in the context of SDN~\cite{yeganeh2013}.
 
 Most of the scalability concerns in SDNs are related to the decoupling of the control and data planes. 
 Of particular relevance are reactive network configurations where the first packet of a new flow is sent by the first forwarding element to the controller.
@@ -346,7 +526,7 @@ Kandoo~\cite{yeganeh2012},
 Maestro~\cite{cai2011},
 NOX-MT~\cite{tootoonchian2012}, and 
 Maple~\cite{voellmy2013}. 
-Also related to scalability, the notion of elasticity in SDN controllers is also being pursued~\cite{dixit2013}.
+\coloredtext{Still related to scalability, the notion of elasticity in SDN controllers is also being pursued~\cite{dixit2013,Krishnamurthy2014_4}}.
 Elastic approaches include dynamically changing 
 the number of controllers and their locations under different conditions~\cite{bari2013-1}.
 
@@ -387,7 +567,7 @@ software-based implementations of functions for data aggregation and compression
 Maestro~\cite{cai2011},
 NOX-MT~\cite{tootoonchian2012},
 Kandoo~\cite{yeganeh2012},
-Beacon~\cite{erickson2013-1}, and
+Beacon~\cite{erickson2013}, and
 Maple~\cite{voellmy2013}
 are examples of the effort on designing and deploying high performance controllers, i.e., trying to increase the performance of the control plane.
 These controllers mainly explore well-known techniques from networking, computer architectures and high performance computing, such as buffering, pipelining and parallelism, to increase the throughput of the control platform.
@@ -421,21 +601,21 @@ As can be observed, the vast majority are control plane solutions that try to in
 \begin{tabularx}{\linewidth}{p{1.9cm}p{1.6cm}p{2.8cm}p{2.5cm}p{1.0cm}X}
 \hline
 \textbf{Solution} & \textbf{Domain} & \textbf{Proposes} & \textbf{Main purpose} & \textbf{Flows/s} & \textbf{Resorts to} \\\hline
+Beacon~\cite{erickson2013} & control plane & a multi-threaded controller & improve controller performance & 12.8M & High performance flow processing capabilities using pipeline threads and shared queues. \\\hline
+Beacon cluster~\cite{yazici2012} & control plane & coordination framework & create clusters of controllers & 6.2M & A coordination framework to create high-performance clusters of controllers. \\\hline
 DevoFlow~\cite{curtis2011} & data plane & thresholds for counters, type of flow detection & reduce the control plane overhead & --- & Reduce the control traffic generated by counters statistics monitoring. \\\hline
-HyperFlow~\cite{tootoonchian2010} & control plane & a distributed controller & distribute the control plane & --- & Application on top of NOX to provide control message distribution among controllers. \\\hline
-Kandoo~\cite{yeganeh2012} & control plane & a hierarchical controller & distribute the control plane hierarchically & --- & Use two levels of controller (local and root) to reduce control traffic. \\\hline
-Onix~\cite{koponen-1} & control plane & a distributed control platform & robust and scalable control platform & --- & Provide a programmable and flexible distributed NIB for application programmers.\\\hline
-SDCs~\cite{mogul2012} & data plane & Software-Defined Counters & reduce the control plane overhead & --- & Remove counters from the ASIC to a general purpose CPU, improving programmability. \\\hline
 DIFANE~\cite{yu2010-1} & control and data plane & authoritative specialized switches & improve data plane performance & 500K & Maintain flows in the data plane reducing controller work. \\\hline
 Floodlight~\cite{erickson2013} & control plane & a multi-threaded controller & Improve controller performance & 1.2M & High performance flow processing capabilities. \\\hline
-NOX-MT~\cite{tootoonchian2012} & control plane & a multi-threaded controller & improve controller performance & 1.8M & High performance flow processing capabilities. \\\hline
-Maestro cluster~\cite{yazici2012} & control plane & coordination framework & create clusters of controllers & 1.8M & A coordination framework to create high-performance clusters of controllers. \\\hline
-NOX cluster~\cite{yazici2012} & control plane & coordination framework & create clusters of controllers & 3.2M & A coordination framework to create high-performance clusters of controllers. \\\hline
+HyperFlow~\cite{tootoonchian2010} & control plane & a distributed controller & distribute the control plane & --- & Application on top of NOX to provide control message distribution among controllers. \\\hline
+Kandoo~\cite{yeganeh2012} & control plane & a hierarchical controller & distribute the control plane hierarchically & --- & Use two levels of controller (local and root) to reduce control traffic. \\\hline
 Maestro~\cite{cai2011} & control plane & a multi-threaded controller & improve controller performance & 4.8M & High performance flow processing capabilities. \\\hline
-NOX~\cite{erickson2013} & control plane & a multi-threaded controller & improve controller performance & 5.3M & High performance flow processing capabilities. \\\hline
-Beacon cluster~\cite{yazici2012} & control plane & coordination framework & create clusters of controllers & 6.2M & A coordination framework to create high-performance clusters of controllers. \\\hline
-Beacon~\cite{erickson2013} & control plane & a multi-threaded controller & improve controller performance & 12.8M & High performance flow processing capabilities using pipeline threads and shared queues. \\\hline
+Maestro cluster~\cite{yazici2012} & control plane & coordination framework & create clusters of controllers & 1.8M & A coordination framework to create high-performance clusters of controllers. \\\hline
 Maple~\cite{voellmy2013} & control plane & programming language & scaling algorithmic policies & 20M & Algorithmic policies and user- and OS-level threads on multicore systems (e.g., 40+ cores). \\\hline
+NOX~\cite{erickson2013} & control plane & a multi-threaded controller & improve controller performance & 5.3M & High performance flow processing capabilities. \\\hline
+NOX-MT~\cite{tootoonchian2012} & control plane & a multi-threaded controller & improve controller performance & 1.8M & High performance flow processing capabilities. \\\hline
+NOX cluster~\cite{yazici2012} & control plane & coordination framework & create clusters of controllers & 3.2M & A coordination framework to create high-performance clusters of controllers. \\\hline
+Onix~\cite{koponen-1} & control plane & a distributed control platform & robust and scalable control platform & --- & Provide a programmable and flexible distributed NIB for application programmers.\\\hline
+SDCs~\cite{mogul2012} & data plane & Software-Defined Counters & reduce the control plane overhead & --- & Remove counters from the ASIC to a general purpose CPU, improving programmability. \\\hline
 \end{tabularx}
 \end{center}
 \end{table*}
@@ -445,15 +625,14 @@ Maple~\cite{voellmy2013} & control plane & programming language & scaling algori
 Some figures are relatively impressive, with some solutions achieving up to 20M flows/s. 
 However, we should caution the reader that current evaluations consider only simple applications and count basically the number of \texttt{packet-in} and \texttt{packet-out} messages to measure throughput. 
 The actual performance of controllers will be affected by other factors, such as the number and complexity of the applications running on the controller and security mechanisms implemented.
-For example, a routing algorithm consumes more computing resources and needs more time to execute than a simple learning switch application
+For example, a routing algorithm consumes more computing resources and needs more time to execute than a simple learning switch application.
 Also, current evaluations are done using plain TCP connections.
 The performance is very likely to change when basic security mechanisms are put in place, such as TLS, or more advanced mechanisms to avoid eavesdropping, man-in-the-middle and DoS attacks on the control plane.
 
 Another important issue concerning scalability is data distribution among controller replicas in distributed architectures.
 Distributed control platforms rely on data distribution mechanisms to achieve their goals.
 For instance, controllers such as Onix, HyperFlow, and ONOS need mechanisms to keep a consistent state in the distributed control platform.
-Recently, experimental evaluations have shown that high performance 
-distributed and fault-tolerant data stores can be used to tackle such challenges~\cite{botelho2013}. 
+Recently, experimental evaluations have shown that high performance distributed and fault-tolerant data stores can be used to tackle such challenges~\cite{botelho2013}. 
 Nevertheless, further work is necessary to properly understand state distribution trade-offs~\cite{levin2012}.
 
 %Albeit significant advancements in scaling issues of SDN have been made, there is still room for further investigation and developments in this direction.
@@ -490,18 +669,12 @@ A closed-form description of a networking architecture paves the way for network
 for simulation studies or expensive experimental setup~\cite{Kobayashi2014151}.
 
 Some work has investigated ways to improve the performance of switching capabilities in SDN.
-These mainly consist of observing the performance of OpenFlow-enabled networks regarding different aspects, such as lookup 
-performance~\cite{jarschel2011}, hardware acceleration~\cite{luo2009}, the influence of types of rules and 
-packet sizes~\cite{bianco2010}, performance bottlenecks of current OpenFlow implementations~\cite{curtis2011}, 
-how reactive settings impact the performance on data center networks~\cite{pries2012}, and the impact of
-configuration on OpenFlow switches~\cite{sherwood2011}.
+These mainly consist of observing the performance of OpenFlow-enabled networks regarding different aspects, such as lookup performance~\cite{jarschel2011}, hardware acceleration~\cite{luo2009}, the influence of types of rules and packet sizes~\cite{bianco2010}, performance bottlenecks of current OpenFlow implementations~\cite{curtis2011}, how reactive settings impact the performance on data center networks~\cite{pries2012}, and the impact of configuration on OpenFlow switches~\cite{sherwood2011}.
 
 Design choices can have a significant impact on the lookup performance of OpenFlow switching in Linux 
-operating system using standard commodity network interface cards~\cite{jarschel2011}. Just by using commodity 
-network hardware the packet switching throughput can be improved by up to 25\% when compared to one based 
-on soft OpenFlow switching~\cite{jarschel2011}. Similarly, hardware acceleration based on network processors 
-can also be applied to perform OpenFlow switching. In such cases, early reports indicate that performance, 
-in terms of packet delay, can be improved by 20\% when compared to conventional designs~\cite{luo2009}.
+operating system using standard commodity network interface cards~\cite{jarschel2011}. 
+Just by using commodity network hardware the packet switching throughput can be improved by up to 25\% when compared to one based on soft OpenFlow switching~\cite{jarschel2011}. Similarly, hardware acceleration based on network processors can also be applied to perform OpenFlow switching. 
+In such cases, early reports indicate that performance, in terms of packet delay, can be improved by 20\% when compared to conventional designs~\cite{luo2009}.
 
 %More recently, new approaches are advancing the state-of-the-art of network virtualization, such as 
 %NetVM~\cite{hwang2014} and ClickOS~\cite{martins2014}.
@@ -513,47 +686,28 @@ center infrastructures, as in VMware's NVP solution~\cite{koponen}.
 
 Current OpenFlow switch implementations can lead to performance bottlenecks with respect to the CPU 
 load~\cite{curtis2011}. Yet, modifications on the protocol specification can help reduce the occurrence 
-of these bottlenecks. Further investigations provide measurements regarding the performance of the OpenFlow 
-switch for different types of rules and packet sizes~\cite{bianco2010}.
+of these bottlenecks. Further investigations provide measurements regarding the performance of the OpenFlow switch for different types of rules and packet sizes~\cite{bianco2010}.
 
 In data centers, a reactive setting of flow rules can lead to an unacceptable performance when only eight 
-switches are handled by one OpenFlow controller~\cite{pries2012}. This means that large-scale SDN deployments 
-should probably not rely on a purely reactive ``modus operandi'', but rather on a combination of proactive and reactive 
-flow setup.
+switches are handled by one OpenFlow controller~\cite{pries2012}. This means that large-scale SDN deployments should probably not rely on a purely reactive ``modus operandi'', but rather on a combination of proactive and reactive flow setup.
 
 To foster the evaluation of different performance aspects of OpenFlow devices, frameworks such as 
-OFlops~\cite{rotsos2012-1},  Cbench~\cite{tootoonchian2012}, and OFCBenchmark~\cite{jarschel2012} 
-have been proposed. They provide a set of tools to analyze the performance of OpenFlow switches.
-Cbench~\cite{tootoonchian2012,sherwood2011} is a benchmark tool developed to evaluate the 
-performance of OpenFlow controllers. By taking advantage of the Cbench, it is possible to identify performance 
-improvements for OpenFlow controllers based on different environment and system configurations, such as the number 
-of forwarding devices, network topology, overall network workload, type of equipments, forwarding complexity, and 
-overhead of the applications being executed on top of controllers~\cite{tootoonchian2012}.
-Therefore, such tools can help system designers make better decisions regarding the performance of devices and 
-the network, while also allowing end-users to measure the device performance and better decide which one is best 
-suited for the target network infrastructure.
+\coloredtext{OFLOPS~\cite{rotsos2012-1},  OFLOPS-Turbo~\cite{Rotsos2014},} Cbench~\cite{tootoonchian2012}, and OFCBenchmark~\cite{jarschel2012} have been proposed. They provide a set of tools to analyze the performance of OpenFlow switches and controllers.
+Cbench~\cite{tootoonchian2012,sherwood2011} is a benchmark tool developed to evaluate the performance of OpenFlow controllers. By taking advantage of the Cbench, it is possible to identify performance improvements for OpenFlow controllers based on different environment and system configurations, such as the number of forwarding devices, network topology, overall network workload, type of equipments, forwarding complexity, and overhead of the applications being executed on top of controllers~\cite{tootoonchian2012}.
+Therefore, such tools can help system designers make better decisions regarding the performance of devices and the network, while also allowing end-users to measure the device performance and better decide which one is best suited for the target network infrastructure.
 
-Surprisingly, despite being designed to evaluate the performance of
-controllers, Cbench is currently a single-threaded 
-tool. Therefore, multiple instances have to be started to utilize multiple CPUs. It also only establishes one 
-controller connection for all emulated switches. Unfortunately, this means little can be derived from the results in terms 
-of controller performance and behavior or estimation of different bounds at the moment. For instance, aggregated
-statistics are gathered for all switches but not for each individual switch. As a result, it is not possible to 
-identify whether all responses of the controller are for a single switch, or whether the capacity of the controller 
-is actually shared among the switches. Flexible OpenFlow controller benchmarks are available though. 
-OFCBenchmark~\cite{jarschel2012} is one of the recent developments. It creates a set of message-generating virtual 
-switches, which can be configured independently from each other to emulate a specific scenario and to maintain their 
-own statistics.
+Surprisingly, despite being designed to evaluate the performance of controllers, Cbench is currently a single-threaded tool. Therefore, multiple instances have to be started to utilize multiple CPUs. It also only establishes one controller connection for all emulated switches. Unfortunately, this means little can be derived from the results in terms 
+of controller performance and behavior or estimation of different bounds at the moment. For instance, aggregated statistics are gathered for all switches but not for each individual switch. As a result, it is not possible to identify whether all responses of the controller are for a single switch, or whether the capacity of the controller is actually shared among the switches. Flexible OpenFlow controller benchmarks are available though. 
+OFCBenchmark~\cite{jarschel2012} is one of the recent developments. It creates a set of message-generating virtual switches, which can be configured independently from each other to emulate a specific scenario and to maintain their own statistics.
 
 %Some experiments have being studying the performance of OpenFlow switching, link layer Ethernet switching and network layer IP routing  by injecting different packet sizes into the network and comparing the results of single flows against multiple flows~\cite{bianco2010}. 
 %In the reported experiments, OpenFlow shows better performance compare to the link layer Ethernet switching and network layer IP routing.
 
-Another interesting question to pose when evaluating the performance of SDN architectures is what is the required 
-number of controllers for a given network topology and where to place the controllers~\cite{heller2012}. 
+Another interesting question to pose when evaluating the performance of SDN architectures is what is the required number of controllers for a given network topology and where to place the controllers~\cite{heller2012,philip2014cross}. 
 By analyzing the performance of controllers in different network topologies, it is possible to conclude that one controller is often enough to keep the latency at a reasonable rate~\cite{heller2012}. 
 Moreover, as observed in the same experiments, in the general case adding $k$ controllers to the network can reduce the latency by a factor of $k$. However, there are cases, such as large scale networks and WANs, where more controllers should be deployed to achieve high reliability and low control plane latency. 
 
-Recent studies also show that the SDN control plane cannot be fully physically centralized due to responsiveness, reliability and scalability metrics~\cite{levin2012}. 
+Recent studies also show that the SDN control plane cannot be fully physically centralized due to responsiveness, reliability and scalability metrics~\cite{levin2012,philip2014cross}. 
 Therefore, distributed controllers are the natural choice for creating a logically centralized control plane, while being capable of coping with the demands of large scale networks. 
 However, distributed controllers bring additional challenges, such as the consistency of the global network view, which can significantly affect the performance of the network if not carefully engineered. 
 Taking two applications as examples, one that ignores inconsistencies and another that takes inconsistency into consideration, it is possible to observe that optimality is significantly affected when inconsistencies are not considered and that the robustness of an application is increased when the controller is aware of the network state distribution~\cite{levin2012}.
@@ -570,20 +724,20 @@ Using recent measurements, the authors have reproduced the packet processing del
 Analytic models based on queuing theory for the forwarding speed and blocking probability of current OpenFlow 
 switches can also be used to estimate the performance of the network~\cite{jarschel2011}.
 
-%However, modeling an OpenFlow controller as a simple M/M/1 queueing system to obtain the total sojourn time of a packet through 
-%the system~\cite{jarschel2011} does not capture the fact that incoming traffic at the switch is first queued per 
-%line card. Moreover, an analytic model, such as proposed in~\cite{jarschel2011}, should not be constrained to a 
-%single switch per controller. Indeed, in SDN architectures the controller is supposed to be contacted by a number 
-%of different switches. On the positive side, the proposed model captures the delay difference of a packet that 
-%should be sent to the controller and the one that is processed by the switch, which makes it possible to study 
-%the probability of dropping a packet due to the heavy load of the controller. Some early results show that 
-%controllers, back to 2011, could not handle a large number of flows in a 10Gbps link~\cite{jarschel2011}.
-%However, this is changing very fast.
-%As it will be shown in Section~\ref{sec:scaling}, approximately two years later controllers are already achieving impressive performance of up to 20M flows per second.
+% However, modeling an OpenFlow controller as a simple M/M/1 queueing system to obtain the total sojourn time of a packet through 
+% the system~\cite{jarschel2011} does not capture the fact that incoming traffic at the switch is first queued per 
+% line card. Moreover, an analytic model, such as proposed in~\cite{jarschel2011}, should not be constrained to a 
+% single switch per controller. Indeed, in SDN architectures the controller is supposed to be contacted by a number 
+% of different switches. On the positive side, the proposed model captures the delay difference of a packet that 
+% should be sent to the controller and the one that is processed by the switch, which makes it possible to study 
+% the probability of dropping a packet due to the heavy load of the controller. Some early results show that 
+% controllers, back to 2011, could not handle a large number of flows in a 10Gbps link~\cite{jarschel2011}.
+% However, this is changing very fast.
+% As it will be shown in Section~\ref{sec:scaling}, approximately two years later controllers are already achieving impressive performance of up to 20M flows per second.
 
 % steve here
 
-\subsection{Security and dependability}
+\subsection{Security and Dependability}
 \label{secSecurity}
 
 Cyber-attacks against financial institutions, energy facilities, government units and research institutions 
@@ -604,12 +758,12 @@ investigated in SDN~\cite{kreutz2013,sorensen2012,kerner2013}.
 
 Additionally, from the dependability perspective, availability of Internet routers is nowadays a major concern 
 with the widespread of clouds and their strong expectations about the network~\cite{agapi2011}. It is 
-therefore crucial to achieve high levels of availability on SDN control platforms once they become pillars of
-networked applications. Accordingly, the dependability of software-defined networks cannot be overlooked when 
-we think about enterprise class deployments.
+therefore crucial to achieve high levels of availability on \coloredtext{SDN control platforms if they are to become the main pillars of networked applications~\cite{Ros2014_4}}. 
+%Similarly, the control plane of traditional networks, such as those based on GMPLS, is also critical to maintain high levels of availability and resiliency of the network~\cite{korniak2011}}. 
+%Accordingly, the dependability of software-defined networks cannot be overlooked when we think about enterprise class deployments.
 
 Different threat vectors have already been identified in SDN architectures~\cite{kreutz2013}, as well 
-as several security issues and weaknesses in OpenFlow-based networks~\cite{kloti2013,wasserman2013,shin2013,porras2012,benton2013}.
+as several security issues and weaknesses in OpenFlow-based networks\coloredtext{~\cite{kloti2013,wasserman2013,shin2013,porras2012,benton2013,shin2014,scotthayward2013sec,sezer2013are}}.
 While some threat vectors are common to existing networks, others are more specific to SDN, such as attacks on 
 control plane communication and logically-centralized controllers. It is worth mentioning that most threats vectors 
 are independent of the technology or the protocol (e.g., OpenFlow, POF, ForCES), because they represent threats on 
@@ -645,9 +799,9 @@ back into a safe operation condition.
 
 As can be observed in Table~\ref{tab:newandoldproblems}, threat vectors 3 to 5 are specific to SDN as they 
 stem from the separation of the control and data planes and the consequent introduction of a new entity in 
-these networks --- the logically centralized controller. The other vectors were already present 
-in traditional networks. However, the impact of these threats could be larger than today --- or at least it 
-may be expressed differently --- and as a consequence it may need to be dealt with differently.
+these networks -- the logically centralized controller. The other vectors were already present 
+in traditional networks. However, the impact of these threats could be larger than today -- or at least it 
+may be expressed differently -- and as a consequence it may need to be dealt with differently.
 
 
 {\renewcommand{\arraystretch}{1.4}
@@ -674,8 +828,8 @@ Vector 7      & no      & Negative impact on fast recovery and fault diagnosis.\
 }
 
 OpenFlow networks are subject to a variety of security and dependability problems such as spoofing~\cite{kloti2013}, tampering~\cite{kloti2013}, 
-repudiation~\cite{kloti2013}, information disclosure~\cite{kloti2013}, denial of service~\cite{kloti2013,shin2013,benton2013}, and elevation of privileges~\cite{kloti2013}.
-The lack of isolation, protection, access control and stronger security recommendations~\cite{wasserman2013,shin2013,porras2012,benton2013} are some of the reasons for these vulnerabilities.
+repudiation~\cite{kloti2013}, information disclosure~\cite{kloti2013}, denial of service~\cite{kloti2013,shin2013,benton2013}, elevation of privileges~\cite{kloti2013}, \coloredtext{and the assumption that all applications are benign and will not affect SDN operation~\cite{shin2014}}.
+The lack of isolation, protection, access control and stronger security recommendations\coloredtext{~\cite{wasserman2013,shin2013,porras2012,benton2013,shin2014}} are some of the reasons for these vulnerabilities.
 We will explore these next.
 
 %In the remaining of this section we introduce the main threat vectors of SDN and practical security issues of current OpenFlow-enabled networks. Additionally, we discuss some countermeasures that should be consider to address different security and dependability problems of SDN/OpenFlow.
@@ -683,7 +837,10 @@ We will explore these next.
 \vspace{2mm}
 \noindent \textit{OpenFlow security assessment}
 
-By applying the STRIDE methodology~\cite{hernan2006}, it is possible to identify different attacks to OpenFlow-enabled networks.
+\coloredtext{
+%Currently, security is probably the Achilles' heel of SDN.
+There is already a number of identified security issues in OpenFlow-enabled networks.
+Starting from a STRIDE methodology~\cite{hernan2006}, it is possible to identify different attacks to OpenFlow-enabled networks.}
 Table~\ref{tab:securitythreatsopenflow} summarizes these attacks (based on ~\cite{kloti2013}). 
 For instance, information disclosure can be achieved through side channel attacks targeting the flow rule setup process. 
 When reactive flow setup is in place, obtaining information about network operation is relatively easy.
@@ -728,10 +885,15 @@ security recommendations for developers, the lack of TLS and access control supp
 implementations~\cite{wasserman2013}, the belief that TCP is enough because links are ``physically secure''~\cite{benton2013,wasserman2013}, the fact that many switches have listener 
 mode activated by default (allowing the establishment of malicious TCP connections, for instance)~\cite{benton2013} or that flow table verification capabilities are harder to implement when TLS is not 
 in use~\cite{wasserman2013,son2013}.
-In addition, it is worth mentioning the high denial of service risk posed to centralized controllers~\cite{shin2013,son2013}, the vulnerabilities in the controllers themselves~\cite{son2013,kreutz2013}, and the risk of resource 
-depletion attacks~\cite{shin2013,benton2013}.
+In addition, it is worth mentioning the high denial of service risk posed to centralized controllers~\cite{shin2013,son2013}, the vulnerabilities in the controllers themselves~\cite{son2013,kreutz2013}, \coloredtext{bugs and vulnerabilities in applications~\cite{Chandrasekaran2014_4}, targeted flooding attacks~\cite{jarraya2014}, insecure northbound interfaces that can lead to security breaches~\cite{jarraya2014}}, and the risk of resource depletion attacks~\cite{shin2013,benton2013}.
 For instance, it has been shown that an attacker can easily compromise control plane communications through 
 DoS attacks and launch a resource depletion attack on control platforms by exploiting a single  application such as a learning switch~\cite{benton2013,shin2013}.
+
+\coloredtext{Another point of concern is the fact that current controllers, such as Floodlight, OpenDaylight, POX, and Beacon, have several security and resiliency issues~\cite{shin2014}.
+Common application development problems (bugs), such as the sudden exit of an application or the continuous allocation of memory space, are enough to crash existing controllers.
+On the security perspective, a simple malicious action such as changing the value of a data structure in memory can also directly affect the operation and reliability of current controllers.
+These examples are illustrative that from a security and dependability perspective, there is still a long way to go.
+}
 
 \vspace{2mm}
 \noindent \textit{Countermeasures for OpenFlow based SDNs}
@@ -739,7 +901,7 @@ DoS attacks and launch a resource depletion attack on control platforms by explo
 Several countermeasures can be put in place to mitigate the security threats in SDNs.
 Table~\ref{tab:countermeasuresthreats} summarizes a number of countermeasures that can be applied to different 
 elements of an SDN/OpenFlow-enabled network. Some of these measures, namely rate limiting, event filtering, 
-packet dropping, shorter timeouts, and flow aggregation, are already recommended in more recent 
+packet dropping, shorter timeouts, and flow aggregation, are already recommended in the most recent 
 versions of the OpenFlow specification (version 1.3.1 and later). 
 However, most of them are not yet supported or implemented in SDN deployments.
 
@@ -769,13 +931,13 @@ Shorter timeouts  & Useful to reduce the impact of an attack that diverts traffi
 }
 
 Traditional techniques such as 
-access control, attack detection mechanisms, event filtering (e.g.,  controller decides which asynchronous messages he is not going to accept), firewalls, and intrusion detection systems, can be used to mitigated the impact of or avoid attacks.
+access control, attack detection mechanisms, event filtering (e.g.,  controller decides which asynchronous messages he is not going to accept), firewalls, and intrusion detection systems, can be used to mitigate the impact of or to avoid attacks.
 They can be implemented in different devices, such as controllers, forwarding devices, middleboxes, and so forth.
 Middleboxes can be a good option for enforcing security policies in an enterprise because they are (in general) more robust and special purpose (high performance) devices.
 Such a strategy also reduces the potential overhead cause by implementing these countermeasures directly on controllers or forwarding devices.
-However, middleboxes can add extra complexity to the network management, i.e., increase the OPEX at the cost of a better performance.
+However, middleboxes can add extra complexity to the network management, i.e., increase the OPEX at the cost of better performance.
 
-Rate limiting, packet dropping, shorter timeouts and flow aggregations are techniques that can be applied on controlled and forwarding devices to mitigate different types of attacks, such as denial-of-service and information disclosure.
+Rate limiting, packet dropping, shorter timeouts and flow aggregations are techniques that can be applied on controllers and forwarding devices to mitigate different types of attacks, such as denial-of-service and information disclosure.
 For instance, reduced timeouts can be used to mitigate the effect of an attack exploring the reactive operation mode of the network to make the controller install rules that divert traffic to a malicious machine. 
 With reduced timeouts, the attacker would be forced to constantly generate a number of forged packets to avoid timeout expiration, making the attack more likely to be detected.
 Rate limiting and packet dropping can be applied to avoid DoS attacks on the control plane or stop on-going attacks directly on the data plane by installing specific rules on the devices where the attacks is being originated.
@@ -785,14 +947,14 @@ If anything wrong happens with the network, operators should be able to safely f
 Additionally, techniques to tolerate faults and intrusions, such as state machine replication~\cite{bolosky2011}, proactive-reactive recovery~\cite{sousa2010}, and diversity~\cite{garcia2013}, can be added to control platforms for increasing the robustness and security properties by automatically masking and removing faults.
 Put differently, SDN controllers should be able to resist against different types of events (e.g., power outages, network disruption, communication failures, network partitioning) and attacks (e.g., DDoS, resource exhaustion)~\cite{kreutz2013,botelho2013}. 
 One of the most traditional ways of achieving high availability is through replication. 
-Yet, proactive-reactive recover and diversity are two examples of crucial techniques that add value to the system for resisting against different kinds of attacks and failures (e.g., those exploring common vulnerabilities or caused by software aging problems).
+Yet, proactive-reactive recovery and diversity are two examples of crucial techniques that add value to the system for resisting against different kinds of attacks and failures (e.g., those exploring common vulnerabilities or caused by software aging problems).
 
 Other countermeasures to address different threats and issues of SDN include enhancing the security and 
-dependability of controllers, protection and isolation of applications~\cite{sorensen2012,kreutz2013,porras2012}, trust management between controllers 
+dependability of controllers, protection and isolation of applications\coloredtext{~\cite{sorensen2012,kreutz2013,porras2012,shin2014}}, trust management between controllers 
 and forwarding devices~\cite{kreutz2013}, integrity checks of controllers and applications~\cite{kreutz2013}, forensics and remediation~\cite{sorensen2012,kreutz2013}, 
 verification frameworks~\cite{chua2013,porras2012,korniak2011}, and resilient control planes~\cite{fonseca2012,korniak2011,kreutz2013,sorensen2012}.
 Protection and isolation mechanisms should be part of any controller. Applications should be isolated from each other and from the controller. 
-Different techniques such as security domains (e.g., kernel, security, and user level) and data access protection mechanisms should be put in place in order to avoid security threats from management applications. 
+Different techniques such as security domains (e.g., kernel, security, and user level) and data access protection mechanisms should be put in place in order to avoid security threats from \manapps. 
 
 Implementing trust between controllers and forwarding is another requirement for insuring that malicious elements 
 cannot harm the network without being detected. 
@@ -800,7 +962,7 @@ An attacker can try to spoof the IP address of the controller and make switches 
 This is currently the case since most controllers and switches only establish insecure TCP connections. 
 Complementarly, integrity checks on controller and application software can help to ensure that safe code is being bootstrapped, which eliminates harmful software from being started once the system restarts. 
 Besides integrity checks, other things such as highly specialized malware detection systems should be developed for SDN. 
-Third-party management applications should always be scanned for bad code and vulnerabilities because a malicious application represents a significant security threat to the network. 
+Third-party \manapps should always be scanned for bad code and vulnerabilities because a malicious application represents a significant security threat to the network. 
 
 It is worth mentioning that there are also other approaches for mitigating security threats in SDN, such as declarative languages to eliminate network 
 protocol vulnerabilities~\cite{casey2013}. 
@@ -808,9 +970,18 @@ This kind of descriptive languages can specify semantic constraints, structural 
 Then, a compiler can use these inputs to find programmers' implementation mistakes on message operations. 
 In other words, such languages can help find and eliminate implementation vulnerabilities of southbound specifications.
 
-\subsection{Migration to SDN}
+\coloredtext{Proposals providing basic security properties such as authentication~\cite{Toseef2014} and access control~\cite{Klaedtke2014-4} are starting to appear. 
+C-BAS~\cite{Toseef2014} is a certificate-based AAA (Authentication, Authorization and Accounting) architecture for improving the security control on SDN experimental facilities.
+%Such kind of solutions and developments of essential security mechanisms for SDNs are indeed required to foster the deployment of those network to the next level, i.e., wide spread adoption.
+Solutions in the spirit of C-BAS can be made highly secure and dependable through hybrid system architectures, which combine different technologies and techniques from distributed systems, security, and fault and intrusion tolerance~\cite{Kreutz2014PRDC,Kreutz2014sodis,Verissimo2003ADS}.
+%Furthermore, other proposals for access control are expected to appear as this is one of the major security issues of current SDN architectures.
+}
+
+\subsection{Migration and Hybrid deployments}
 \label{sec:hybrid}
 
+The promises by SDN to deliver easier design, operation and management of computer networks are endangered
+by challenges regarding incremental deployability, robustness, and scalability. 
 A prime SDN adoption challenge relates to organizational barriers that may arise due to the first (and second) order 
 effects of SDN automation capabilities and ``layer/domain blurring''. 
 Some level of human resistance is to be expected and may affect the decision and deployment processes of SDN, especially by those that may regard the 
@@ -847,10 +1018,56 @@ local networking stack and its management stack. Flow-based partitioning is the 
 allows each packet entering a switch to be classified by an OpenFlow flow description and treated by the 
 appropriate data plane (OpenFlow or legacy).
 
-The promises by SDN to deliver easier design, operation and management of computer networks are endangered
-by challenges regarding incremental deployability, robustness, and scalability. Full SDN deployments are 
-difficult and straightforward only in some green field deployments such as data center networks or by 
-means of an overlay model approach. Hybrid SDN approaches represent however a very likely deployment model 
+There are diverse controllers, such as OpenDaylight~\cite{opendaylight2013}, HP VAN SDN~\cite{hp2013-1}, and OpenContrail~\cite{junipernetworks2013-1}, that have been designed to integrate current non-SDN technologies (e.g., SNMP, PCEP, BGP, NETCONF) with SDN interfaces such as OpenFlow and OVSDB.
+Nonetheless, controllers such as ClosedFlow~\cite{Hand2014_4} have been recently proposed with the aim of introducing SDN-like programming capabilities in traditional network infrastructures, making the integration of legacy and SDN-enabled networks a reality without side effects in terms of programmability and global network control.
+ClosedFlow is designed to control legacy Ethernet devices (e.g., Cisco 3550 switches with a minimum IOS of 12.2 SE) in a similar way an OpenFlow controller allows administrators to control OpenFlow-enabled devices.
+More importantly, ClosedFlow does not impose any change on the forwarding devices. 
+It only takes advantage of the existing hardware and firmware capabilities to mimic an SDN control over the network, i.e., allow dynamic and flexible programmability in the data plane.
+The next step could be the integration of controllers like ClosedFlow and OpenFlow-based controllers, promoting interoperability among controllers and a smooth transition from legacy infrastructures to SDN-enabled infrastructure with nearly all the capabilities of a clean-slate SDN-enabled infrastructure.
+
+Furthermore, controllers may have to be separated into distinct peer domains for different reasons, such as scalability, technology, controllers from different vendors, controllers with different service functionality, and diversity of administrative domains~\cite{ONF2014SDNarch}.
+Controllers from different domains, or with distinct purposes, are also required to be backwards compatible either by retrofitting or extending existing multi-domain protocols (e.g. BGP) or by proposing new SDN-to-SDN protocols (aka east/westbound APIs).
+%These are some of the challenges not yet completely addressed.
+
+Some efforts have been already devoted to the challenges of migration and hybrid SDNs. RouteFlow~\cite{rothenberg2012-1} implements an IP level control plane on top of an OpenFlow 
+network, allowing the underlying devices to act as IP routers under different possible arrangements. \coloredtext{The Cardigan project~\cite{stringer2013,floss-meets-sdn} has deployed RouteFlow at a live Internet eXchange now for over a year.  
+LegacyFlow~\cite{rothenberg2014} extends the OpenFlow-based controlled network to embrace non-OpenFlow nodes. 
+There are also some other early use cases on integrating complex legacy system such as DOCSIS~\cite{Fuentes2014}, Gigabit Ethernet passive optical network and DWDM ROADM (Reconfigurable Optical Add/Drop Multiplexer)~\cite{Parniewicz2014,Belter2014}.}
+The common 
+grounds of these pieces of work are (1) considering hybrid as the coexistence of traditional environments of 
+closed vendor's routers and switches with new OpenFlow-enabled devices; (2) targeting the interconnection of 
+both control and data planes of legacy and new network elements; and (3) taking a controller-centric approach, 
+drawing the hybrid line outside of any device itself, but into the controller application space.
+
+Panopticon~\cite{levin2014} defines an architecture and methodology to consistently implement 
+SDN inside enterprise legacy networks through network orchestration under strict budget constraints. The proposed 
+architecture includes policy configurations, troubleshooting and maintenance tasks establishing transitional networks 
+(SDN and legacy) in structures called Solitary Confinement Trees (SCTs), where VLAN IDs are efficiently used by 
+orchestration algorithms to build paths in order to steer traffic through SDN switches. Defying the partial SDN 
+implementation concept, they confirm that this could be a long-term operational strategy solution for enterprise 
+networks.
+
+HybNET~\cite{lu2013} presents a network management framework for
+hybrid OpenFlow-legacy networks. It provides a common centralized
+configuration interface to build virtual networks using VLANs. An
+abstraction of the physical network topology is taken into account by
+a centralized controller that applies a path finder mechanism, in
+order to calculate network paths and program the OpenFlow switches via
+REST interfaces and legacy devices using NETCONF~\cite{enns2011-1}.
+
+\coloredtext{More recently, frameworks such as ESCAPE~\cite{Csoma2014}  and its extensions have been proposed to provide multi-layer service orchestration in multi-domains.
+Such frameworks combine different tools and technologies such as Click~\cite{morris1999}, POX~\cite{mccauley2012}, OpenDaylight~\cite{opendaylight2013} and NETCONF~\cite{enns2011-1}.
+In other words, those frameworks integrate different SDN solutions with traditional ones.
+Therefore, they might be useful tools on the process of integrating or migrating legacy networking infrastructure to SDN.
+
+Other hybrid solutions starting to emerge include Open Source Hybrid IP/SDN (OSHI)~\cite{salsano2014oshi}. 
+OSHI combines Quagga for OSPF routing and SDN capable switching devices (e.g., Open vSwitch) on Linux to provide  backwards compatibility for supporting incremental SDN deployments, i.e., enabling interoperability with non-OF forwarding devices in carrier-grade networks.
+%It is also worth mentioning that the current version of the OSHI node offers support to three different environments, VirtualBox, Mininet  and the OFELIA testbed~\cite{sune2014ofelia}.
+}
+
+
+While full SDN deployments are straightforward only in some green field deployments such as data center networks or by 
+means of an overlay model approach, hybrid SDN approaches represent a very likely deployment model 
 that can be pursued by different means, including~\cite{vissicchio2014}:
 
 \begin{itemize}
@@ -878,43 +1095,28 @@ costs. On the negative side, the drawbacks of hybridization include the need for
 between the networking paradigms (SDN and traditional) while dealing with the heterogeneity that largely depends on 
 the model.
 
-Initial trade-off analyses suggest that the combination of centralized and distributed paradigms may provide 
+Initial trade-off analyses~\cite{vissicchio2014} suggest that the combination of centralized and distributed paradigms may provide 
 mutual benefits. However, future work is required to devise techniques and interaction mechanisms that maximize 
 such benefits while limiting the added complexity of the paradigm coexistence.
 
-Some efforts have been already devoted to the challenges of migration and hybrid SDNs. RouteFlow~\cite{rothenberg2012-1} implements an IP level control plane on top of an OpenFlow 
-network, allowing the underlying devices to act as IP routers under different possible arrangements. LegacyFlow 
-\cite{rothenberg2014} extends the OpenFlow-based controlled network to embrace non-OpenFlow nodes. The common 
-grounds of these pieces of work are (1) considering hybrid as the coexistence of traditional environments of 
-closed vendor's routers and switches with new OpenFlow-enabled devices; (2) targeting the interconnection of 
-both control and data planes of legacy and new network elements; and (3) taking a controller-centric approach, 
-drawing the hybrid line outside of any device itself, but into the controller application space.
 
-Panopticon~\cite{levin2014} defines an architecture and methodology to consistently implement 
-SDN inside enterprise legacy networks through network orchestration under strict budget constraints. The proposed 
-architecture includes policy configurations, troubleshooting and maintenance tasks establishing transitional networks 
-(SDN and legacy) in structures called Solitary Confinement Trees (SCTs), where VLAN IDs are efficiently used by 
-orchestration algorithms to build paths in order to steer traffic through SDN switches. Defying the partial SDN 
-implementation concept, they confirm that this could be a long-term operational strategy solution for enterprise 
-networks.
+%\subsection{SDN for telecom and cloud providers}
 
-HybNET~\cite{lu2013} presents a network management framework for
-hybrid OpenFlow-legacy networks. It provides a common centralized
-configuration interface to build virtual networks using VLANs. An
-abstraction of the physical network topology is taken into account by
-a centralized controller that applies a path finder mechanism, in
-order to calculate network paths and program the OpenFlow switches via
-REST interfaces~\cite{richardson2008restful} and legacy devices using NETCONF~\cite{enns2011-1}.
+\subsection{Meeting carrier-grade and cloud requirements}
 
-\subsection{SDN for telecom and cloud providers}
-
-A number of carrier-grade infrastructure providers (e.g., NTT, AT\&T, Verizon, Deutsch Telekom) have already joined the SDN community and its activities with the ultimate goal of solving their long standing networking problems.
-One of the forefront runners (and early SDN adopter) was NTT, already taking advantage o this new paradigm to provide new on-demand network provisioning models.
-In 2013, NTT launched an SDN-based, on-demand elastic provisioning platform of network resources (e.g., bandwidth) for HD video broadcasters~\cite{bernier2013}. 
+A number of carrier-grade infrastructure providers (e.g., NTT, AT\&T, Verizon, Deutsche Telekom) are at the core of the SDN community with the ultimate goal of solving their long standing networking problems.
+%One of the forefront runners (and early SDN adopter) is NTT, already taking advantage o this new paradigm to provide new on-demand network provisioning models. 
+\coloredtext{In the telecom world, NTT can be considered one of the forefront runners in terms of investing in the adoption and deployment of SDN in all kinds of network infrastructures, from backbone, data center, to edge customers~\cite{Reinecke2014}. In 2013, NTT launched an SDN-based, on-demand elastic provisioning platform of network resources (e.g., bandwidth) for HD video broadcasters~\cite{bernier2013}.
+%Similarly to self driving cars, NTT is fostering the development of a network that drives itself, i.e., a central intelligence that can automate most of the traditional tasks and provide autonomic functions and services to the network.
+}
 Similarly, as a global cloud provider with data centers spread across the globe~\cite{nttdata2014}, the same company launched a similar service for its cloud customers, who are now capable of taking advantage of dynamic networking 
 provisioning intra- and inter-data centers~\cite{wagner2014}.
 AT\&T is another telecom company that is investing heavily in new services, such as user-defined network clouds, that 
 take advantage of recent developments in NFV and SDN~\cite{atandtinc.2014}.
+\coloredtext{As we mentioned before, SDN and NFV are complementary technologies that can be applicable to different types of networks, from local networks and data centers to transport networks~\cite{Haleplidis2014_4,onf2014-1,Cerrato2014-1,Xia2014_4,haleplidis2014sdnnfv,gemberjacobson2014}.
+Recently, several research initiatives have worked towards combining SDN and NFV through Intel's DPDK, a set of libraries and drivers that facilitates the development of network-intensive applications and allows the implementation of fine-grained network functions~\cite{Cerrato2014}. 
+Early work towards service chaining have been proposed by combining SDN and NFV technologies~\cite{Ruckert2014,Blendin2014,Skoldstrom2014,Jamjoom2014_4,john2013nsc}, and studies around the ForCES's~\cite{doria2010} applicability to SDN-enhanced NFV have also come to light~\cite{Haleplidis2014_4}.}
+%, and so forth~\cite{onf2014-1}.}
 These are some of the early examples of the opportunities SDNs seem to bring to telecom and cloud providers. 
 
 Carrier networks are using the SDN paradigm as the technology means for solving a number of long standing problems. 
@@ -924,22 +1126,33 @@ Carrier networks are using the SDN paradigm as the technology means for solving 
 Some of these efforts include 
 new architectures for a smooth migration from the current mobile core infrastructure to SDN~\cite{pentikousis2013}, and techno-economic models for virtualization of these networks~\cite{naudts2012,onfsolutionbrief2013};  
 carrier-grade OpenFlow virtualization schemes~\cite{skoldstrom2013,koponen}, including virtualized broadband access infrastructures~\cite{gharakheili2013}, techniques that are allowing the offer of network-as-a-service~\cite{pacnet2013}; 
+\coloredtext{programmable GE-PON and DWDM ROADM~\cite{Parniewicz2014,Belter2014,Belter2014-1,Clegg2014}; large-scale inter-autonomous systems (ASs) SDN-enabled deployments~\cite{bennesby2012inter};}
 flexible control of network resources~\cite{corporation2012}, including offering MPLS services using an SDN approach~\cite{das2011};
 and the investigation of novel network architectures, from proposals to separate the network edge from the core~\cite{casado2012,6786608}, with the latter forming the fabric that transports packets as defined by an intelligent edge, to software-defined Internet exchange points~\cite{feamster2013,stringer2013}.
+
+\coloredtext{Use-case analysis~\cite{Devlic2012} of management functions required by carrier networks have identified a set of requirements and existing limitations in the SDN protocol toolbox. 
+For instance, it has been pinpointed that OF-Config~\cite{OFCONFIG} needs a few extensions in order to meet the carrier requirements, such as physical resource discovery, logical link configuration, logical switch instantiation, and device and link OAM configuration~\cite{Devlic2012}.
+%Some of these extensions imply also modifications on the OpenFlow protocol itself.
+Similarly, OpenFlow extensions have also been proposed to realize packet-optical integration with SDN~\cite{shirazipour2012}.
+In order to support SDN concepts in large-scale wide area networks, different extensions and mechanisms are required, both technology-specific (e.g., MPLS BFD) and technology agnostic, such as: resiliency mechanisms for surviving link failures~\cite{Adrichem2014}, failures of controller or forwarding elements; solutions for integrating residential customer services in different forms (i.e., support also current technologies); new energy-efficient networking approaches; QoS properties for packet classification, metering, coloring, policing, shaping and scheduling; and multi-layer aspects outlining different stages of packet-optical integration~\cite{John2014_4,John2014split,shirazipour2012}.
+}
+%
+%\coloredtext{Research efforts on resilient OpenFlow networksusing group tables for fast failover and leveraging BFD like failure detection suggest that SDN can achieve stringent telecom requirements, such as sub 50 ms latency path restoration.}
 
 
 SDN technology also brings new possibilities for cloud providers.
 By taking advantage of the logically centralized control of network resources~\cite{hong2013,jain2013-1} it is possible to simplify and optimize network management of data centers and achieve:
-(i) efficient intra-datacenter networking, including fast recovery mechanisms for the  data and control planes~\cite{sharma2013-1,staessens2011,sharma2013}, simplified fault-tolerant routing~\cite{mysore2009}, performance isolation~\cite{greenberg2009}, and easy and efficient resource migration (e.g., of VMs and virtual networks)~\cite{sharma2013-1};
+(i) efficient intra-datacenter networking, including fast recovery mechanisms for the  data and control planes~\cite{sharma2013-1,staessens2011,sharma2013}, adaptive traffic engineering with minimal modifications to DCs networks~\cite{benson2011mTE}, simplified fault-tolerant routing~\cite{mysore2009}, performance isolation~\cite{greenberg2009}, and easy and efficient resource migration (e.g., of VMs and virtual networks)~\cite{sharma2013-1};
 (ii) improved inter-datacenter communication, including the ability to fully utilize the expensive high-bandwidth links without impairing quality of service~\cite{jain2013-1,sadasivarao2013};
-(iii) higher levels of reliability (with novel fault management mechanisms, etc.)~\cite{mysore2009,sharma2013-1,staessens2011}; and 
+(iii) higher levels of reliability (with novel fault management mechanisms, etc.)~\cite{mysore2009,staessens2011,sharma2013-1,Adrichem2014}; and 
 (iv) cost reduction by replacing complex, expensive hardware by simple and cheaper forwarding devices~\cite{tanner2013,jain2013-1}.
+
+
 
 Table~\ref{tab:carriergradeneeds} summarizes some of the carrier-grade network and cloud infrastructure providers' requirements.
 In this table we show the current challenges and what is to be expected with SDN.
 As we saw before, some of the expectations are already becoming a reality, but many are still open issues.
 What seems to be clear is that SDN represents an opportunity for telecom and cloud providers, in providing flexibility, cost-effectiveness, and easier management of their networks.
-
 
 {\renewcommand{\arraystretch}{1.4}
 \begin{table*}[t!]
@@ -973,7 +1186,7 @@ What seems to be clear is that SDN represents an opportunity for telecom and clo
 \hline
 \multirow{7}{*}{\begin{minipage}{\firstcolumnwidth}Managed Router\\ Services\end{minipage}}   
                      & Complex configuration, management and upgrade. & Simplified management and upgrade.~\cite{jain2013-1,elby2012,tanner2013,onfsolutionbrief2013,staessens2011} \\\cline{2-3}
-                     & Different kinds of routers, such as CO. & No need for CO routers, reducing aggregation costs.~\cite{elby2012,tanner2013,naudts2012} \\\cline{2-3}
+                     & Different kinds of routers, such as changeover (CO). & No need for CO routers, reducing aggregation costs.~\cite{elby2012,tanner2013,naudts2012} \\\cline{2-3}
                      & Manual provisioning. & Automated provisioning.~\cite{elby2012,onfsolutionbrief2013,anwer2013} \\\cline{2-3}
                      & On-premises router deployment. & Virtual routers (either on-site or not).~\cite{onfsolutionbrief2013,elby2012,naudts2012} \\\cline{2-3}
                      & Operational burden to support different equipments. & Reduced technology obsolescence.~\cite{naudts2012} \\\cline{2-3}
@@ -1088,7 +1301,7 @@ SDN is seen as the technology that may fill this gap, as attested by the emergen
 
 
 The IBM SmartCloud Orchestrator is one of the first examples of an SDE~\cite{li2014,racherla2014}.
-It integrates compute, storage, management and networking in a structured way
+It integrates compute, storage, management and networking in a structured way.
 Figure~\ref{fig:SDEenabledIT} gives a simplified overview of an SDE, by taking the approach developed by IBM as its basis.
 The main idea of an SDE-based infrastructure is that the business needs that define the workloads trigger the reconfiguration of the global IT infrastructure (compute, storage, network). 
 This is an important step towards a more customizable IT infrastructure that focuses on the business requirements rather than on the limitations of the infrastructure itself.

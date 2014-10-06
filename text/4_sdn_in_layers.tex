@@ -5,7 +5,7 @@
 An SDN architecture can be depicted as a composition of different layers, 
 as shown in Figure~\ref{fig:sdnlayers}~(b). Each layer has its own specific functions.
 While some of them are always present in an SDN deployment, such as the southbound API, 
-network operating systems, northbound API and management applications, others may be 
+network operating systems, northbound API and \manapps, others may be 
 present only in particular deployments, such as hypervisor- or language-based virtualization.
 
 \begin{figure*}[ht!]
@@ -126,15 +126,15 @@ There are many off-the-shelf, ready to deploy, OpenFlow switches and routers, am
 %Moreover, many companies have already announced new OpenFlow products~\cite{sdncentralcommunity2013}.
 Most of the switches available on the market have relatively small Ternary Content-Addressable Memory (TCAMs), with up to 8K entries. 
 Nonetheless, this is changing at a fast pace. Some of the latest devices released in the market go 
-far beyond that figure. Gigabit Ethernet switches for common business purposes are already supporting up 
-to 32K L2+L3 or 64K L2/L3 exact match flows~\cite{centecnetworks2013-1}. Enterprise class 10GE switches 
+far beyond that figure. Gigabit Ethernet (GbE) switches for common business purposes are already supporting up 
+to 32K L2+L3 or 64K L2/L3 exact match flows~\cite{centecnetworks2013-1}. Enterprise class 10GbE switches 
 are being delivered with more than 80K Layer 2 flow entries~\cite{nec2013-1}. Other switching 
-devices using high performance chips such as the EZchip NP-4, provide optimized TCAM memory that 
-already supports from 125K up to 1000K flow table entries~\cite{noviflow2013-1}. This is a clear sign that the size 
+devices using high performance chips (e.g., EZchip NP-4) provide optimized TCAM memory that 
+ supports from 125K up to 1000K flow table entries~\cite{noviflow2013-1}. This is a clear sign that the size 
 of the flow tables is growing at a pace aiming to meet the needs of future SDN deployments.
 
 Networking hardware manufacturers have produced various kinds of OpenFlow-enabled devices, as is shown in Table~\ref{tab:openflowdevices}. 
-These devices range from equipment for small businesses (e.g., Gigabit Ethernet switches) to high-class data center equipment (e.g., high-density switch chassis with up to 100GbE connectivity for edge-to-core applications, with tens of Tbps of switching capacity).
+These devices range from equipment for small businesses (e.g., GbE switches) to high-class data center equipment (e.g., high-density switch chassis with up to 100GbE connectivity for edge-to-core applications, with tens of Tbps of switching capacity).
 
 {\renewcommand{\arraystretch}{1.4}
 \begin{table*}[!htp]
@@ -143,7 +143,7 @@ These devices range from equipment for small businesses (e.g., Gigabit Ethernet 
 \begin{center}
 \footnotesize
 %\rowcolors{1}{lightgray}{white}
-\begin{tabularx}{\linewidth}{p{1.2cm}p{3.1cm}p{0.9cm}p{2.4cm}p{0.8cm}X}
+\begin{tabularx}{\linewidth}{p{1.1cm}p{3.1cm}p{0.9cm}p{2.4cm}p{0.95cm}X}
 \hline
 \textbf{Group} & \textbf{Product} & \textbf{Type} & \textbf{Maker/Developer} & \textbf{Version} & \textbf{Short description} \\
 \hline
@@ -166,9 +166,9 @@ These devices range from equipment for small businesses (e.g., Gigabit Ethernet 
 \hline
 \multirow{9}{*}{Software} 
 & contrail-vrouter~\cite{networks2013} & vrouter &  Juniper Networks & v1.0 & Data-plane function to interface with a VRF.\\\cline{2-6}
-& LINC~\cite{flowforwarding2013,rutka2013} & switch &  FlowForwarding & v1.3 & Erlang-based soft switch with OF-Config 1.1 support.\\\cline{2-6}
+& LINC~\cite{flowforwarding2013,rutka2013} & switch &  FlowForwarding & v1.4 & Erlang-based soft switch with OF-Config 1.1 support.\\\cline{2-6}
 & ofsoftswitch13~\cite{cpqd2013} & switch & Ericsson, CPqD & v1.3 & OF 1.3 compatible user-space software switch implementation. \\\cline{2-6}
-& Open vSwitch~\cite{listofcontributors2013,pfaff2009} & switch & Open Community & v1.0  & Switch platform designed for virtualized server environments.  \\\cline{2-6}
+& Open vSwitch~\cite{listofcontributors2013,pfaff2009} & switch & Open Community & v1.0-1.3  & Switch platform designed for virtualized server environments.  \\\cline{2-6}
 & OpenFlow Reference~\cite{openflowcommunity2009} & switch & Stanford & v1.0 & OF Switching capability to a Linux PC with multiple NICs. \\\cline{2-6}
 & OpenFlowClick~\cite{mundada2009} & vrouter & Yogesh Mundada & v1.0 & OpenFlow switching element for Click software routers.\\\cline{2-6}
 & Switch Light~\cite{bigswitchnetworks2013} & switch & Big Switch & v1.0  & Thin switching software platform for physical/virtual switches. \\\cline{2-6}
@@ -239,7 +239,8 @@ controller'' action in the matched entry of the flow table. These information ch
 means to provide flow-level information to the network operating system.
 
 Albeit the most visible, OpenFlow is not the only available southbound interface for SDN.
-There are other API proposals such as ForCES~\cite{doria2010}, OVSDB~\cite{pfaff2013-1}, POF~\cite{song2013,song2013-1}, and OpFlex~\cite{smith2014}.
+There are other API proposals such as ForCES~\cite{doria2010}, OVSDB~\cite{pfaff2013-1}, POF~\cite{song2013,song2013-1}, OpFlex~\cite{smith2014}, \coloredtext{OpenState~\cite{bianchi2014},  Revised OpenFlow Library (ROFL)~\cite{Sune2014},  Hardware Abstraction Layer (HAL)~\cite{Parniewicz2014,Belter2014}, and Programmable Abstraction of
+Datapath (PAD)~\cite{Belter2014-1}.}
 ForCES proposes a more flexible approach to traditional network management without changing the current architecture of the network, i.e., without the need of a logically-centralized external controller. 
 The control and data planes are separated but can potentially be kept in the same network element.
 However, the control part of the network element can be upgraded on-the-fly with third-party firmware.
@@ -282,13 +283,37 @@ A forwarding element does not need to know, by itself, anything about the packet
 Forwarding devices are seen as white boxes with only processing and forwarding  capabilities. 
 In POF, packet parsing is a controller task that results in a sequence of generic keys and table lookup instructions that are installed in the forwarding elements.
 The behavior of data plane devices is therefore completely under the control of the SDN controller.
-Similar to a CPU in a computer sytem, a POF switch is application- and protocol-agnostic. 
+Similar to a CPU in a computer system, a POF switch is application- and protocol-agnostic. 
 
-A very recent soutbound interface proposal is OpFlex~\cite{smith2014}.
+A recent southbound interface proposal is OpFlex~\cite{smith2014}.
 Contrary to OpenFlow (and similar to ForCES), one of the ideas behind OpFlex is to distribute part of the 
 complexity of managing the network back to the forwarding devices, with the aim of improving scalability.
 Similar to OpenFlow, policies are logically centralized and abstracted from the underlying implementation.
 The differences between OpenFlow and OpFlex are a clear illustration of one of the important questions to be answered when devising a southbound interface: where to place each piece of the overall functionality. 
+
+\coloredtext{In contrast to OpFlex and POF, OpenState~\cite{bianchi2014} and ROFL~\cite{Sune2014} do not propose a new set of instructions for programming data plane devices.
+OpenState proposes extended finite machines (stateful programming abstractions) as an extension (super-set) of the OpenFlow match/action abstraction. 
+Finite state machines allow the implementation of several stateful tasks inside forwarding devices, i.e., without augmenting the complexity or overhead of the control plane.
+For instance, all tasks involving only local state, such as MAC learning operations, port knocking or stateful edge firewalls can be performed directly on the forwarding devices without any extra control plane communication and processing delay.
+ROFL, on the other hand, proposes an abstraction layer that hides the details of the different OpenFlow versions, thus providing a clean API for software developers, simplifying application development.}
+
+\coloredtext{
+HAL~\cite{Parniewicz2014,Belter2014} is not exactly a southbound API, but is closely related.
+Differently from the aforementioned approaches, HAL is rather a translator that enables a southbound API such as OpenFlow to control heterogeneous hardware devices.
+It thus sits between the southbound API and the hardware device.
+%HAL is a hardware abstraction layer that enables OpenFlow instruction sets to manage non-OpenFlow enabled devices.
+Recent research experiments with HAL have demonstrated the viability of SDN control in access networks such as Gigabit Ethernet passive optical networks (GEPONs)~\cite{Clegg2014} and cable networks (DOCSIS)~\cite{Fuentes2014}.
+%and DWDM ROADM (Reconfigurable Optical Add/Drop Multiplexer), for instance.
+A similar effort to HAL is the Programmable Abstraction of Datapath (PAD)~\cite{Belter2014-1}, a proposal that goes a bit further by also working as a southbound API by itself.
+More importantly, PAD allows a more generic programming of forwarding devices by enabling the control of datapath behavior using generic byte operations, defining protocol headers and providing function definitions.}
+
+% ch: tinyNBI already covered in Section V
+%\coloredtext{
+%Whereas, on the one hand, this diversity of proposals helps mature the southbound interface of SDNs, on the other hand its increased complexity is becoming a matter of concern.
+%%Even considering only OpenFlow by itself, with its several versions, complexity is already becoming a  concerning issue. 
+%To tame part of this complexity, tinyNBI~\cite{Casey2014_4} distills the essentials of the different versions of OpenFlow, abstracting from developers the irrelevant details and therefore offering a simplified API.
+%%It is expected that such kind of efforts will start to take place and help to simplify the rather complex set of instructions and versions of current southbound APIs.
+%}
 
 \subsection{Layer III: Network Hypervisors}
 \label{sec:virtualizationhypervisor}
@@ -300,8 +325,9 @@ servers~\cite{bittman2013,koponen}.
 
 Hypervisors enable distinct virtual machines to share the same hardware resources. In a 
 cloud infrastructure-as-a-service (IaaS), each user can have its own virtual resources, from computing to 
-storage. This enabled new revenue and business models where users allocate resources on-demand, from a shared 
-physical infrastructures, at a relatively low cost.
+storage.
+This enabled new revenue and business models where users allocate resources on-demand, from a shared 
+physical infrastructure, at a relatively low cost.
 % (less CAPEX and OPEX expenditures, for instance). 
 At the same time, providers make better use of the capacity of their installed physical 
 infrastructures, creating new revenue streams without significantly increasing their CAPEX and OPEX 
@@ -337,14 +363,12 @@ As a consequence, current network provisioning can take months, while computing 
 minutes~\cite{koponen,cearley2013,peng2012,zhang2014}.
 
 There is hope that this situation will change with SDN and the availability of new tunneling techniques (e.g., VXLAN~\cite{mahalingam2013}, NVGRE~\cite{sridharan2013}).
-For instance, solutions such as FlowVisor~\cite{sherwood2009,sherwood2010,azodolmolky2012},  FlowN~\cite{drutskoy2012}, NVP~\cite{koponen}, OpenVirteX~\cite{al-shabibi2014} and IBM SDN VE~\cite{racherla2014,li2014}
-have been recently proposed, evaluated and deployed in real scenarios for on-demand provisioning of virtual 
-networks.
+For instance, solutions such as FlowVisor~\cite{sherwood2009,sherwood2010,azodolmolky2012},  FlowN~\cite{drutskoy2012}, NVP~\cite{koponen}, OpenVirteX~\cite{al-shabibi2014,Al_Shabibi2014_4}, IBM SDN VE~\cite{racherla2014,li2014}, \coloredtext{RadioVisor~\cite{Gudipati2014_4}, AutoVFlow~\cite{Yamanaka2014}, eXtensible Datapath Daemon (xDPd)~\cite{berlin2014,doriguzzicorin2014}, optical transport network virtualization~\cite{Szyrkowiec2014}, and version-agnostic OpenFlow slicing mechanisms~\cite{Depaoli2014}, } have been recently proposed, evaluated and deployed in real scenarios for on-demand provisioning of virtual networks.
 
 \vspace{2mm}
 \noindent \textit{Slicing the network}
 
-FlowVisor is one of the early technologies to virtualize a Software-Defined Network.
+FlowVisor is one of the early technologies to virtualize a SDN.
 %FlowVisor is also the first known hypervisor for OpenFlow-based SDNs. 
 Its basic idea is to allow multiple logical networks share the same OpenFlow networking infrastructure.
 For this purpose, it provides an abstraction layer that makes it easier to slice a data plane based on off-the-shelf OpenFlow-enabled switches, allowing multiple and diverse networks to co-exist. 
@@ -359,18 +383,22 @@ From a system design perspective, FlowVisor is a transparent proxy that intercep
 switches and controllers. It partitions the link bandwidth and flow tables of each switch. Each slice receives 
 a minimum data rate and each guest controller gets its own virtual flow table in the switches.
 
-Similarly to FlowVisor, OpenVirteX~\cite{al-shabibi2014} acts as a proxy between the network operating system and the forwarding 
+Similarly to FlowVisor, OpenVirteX~\cite{al-shabibi2014,Al_Shabibi2014_4} acts as a proxy between the network operating system and the forwarding 
 devices. However, its main goal is to provide virtual SDNs through both topology, address, and control function
 virtualization. 
 All these properties are necessary in multi-tenant environments where virtual networks 
 need to be managed and migrated according to the computing and storage virtual resources. Virtual network 
-topologies have to be mapped onto the underlying forwarding devices, with virtual addresses allowing tenants 
-to completely manage their address space without depending on the underlying network elements addressing schemes.
+topologies have to be mapped onto the underlying forwarding devices, with virtual addresses allowing tenants to completely manage their address space without depending on the underlying network elements addressing schemes.
 
-AutoSlice~\cite{bozakov2012} is another SDN-based virtualization proposal. Similar to FlowVisor, the idea is to 
-allow multiple controllers to manage their respective virtual SDN.
-The main difference is that AutoSlice intends to develop a transparent virtualization layer, or SDN hypervisor, 
-to automate the deployment of virtual SDNs in a less cumbersome manner than FlowVisor.
+\coloredtext{AutoSlice~\cite{bozakov2012} is another SDN-based virtualization proposal. 
+Differently from FlowVisor, it focuses on the automation of the deployment and operation of vSDN (virtual SDN) topologies with minimal mediation or arbitration by the substrate network operator.
+Additionally, AutoSlice targets also scalability aspects of network hypervisors by optimizing resource utilization and by mitigating the flow-table limitations through a precise monitoring of the flow traffic statistics. 
+Similarly to AutoSlice, AutoVFlow~\cite{Yamanaka2014} also enables multi-domain network virtualization.
+However, instead of having a single third party to control the mapping of vSDN topologies, as is the case of AutoSlice, AutoVFlow uses a multi-proxy architecture that allows network owners to implement flow space virtualization in an autonomous way by exchanging information among the different domains.% (i.e., virtualization proxies). 
+%AutoVFlow proxies are used as the essential mechanisms for mapping messages involving adjacent network substrates.
+%Those proxies have two tables for managing the mapping of MAC addresses, one for the internal network substrate and one for the adjacent network substrate.
+%Therefore, the AutoVFlow architecture eliminates the need of a third party for flow space virtualization between different network substrates.
+}
 
 FlowN~\cite{drutskoy2012,drutskoy2013} is based on a slightly different concept. Whereas FlowVisor can be compared to a full virtualization technology, FlowN 
 is analogous to a container-based virtualization, i.e., a lightweight virtualization approach. FlowN 
@@ -379,6 +407,10 @@ be scalable and allows a unique shared controller platform to be used for managi
 in a cloud environment. Each tenant has full control over its virtual networks and is free to deploy 
 any network abstraction and application on top of the controller platform.
 
+\coloredtext{The compositional SDN hypervisor~\cite{Jin2014_4} was designed with a different set of goals. 
+Its main objective is to allow the cooperative (sequential or parallel) execution of applications developed with different programming languages or conceived for diverse control platforms.
+It thus offers interoperability and portability in addition to the typical functions of network hypervisors.
+}
 
 \vspace{2mm}
 \noindent \textit{Commercial multi-tenant network hypervisors}
@@ -403,8 +435,8 @@ Forwarding decisions are therefore made exclusively on the network edge.
 After the decision is made, the packet is tunneled over the physical network to the receiving host hypervisor (the physical network sees nothing but ordinary IP packets).
 
 IBM has also recently proposed SDN VE~\cite{racherla2014,li2014}, another commercial and enterprise-class network virtualization platform.
-SDN VE uses OpenDaylight as one of its building blocks for Software-Defined Environments (SDEs)\footnote{We will return to OpenDaylight and SDE later.}.
-This solutions also offers a complete implementation framework for network virtualization. 
+SDN VE uses OpenDaylight as one \coloredtext{ of the building blocks of the so-called Software-Defined Environments (SDEs), a trend further discussed in Section~\ref{sec:challenges}.}
+This solution also offers a complete implementation framework for network virtualization. 
 Like NVP, it uses a host-based overlay approach, achieving advanced network abstraction that enables application-level network services in large-scale multi-tenant environments. 
 %It provides a multi-hypervisor, server-centric solution comprising multiple components that overlay virtual networks onto any physical network that provides IP connectivity.
 Interestingly, SDN VE 1.0 is capable of supporting in one single instantiation up to 16,000 virtual networks and 128,000 virtual machines~\cite{racherla2014,li2014}.
@@ -412,8 +444,11 @@ Interestingly, SDN VE 1.0 is capable of supporting in one single instantiation u
 %distinct virtual networks for multi-tenancy separation and isolation, multicast support without needing to be supported on the underlaying %hardware.
 %This gives a rough idea of what future software-defined environments will be capable of delivering for the  evolution of IT infrastructures.
 
-To summarize, currently there are only a few network hypervisor proposals leveraging the advances of SDN.
-We antecipate, however, this ecosystem to expand in the near future since network virtualization will most likely play a key role in future virtualized environments, similarly to the expansion we have been witnessing in virtualized computing.
+%HERE
+To summarize, currently there are already a few network hypervisor proposals leveraging the advances of SDN.
+\coloredtext{There are, however, still several issues to be addressed.
+These include, among others, the improvement of virtual-to-physical mapping techniques~\cite{Ghorbani2014_4}, the definition of the level of detail that should be exposed at the logical level, and the support for nested virtualization~\cite{Casado2014_4}.}
+We anticipate, however, this ecosystem to expand in the near future since network virtualization will most likely play a key role in future virtualized environments, similarly to the expansion we have been witnessing in virtualized computing.
 
 %By providing also overlay networks for backward compatibility, SDN VE also ensures:
 %scalability on  L2 and L3 independently from the underlying network infrastructure;
@@ -443,7 +478,7 @@ languages) and the development of a myriad of applications.
 In contrast, networks have so far been managed and configured using lower level, device-specific instruction 
 sets and mostly closed proprietary network operating systems (e.g., Cisco IOS and Juniper JunOS). 
 Moreover, the idea of operating systems abstracting device-specific characteristics 
-and providing, in a transparent way, common functionalities is still almost absent in networks.
+and providing, in a transparent way, common functionalities is still mostly absent in networks.
 For instance, nowadays designers of routing protocols need to deal with complicated distributed algorithms when solving networking problems.
 Network practitioners have therefore been solving the same problems over and over again.
 
@@ -452,7 +487,7 @@ As with traditional operating systems, the crucial value of a NOS is to provide 
 and common application programming interfaces (APIs) to developers. 
 Generic functionality as network state and network topology information, device discovery, and distribution of network configuration can be provided as services of the NOS.
 With NOSs, to define network policies a developer no longer needs to care about the low-level details of data distribution among routing elements, for instance.
-Such systems can arguably create a new environment capable of fostering innovation at a faster pace by reducing the inherent complexity of creating new network protocols and management applications.
+Such systems can arguably create a new environment capable of fostering innovation at a faster pace by reducing the inherent complexity of creating new network protocols and \manapps.
 
 A NOS (or controller) is a critical element in an SDN architecture as it is the key supporting piece 
 for the control logic (applications) to generate the network configuration based on the policies defined by the network operator. 
@@ -462,7 +497,7 @@ Similar to a traditional operating system, the control platform abstracts the lo
 %\noindent \textit{Inside a controller}
 %
 %Figure~\ref{fig:controllerarchitecture} illustrates a simplified internal architecture of a controller.
-%It gives an idea of how a controller and management applications deal with requests from forwarding devices.
+%It gives an idea of how a controller and \manapps deal with requests from forwarding devices.
 %Incoming requests can go simultaneously through one or more pipelines of applications.
 %For instance, programming languages like Pyretic~\cite{monsanto2013} make it possible this kind of composition, allowing two distinct configurations, parallel pipelines (e.g., packets are processed at the same time by apps 3 and 4) and sequential pipelines (e.g., packets go sequentially through apps 1 and 2).
 %Regardless of the set of applications and pipelines, the output is always the same, i.e., programming/configuration data or data requests to be send to the forwarding devices.
@@ -501,7 +536,7 @@ Similar to a traditional operating system, the control platform abstracts the lo
 \vspace{2mm}
 
 %While a controller can be seen as the kernel of an operating system, a control platform can be viewed as an operating system distribution (e.g., Ubuntu Linux).
-There are very diverse controllers and control platforms with different design and architectural choices~\cite{koponen-1,opendaylight2013,junipernetworks2013-1,hp2013-1,phemius2013,erickson2013-1}.
+There is a very diverse set of controllers and control platforms with different design and architectural choices~\cite{koponen-1,opendaylight2013,junipernetworks2013-1,hp2013-1,phemius2013,erickson2013}.
 Existing controllers can be categorized based on many aspects. 
 From an architectural point of view, one of the most relevant is if they are centralized or distributed.
 This is one of the key design axes of SDN control platforms, so we start by discussing this aspect next. 
@@ -520,8 +555,11 @@ These controllers are based on multi-threaded designs to explore the parallelism
 As an example, Beacon can deal with more than 12 
 million flows per second by using large size computing nodes of cloud providers such as Amazon~\cite{erickson2013}. Other centralized controllers such as Trema~\cite{takamiya2012}, 
 Ryu NOS~\cite{nippontelegraphandtelephonecorporation2012}, Meridian~\cite{banikazemi2013}, and 
-ProgrammableFlow~\cite{nec2013,nec2013-2} target more or less 
-specific environments such as data centers, cloud infrastructures, and carrier grade networks.
+ProgrammableFlow~\cite{nec2013,nec2013-2} target specific environments such as data centers, cloud infrastructures, and carrier grade networks.
+\coloredtext{Furthermore, controllers such as Rosemary~\cite{shin2014} offer specific functionality and guarantees, namely security and isolation of applications.
+By using a container-based architecture called micro-NOS, it achieves its primary goal of isolating applications and preventing the propagation of failures throughout the SDN stack.
+%Speaking differently, OpenFlow applications are deployed in independent instances of Rosemary, providing security and failure isolation among different applications.
+}
 
 Contrary to a centralized design, a distributed network operating system can be scaled up to meet the requirements 
 of potentially any environment, from small to large-scale networks.
@@ -534,7 +572,7 @@ distributed controller nodes in the different sites~\cite{jain2013-1}.
 
 Onix~\cite{koponen-1}, HyperFlow~\cite{tootoonchian2010},
 HP VAN SDN~\cite{hp2013-1}, ONOS~\cite{krishnaswamy2013}, DISCO~\cite{phemius2013},
-and \textit{yanc}~\cite{monaco2013} are examples of distributed controllers. 
+ \textit{yanc}~\cite{monaco2013}, \coloredtext{PANE~\cite{ferguson2013}, SMaRtLight~\cite{Botelho2014}, and Fleet~\cite{Matsumoto2014_4}} are examples of distributed controllers. 
 Most distributed controllers offer weak consistency semantics, which means that data updates on distinct nodes will \emph{eventually} be updated on 
 all controller nodes.
 This implies that there is a period of time in which distinct nodes may read different 
@@ -542,7 +580,7 @@ values (old value or new value) for a same property.
 Strong consistency, on the other hand, ensures that all 
 controller nodes will read the most updated property value after a write operation.
 Despite its impact on system performance, strong consistency offers a simpler interface to application developers.
-To date, only Onix and ONOS provide different data consistency models (both weak and strong). 
+To date, only \coloredtext{Onix, ONOS, and SMaRtLight provide this data consistency model.} 
 
 %A developer implementing an application for a system which offers only weak consistency has to be 
 %aware of the fact that reading values of properties in different controlling node can produce different 
@@ -594,19 +632,19 @@ In fact, some platforms have very specific niche markets, such as telecom compan
 \hline
 \textbf{Component} & \textbf{OpenDaylight} & \textbf{OpenContrail} & \textbf{HP VAN SDN} & \textbf{Onix} & \textbf{Beacon} \\\hline
 
-\textbf{Base network services}     & Topology/Stats/Switch Manager, Host Tracker, Shortest Path Forwarding & Routing, Tenant Isolation & Audit Log, Alerts, Topology, Discovery & Discovery, Multi-consistency Storage, Read State, Register for updates  & Topology, device manager, and routing \\\hline
+\textbf{Base network \hfill {\color{white}x} services}     & Topology/Stats/Switch Manager, Host \hfill {\color{white}x} Tracker, Shortest \hfill {\color{white}x} Path Forwarding & Routing, Tenant \hfill {\color{white}x} Isolation & Audit Log, Alerts, \hfill{\color{white}x} Topology, Discovery & Discovery, Multi-\hfill{\color{white}x} consistency Storage, {\color{white}x} Read State, Register \hfill{\color{white}x} for updates  & Topology, device \hfill {\color{white}x} manager, and routing \\\hline
 
-\textbf{East/Westbound APIs}       & \textit{---} & Control Node (XMPP-like control channel) & Sync API & Distribution I/O module & \textit{Not present} \\\hline
+\textbf{East/Westbound APIs}       & \textit{---} & Control Node (XMPP-\hfill{\color{white}x} like control channel) & Sync API & Distribution I/O module & \textit{Not present} \\\hline
 
 \textbf{Integration Plug-ins}  & OpenStack Neutron & CloudStack, OpenStack & OpenStack & \textit{---} & \textit{---} \\\hline
 
 \textbf{Management Interfaces} & GUI/CLI, REST API & GUI/CLI & REST API Shell / GUI Shell & \textit{---} & Web \\\hline
 
-\textbf{Northbound APIs}           & REST, RESTCONF, Java APIs & REST APIs (configuration, operational, and analytic) & REST API, GUI Shell & Onix API (general purpose) & API (based on OpenFlow events) \\\hline
+\textbf{Northbound APIs}           & REST, RESTCONF~\cite{bierman2014restconf}, Java APIs & REST APIs (configuration, operational, and analytic) & REST API, GUI Shell & Onix API (general \hfill {\color{white}x} purpose) & API (based on \hfill {\color{white}x} OpenFlow events) \\\hline
 
-\textbf{Service abstraction layers} & Service Abstraction Layer (SAL) & \textit{---} & Device Abstraction API & Network Information Base (NIB) Graph with Import/Export Functions & \textit{---} \\\hline
+\textbf{Service abstraction layers} & Service Abstraction\hfill {\color{white}x} Layer (SAL) & \textit{---} & Device Abstraction API & Network Information \hfill{\color{white}x} Base (NIB) Graph \hfill{\color{white}x} with Import/Export\hfill {\color{white}x} Functions & \textit{---} \\\hline
 
-\textbf{Southbound APIs or connectors} & OpenFlow, OVSDB, SNMP, PCEP, BGP, NETCONF & \textit{---} & OpenFlow, L3 Agent, L2 Agent & OpenFlow, OVSDB & OpenFlow \\\hline
+\textbf{Southbound APIs or \hfill {\color{white}x} connectors} & OpenFlow, OVSDB,\hfill{\color{white}x}  SNMP, PCEP, BGP, \hfill{\color{white}x} NETCONF & \textit{---} & OpenFlow, L3 Agent, \hfill {\color{white}x} L2 Agent & OpenFlow, OVSDB & OpenFlow \\\hline
 
 \end{tabularx}
 \end{center}
@@ -618,7 +656,7 @@ Based on the analysis of the different SDN controllers proposed to date (both th
 
 \begin{figure*}[ht]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig8_sdn_control_platform.pdf}
+\includegraphics[width=0.95\textwidth]{figures/fig8_sdn_control_platform.pdf}
 \caption{SDN control platforms: elements, services and interfaces}
 \label{fig:controlplatformarch}
 \end{figure*}
@@ -627,7 +665,7 @@ There are at least three relatively well-defined layers in most of the existing 
 (\textit{i}) the application, orchestration and services; (\textit{ii})  the core controller functions, and 
 (iii) the elements for southbound communications. The connection at the upper-level layers is based on northbound interfaces such as REST APIs~\cite{richardson2008restful}  and programming languages such as FML~\cite{hinrichs2009}, Frenetic~\cite{foster2011} and NetCore~\cite{monsanto2012}. 
 On the lower-level part of a control platform, southbound APIs and protocol plugins interface the forwarding elements. % and the controller platforms. 
-The core of a controller platform can be characterized as a combination its base network service functions and the various interfaces. 
+The core of a controller platform can be characterized as a combination of its base network service functions and the various interfaces. 
 
 
 \vspace{2mm}
@@ -711,14 +749,24 @@ system robustness by reducing the probability of common faults, such as software
 Other proposals that try to define interfaces between controllers include Onix data import/export functions~\cite{koponen-1}, ForCES CE-CE interface~\cite{doria2010,wang2011-1}, 
 ForCES Intra-NE cold-standby mechanisms for high availability~\cite{ogawa2013}, and distributed data stores~\cite{botelho2013}. 
 An east/westbound API requires advanced data distribution mechanisms such as the Advanced Message Queuing Protocol  (AMQP)~\cite{vinoski2006} used by
-DISCO~\cite{phemius2013}, transactional databases and DHTs~\cite{ghodsi2006} ( as used in Onix~\cite{koponen-1}), or advanced algorithms for strong consistency and fault 
-tolerance~\cite{botelho2013}.
+DISCO~\cite{phemius2013}, \coloredtext{techniques for distributed concurrent and consistent policy composition~\cite{canini2013}}, transactional databases and DHTs~\cite{ghodsi2006} (as used in Onix~\cite{koponen-1}), or advanced algorithms for strong consistency and fault 
+tolerance~\cite{botelho2013,Botelho2014}.
 
 In a multi-domain setup, east/westbound APIs may require also more specific communication protocols 
 between SDN domain controllers~\cite{stallings2013}. Some of the essential functions of such 
 protocols are to \textit{coordinate flow setup} originated by applications, \textit{exchange reachability 
 information} to facilitate inter-SDN routing, \textit{reachability update} to keep the network state 
 consistent, among others.
+
+\coloredtext{Another important issue regarding east/westbound interfaces is heterogeneity. 
+For instance, besides communicating with peer SDN controllers, controllers may also need to communicate with subordinate controllers (in a hierarchy of controllers) and non-SDN controllers~\cite{ONF2014SDNarch}, as is the case of ClosedFlow~\cite{Hand2014_4}.
+To be interoperable, east/westbound interfaces thus need to accommodate different controller interfaces, with their specific set of services, and the diverse characteristics of the underlying infrastructure, including the diversity of technology, the geographic span and scale of the network, and the distinction between WAN and LAN -- potentially across administrative boundaries. 
+In those cases, different information has to be exchanged between controllers, including adjacency and capability discovery, topology information (to the extent of the agreed contracts between administrative domains), billing information, among many others~\cite{ONF2014SDNarch}. %state and attribute information subscription, multi-layer information, OAM configuration, QoS assessment, monitoring, billing information, among additional open challenges around hybrid and multi-domain SDN architectures~\cite{ONF2014SDNarch}. 
+%These examples represent still open avenues with different challenges towards hybrid and clean-slate SDN architectures without disruptions on the migration process.
+%To successfully achieve this goal it is essential to think about interoperability between traditional network architecture and purely SDN networks.
+
+Lastly, a ``SDN compass'' methodology~\cite{sdn-compass} suggests a finer distinction between eastbound and westbound horizontal interfaces, referring to westbound interfaces as SDN-to-SDN protocols and controller APIs while eastbound interfaces would be used to refer to standard protocols used to communicate with legacy network control planes (e.g., PCEP~\cite{vasseur2009}, GMPLS~\cite{mannie2004gmpls}).
+}
 
 \vspace{2mm}
 \noindent \textit{Northbound}
@@ -731,7 +779,8 @@ multi-level programming interfaces, file systems, among other more specialized A
  A second kind of northbound interfaces are those stemming out of SDN programming languages such as  
 Frenetic~\cite{foster2011}, Nettle~\cite{voellmy2011-1},
 NetCore~\cite{monsanto2012}, Procera~\cite{voellmy2012}, 
-and Pyretic~\cite{monsanto2013}.  Section~\ref{sec:programminglanguages} gives a more detailed 
+ Pyretic~\cite{monsanto2013}, \coloredtext{NetKAT~\cite{Anderson2014_4} and other query-based languages~\cite{Narayana2014_4}.}  
+ Section~\ref{sec:programminglanguages} gives a more detailed 
 overview of the several existing programming languages for SDN.
 
 %Programming languages are powerful northbound interfaces because they provide higher-level abstractions 
@@ -752,31 +801,74 @@ overview of the several existing programming languages for SDN.
 %\rowcolors{1}{lightgray}{white}
 \begin{tabularx}{\linewidth}{p{2.94cm}Xp{2.29cm}p{1.47cm}p{0.75cm}p{1.35cm}p{2.1cm}p{0.9cm}}
 \hline
-\textbf{Name} & \textbf{Architecture} & \textbf{Northbound API} & \textbf{Consistency} & \textbf{Faults} & \textbf{License} & \textbf{Prog. language} & \textbf{Version}\\\hline
-Beacon~\cite{erickson2013}     & centralized multi-threaded  & ad-hoc API & no & no & GPLv2 & Java & v1.0 \\\hline
-DISCO~\cite{phemius2013} & distributed & REST & --- & yes & --- & Java & v1.1\\\hline
+\textbf{Name} & \textbf{Architecture} & \textbf{Northbound API} & \textbf{Consistency} & \textbf{Faults} & \textbf{License} & \textbf{Prog. language} & \textbf{Version}\\
+\hline
+Beacon~\cite{erickson2013}  & centralized multi-threaded  & ad-hoc API & no & no & GPLv2 & Java & v1.0 \\
+\hline
+DISCO~\cite{phemius2013} & distributed & REST & --- & yes & --- & Java & v1.1\\
+\hline
+%\myrowcolor
+ Fleet~\cite{Matsumoto2014_4} & distributed & ad-hoc & no & no & --- & --- & v1.0 \\
+\hline
 Floodlight~\cite{openflowhub.org2012} & centralized multi-threaded  & RESTful API & no & no & Apache & Java & v1.1 \\\hline
-HP VAN SDN~\cite{hp2013-1} & distributed & RESTful API & weak & yes & --- & Java & v1.0 \\\hline
-HyperFlow~\cite{tootoonchian2010}  & distributed               & --- & weak & yes & --- & C++ & v1.0 \\\hline
-Kandoo~\cite{yeganeh2012}     & hierarchically distributed & --- & no & no & --- & C, C++, Python & v1.0 \\\hline
-Onix~\cite{koponen-1}       & distributed               & NVP NBAPI   & weak, strong & yes & commercial & Python, C & v1.0 \\\hline
-Maestro~\cite{cai2011}    & centralized multi-threaded  & ad-hoc API & no & no & LGPLv2.1 & Java & v1.0 \\\hline
-Meridian~\cite{banikazemi2013} & centralized multi-threaded & extensible API layer & no & no & --- & Java & v1.0\\\hline
-MobileFlow~\cite{pentikousis2013} & --- & SDMN API & --- & --- & --- & --- & v1.2 \\\hline
-MuL~\cite{Saikia:2013:MuL}        & centralized multi-threaded  & multi-level interface & no & no & GPLv2 & C & v1.0 \\\hline
-NOX~\cite{gude2008}       & centralized               & ad-hoc API  & no & no & GPLv3 & C++ & v1.0 \\\hline
-NOX-MT~\cite{tootoonchian2012}     & centralized multi-threaded  & ad-hoc API & no & no & GPLv3 & C++ & v1.0 \\\hline
-NVP Controller~\cite{koponen} & distributed & --- & --- & --- & commercial & --- & --- \\\hline
-OpenContrail~\cite{junipernetworks2013-1} & --- & REST API & no & no & Apache 2.0 & Python, C++, Java & v1.0\\\hline
-OpenDaylight~\cite{opendaylight2013} & distributed & REST, RESTCONF & weak & no & EPL v1.0 & Java & v1.\{0,3\} \\\hline
-ONOS~\cite{krishnaswamy2013} & distributed & RESTful API & weak, strong & yes & --- & Java & v1.0 \\\hline
+HP VAN SDN~\cite{hp2013-1} & distributed & RESTful API & weak & yes & --- & Java & v1.0 \\
+\hline
+HyperFlow~\cite{tootoonchian2010}  & distributed               & --- & weak & yes & --- & C++ & v1.0 \\
+\hline
+Kandoo~\cite{yeganeh2012}     & hierarchically distributed & --- & no & no & --- & C, C++, Python & v1.0 \\
+\hline
+Onix~\cite{koponen-1}       & distributed               & NVP NBAPI   & weak, strong & yes & commercial & Python, C & v1.0 \\
+\hline
+Maestro~\cite{cai2011}    & centralized multi-threaded  & ad-hoc API & no & no & LGPLv2.1 & Java & v1.0 \\
+\hline
+Meridian~\cite{banikazemi2013} & centralized multi-threaded & extensible API layer & no & no & --- & Java & v1.0\\
+\hline
+MobileFlow~\cite{pentikousis2013} & --- & SDMN API & --- & --- & --- & --- & v1.2 \\
+\hline
+MuL~\cite{Saikia:2013:MuL}        & centralized multi-threaded  & multi-level interface & no & no & GPLv2 & C & v1.0 \\
+\hline
+NOX~\cite{gude2008}       & centralized               & ad-hoc API  & no & no & GPLv3 & C++ & v1.0 \\
+\hline
+NOX-MT~\cite{tootoonchian2012}     & centralized multi-threaded  & ad-hoc API & no & no & GPLv3 & C++ & v1.0 \\
+\hline
+NVP Controller~\cite{koponen} & distributed & --- & --- & --- & commercial & --- & --- \\
+\hline
+OpenContrail~\cite{junipernetworks2013-1} & --- & REST API & no & no & Apache 2.0 & Python, C++, Java & v1.0\\
+\hline
+OpenDaylight~\cite{opendaylight2013} & distributed & REST, RESTCONF & weak & no & EPL v1.0 & Java & v1.\{0,3\} \\
+\hline
+ONOS~\cite{krishnaswamy2013} & distributed & RESTful API & weak, strong & yes & --- & Java & v1.0 \\
+\hline
+
+%\myrowcolor
+PANE~\cite{ferguson2013} & {distributed} & {PANE API} & {yes} & {---} & {---} & {---} & {---} \\
+\hline
+
 POX~\cite{mccauley2012}       & centralized               & ad-hoc API  & no & no & GPLv3 & Python & v1.0 \\\hline
-ProgrammableFlow \cite{shimonishi2010} & centralized & --- & --- & --- & --- & C & v1.3 \\\hline
-Ryu NOS~\cite{nippontelegraphandtelephonecorporation2012} & centralized multi-threaded & ad-hoc API & no & no & Apache 2.0 & Python & v1.\{0,2,3\}\\\hline
-SNAC~\cite{appenzeller2011} & centralized & ad-hoc API & no & no & GPL & C++ & v1.0 \\\hline
-Trema~\cite{takamiya2012}      & centralized multi-threaded  & ad-hoc API & no & no & GPLv2 & C, Ruby & v1.0 \\\hline
-\textit{Unified Controller}~\cite{racherla2014} & --- & REST API & --- & --- & commercial & --- & v1.0 \\\hline
-\textit{yanc}~\cite{monaco2013} & distributed & file system & --- & --- & --- & --- & --- \\\hline
+ProgrammableFlow \cite{shimonishi2010} & centralized & --- & --- & --- & --- & C & v1.3 \\
+\hline
+
+%\myrowcolor
+{Rosemary~\cite{shin2014}} & {centralized} & {ad-hoc} & {---} & {---} & {---} & {---} & {v1.0} \\
+\hline
+
+Ryu NOS~\cite{nippontelegraphandtelephonecorporation2012} & centralized multi-threaded & ad-hoc API & no & no & Apache 2.0 & Python & v1.\{0,2,3\}\\
+\hline
+
+%\myrowcolor
+{SMaRtLight~\cite{Botelho2014}} & {distributed} & {RESTful API} & {no} & {no} & {Apache} & {Java} & {v1.0} \\
+\hline
+
+SNAC~\cite{appenzeller2011} & centralized & ad-hoc API & no & no & GPL & C++ & v1.0 \\
+\hline
+
+Trema~\cite{takamiya2012}      & centralized multi-threaded  & ad-hoc API & no & no & GPLv2 & C, Ruby & v1.0 \\
+\hline
+\textit{Unified Controller}~\cite{racherla2014} & --- & REST API & --- & --- & commercial & --- & v1.0 \\
+\hline
+\textit{yanc}~\cite{monaco2013} & distributed & file system & --- & --- & --- & --- & --- \\
+\hline
+
 \end{tabularx}
 \end{center}
 \end{table*}
@@ -789,8 +881,7 @@ Table~\ref{tab:controllers} shows a summary of some of the existing controllers 
 architectures and characteristics.
 As can be observed, most controllers are centralized and multi-threaded.
 Curiously, the northbound API is very diverse. In particular, five controllers (Onix, Floodlight, MuL, Meridian and SDN Unified Controller) pay a bit more attention to this interface, as a statement
-of its importance. Consistency models and fault tolerance are only present in Onix, HyperFlow, HP VAN SDN, 
-and ONOS. Lastly, when it comes to the OpenFlow standard as southbound API, only Ryu supports its three 
+of its importance. Consistency models and fault tolerance are only present in Onix, HyperFlow, HP VAN SDN,  ONOS and SMaRtLight. Lastly, when it comes to the OpenFlow standard as southbound API, only Ryu supports its three 
 major versions (v1.0, v1.2 and v1.3).
 
 %A northbound API is an interface between the resources provided by the controller and applications. 
@@ -833,13 +924,13 @@ major versions (v1.0, v1.2 and v1.3).
 %On the core of such solutions is a sort of coordination framework which helps on building and deploying clusters of controllers for environments requiring higher levels of scalability and reliability such as cloud scale data centers.
 %Beacon, NOX, and Maestro were already used to prototype and evaluate coordination frameworks~\cite{yazici2012}.
 %Experimental results show that a Beacon cluster is capable of achieving a throughput of six million flows per seconds in a modest set of four dual-core machines with low memory footprint and unmanaged gigabit connection.
-%Although the throughput is lower that the one reported in ~\cite{erickson2013-1}, in which the experiments took advantage of a cluster with eight extra large computing nodes from Amazon's Elastic Computer Cloud (16 cores, more than 60GB of RAM, and 10Gb network), it increases approximately linearly with the number of nodes in the cluster.
+%Although the throughput is lower that the one reported in ~\cite{erickson2013}, in which the experiments took advantage of a cluster with eight extra large computing nodes from Amazon's Elastic Computer Cloud (16 cores, more than 60GB of RAM, and 10Gb network), it increases approximately linearly with the number of nodes in the cluster.
 
 To conclude, it is important to emphasize that the control platform is one of the critical points for 
 the success of SDN~\cite{casemore2012-1}.
-One of the main issues that needs to be address in this respect is interoperability. 
+One of the main issues that needs to be addressed in this respect is interoperability. 
 This is rather interesting, as it was the very first problem that southbound APIs (such as OpenFlow) tried to solve.
-For instance, while WiFi and LTE networks~\cite{Kwan2010survey} need specialized control platforms such as MobileFlow~\cite{pentikousis2013} or SoftRAN~\cite{gudipati2013}, 
+For instance, while WiFi and LTE (Long-Term Evolution) networks~\cite{Kwan2010survey} need specialized control platforms such as MobileFlow~\cite{pentikousis2013} or SoftRAN~\cite{gudipati2013}, 
 data center networks have different requirements that can be met with platforms such as Onix~\cite{koponen-1} or OpenDaylight~\cite{opendaylight2013}. 
 For this reason, in environments where diversity of networking infrastructures is a reality, coordination and cooperation between different controllers is crucial. 
 Standardized APIs for multi-controller and multi-domain deployments are therefore seen as an important step to achieve this goal.
@@ -862,7 +953,7 @@ Discussions about this issue have already begun ~\cite{dix2013,guis2012,salisbur
 The experience from the development of different controllers will certainly be the basis for coming up with a common application level interface.
 
 Open and standard northbound interfaces are crucial to promote application portability and interoperability among the different the control platforms.
-A northbound API can be compared to the POSIX standard in operating systems, representing an abstraction that guarantees programming language and controller independence.
+A northbound API can be compared to the POSIX standard~\cite{posixieee} in operating systems, representing an abstraction that guarantees programming language and controller independence.
 NOSIX~\cite{wundsam2012} is one of the first examples of an effort in this direction. It tries to 
 define portable low-level (e.g., flow model) application interfaces, making southbound APIs such as OpenFlow 
 look like ``device drivers''. However, NOSIX is not exactly a general purpose northbound interface, but 
@@ -872,7 +963,7 @@ abstraction layer in a control platform as the one described in Section~\ref{sec
 Existing controllers such as Floodlight, Trema, NOX, Onix, and OpenDaylight propose and define their own northbound 
 APIs~\cite{salisbury2012-1,chua2012}.
 However, each of them has its own specific definitions.
-Programming languages such as Frenetic~\cite{foster2011}, Nettle~\cite{voellmy2011-1}, NetCore~\cite{monsanto2012}, Procera~\cite{voellmy2012} and Pyretic~\cite{reich2013} also abstract the inner details of the controller functions and data plane behavior from the application developers.
+Programming languages such as Frenetic~\cite{foster2011}, Nettle~\cite{voellmy2011-1}, NetCore~\cite{monsanto2012}, Procera~\cite{voellmy2012}, Pyretic~\cite{reich2013} and \coloredtext{NetKAT~\cite{Anderson2014_4}} also abstract the inner details of the controller functions and data plane behavior from the application developers.
 Moreover, as we explain in 
 Section~\ref{sec:programminglanguages}, programming languages can provide a wide range of powerful 
 abstractions and mechanisms such as application composition, transparent data plane fault tolerance, 
@@ -893,10 +984,24 @@ Eventually, it is unlikely that a single northbound interface emerges as the win
 different network applications are quite different. APIs for security applications are likely to be different 
 from those for routing or financial applications. One possible path of evolution for northbound APIs are 
 vertically-oriented proposals, before any type of standardization occurs, a challenge the ONF has started 
-to undertake in addition to open-source SDN controller platform developments (e.g., OpenDaylight, Floodlight,
-OpenStack). 
+to undertake \coloredtext{in the NBI WG in parallel to open-source SDN developments~\cite{floss-meets-sdn}. %platform developments 
+The ONF architectural work~\cite{ONF2014SDNarch} includes the possibility of northbound APIs providing resources to enable dynamic and granular control of the network resources from customer applications, eventually across different business and organizational boundaries.} 
+% between controllers and applications that use it.
+%(e.g., OpenDaylight, Floodlight, OpenStack). 
 %When and if this happens, the NBAPI might become more like an OS API (e.g., POSIX, iOS, Android), 
 %to accommodate the potential wide range of applications that want a piece of the network.
+
+\coloredtext{There are also other kind of APIs, such as those provided by the PANE controller~\cite{ferguson2013}.
+Designed to be suitable for the concept of participatory networking, PANE allows network administrators to define module-specific quotas and access control policies on network resources. 
+The controller provides an API that allows end-host applications to dynamically and autonomously request network resources. 
+For example, audio (e.g., VoIP) and video applications can easily be modified to use the PANE API to reserve bandwidth for certain quality guarantees during the communication session. 
+PANE includes a compiler and verification engine to ensure that bandwidth requests do not exceed the limits set by the administrator and to avoid starvation, i.e., other applications shall not be impaired by new resource requests.
+}
+
+%In other words, customer applications should have direct access to an SDN controller.
+%In such a scenarios, it is also essential to business and organizational boundaries between controllers and applications that use it.
+%For instance, customer and infrastructure providers should co-exit in different trust domains.
+
 
 \subsection{Layer VI: Language-based Virtualization}
 \label{sec:virtualizationslicing}
@@ -951,10 +1056,12 @@ project~\cite{quantumcommunicty2012}. While Quantum is designed for OpenStack (c
 libNetVirt is a more general purpose library which can be used in different environments. Additionally, 
 it goes one step beyond OpenStack Quantum by enabling QoS capabilities in virtual networks~\cite{turull2012}.
 The libNetVirt library has two layers: (1) a generic network interface; and (2) technology specific device drivers 
-(e.g., VPN, MPLS, OpenFlow). On top of the layers are the management applications and virtual network descriptions.
+(e.g., VPN, MPLS, OpenFlow). On top of the layers are the \manapps and virtual network descriptions.
 The OpenFlow driver uses a NOX controller to manage the underlying infrastructure, using OpenFlow rule-based flow 
 tables to create isolated virtual networks. By supporting different technologies, it can be used as a bridging 
 component in heterogeneous networks.
+
+
 
 Table~\ref{tab:virtualizationsolutions} summarizes the hypervisor and non-hypervisor based virtualization 
 technologies. 
@@ -964,6 +1071,10 @@ one per network slice. FlowN provides a container-based approach where multiple 
 users can co-exist on a single controller. FlowVisor allows QoS provisioning guarantees by using VLAN PCP bits for priority queues.
 SDN VE and NVP also provide their own provisioning methods for guaranteeing QoS.
 
+%\coloredtext{In spite of the initial efforts towards virtualization, there are still different open issues that need further investigation and development~\cite{Casado2014_4}.
+%Issues such as what level of details should be exposed at the logical level, how to combine virtualization with other abstractions such as consistent updates and modular composition, how to enforce resource reservation and isolation in heterogeneous %environments, and how to efficiently implement recursive virtualization, are still far from being solved.
+%}
+
 {\renewcommand{\arraystretch}{1.4}
 \begin{table*}[!htp]
 \caption{Virtualization solutions}
@@ -971,19 +1082,37 @@ SDN VE and NVP also provide their own provisioning methods for guaranteeing QoS.
 \begin{center}
 \footnotesize
 %\rowcolors{1}{lightgray}{white}
-\begin{tabularx}{\textwidth}{p{3cm}p{3.1cm}p{3.1cm}p{2.6cm}X}
+\begin{tabularx}{\textwidth}{p{3.8cm}p{3.1cm}p{3.1cm}p{2.6cm}X}
 \hline
 \textbf{Solution} & \textbf{Multiple controllers} & \textbf{Slicing} & \textbf{QoS ``guarantees''} & \textbf{Multi-technology} \\\hline
-AutoSlice~\cite{bozakov2012} & yes, one per slice & VLAN tags & no & no, OF only\\\hline
-FlowVisor~\cite{sherwood2009,azodolmolky2012} & yes, one per slice & virtual flow tables per slice &  yes (VLAN PCP bits) & no, OF only \\\hline
-FlowN~\cite{drutskoy2012,drutskoy2013} & no (contained applications) & VLAN tags  & \textit{unknown} & no, OF only \\\hline
-IBM SDN VE~\cite{racherla2014} & yes, a cluster of controllers & logical datapaths & yes (priority-based) & yes (VXLAN, OVS, OpenFlow) \\\hline
-libNetVirt~\cite{turull2012} & no, one single controller & VLAN tags & no  & yes (e.g., VPN, MPLS, OpenFlow)\\\hline
-NVP's Hypervisor~\cite{koponen} & yes, a cluster of controller & logical datapaths & yes & no, OVS only \\\hline
-OpenVirteX~\cite{al-shabibi2014} & yes, one per slice & virtual flow tables per slice & \textit{unknown}  & no, OF only \\\hline 
-Pyretic~\cite{reich2013} & no, one single controller & compiler time OF rules & no & no, OF only \\\hline
-Splendid Isolation~\cite{gutz2012} & no, one single controller & compiler time VLANs & no  & no, OF only \\
+
+%\myrowcolor
+{AutoVFlow~\cite{Yamanaka2014}} & {yes, one per tenant} & {flow space virtualization} & {no}  & {no, OF only} \\
 \hline
+
+AutoSlice~\cite{bozakov2012} & yes, one per slice & VLAN tags & no & no, OF only\\\hline
+
+%\myrowcolor
+{Compositional Hypervisor~\cite{Jin2014_4}} & {---} & {---} & {no}  & {no, OF only} \\
+\hline
+
+FlowVisor~\cite{sherwood2009,azodolmolky2012} & yes, one per slice & virtual flow tables per slice &  yes (VLAN PCP bits) & no, OF only \\\hline
+FlowN~\cite{drutskoy2012,drutskoy2013} & no (contained applications) & VLAN tags  & no & no, OF only \\\hline
+IBM SDN VE~\cite{racherla2014} & yes, a cluster of controllers & logical datapaths & yes (priority-based) & yes (VXLAN, OVS, OF) \\\hline
+libNetVirt~\cite{turull2012} & no, one single controller & VLAN tags & no  & yes (e.g., VPN, MPLS, OF)\\\hline
+NVP's Hypervisor~\cite{koponen} & yes, a cluster of controller & logical datapaths & yes & no, OVS only \\\hline
+OpenVirteX~\cite{Al_Shabibi2014_4} & yes, one per slice & virtual flow tables per slice & \textit{unknown}  & no, OF only \\\hline 
+Pyretic~\cite{reich2013} & no, one single controller & compiler time OF rules & no & no, OF only \\\hline
+Splendid Isolation~\cite{gutz2012} & no, one single controller & compiler time VLANs & no  & no, OF only \\\hline
+
+%\myrowcolor
+{RadioVisor~\cite{Gudipati2014_4}} & {yes, one per slice} & {3D resource grid slices} & {---}  & {Femto API~\cite{smallcellforum2013}} \\
+\hline
+
+%\myrowcolor
+{xDPd virtualization~\cite{doriguzzicorin2014}} & {yes, one per slice} & {flow space virtualization} & {no}  & {no, OF only} \\
+\hline
+
 \end{tabularx}
 \end{center}
 \end{table*}
@@ -1045,6 +1174,12 @@ for virtual network topologies, as has already been demonstrated by languages su
 \vspace{2mm}
 \noindent \textit{High-level SDN programming languages}
 
+\coloredtext{High-level  programming languages can be powerful tools as a mean for implementing and providing abstractions for different important properties and functions of SDN such as network-wide structures, distributed updates, modular composition, virtualization, and formal verification~\cite{Casado2014_4}.
+%%% CH: Redundant content below:
+%High-level programming languages can both simplify the development of new network applications and, at the same time, provide minimum guarantees of correctness and robustness.
+%For instance, distributed updates abstractions can make it much simpler to develop and deploy applications for shortest-path routing, distributed access control, and server load balancing.
+%Whereas without higher level abstractions a programmer would need to care about many details regarding rules distribution, failures, and so forth, with abstractions developers can focus on the problem, i.e., on what is being solved or created (innovations).
+}
 
 Low-level instruction sets suffer from several problems.
 To address some of these challenges, higher-level programming languages have been proposed, with 
@@ -1064,7 +1199,7 @@ in traditional network configuration approaches;
 \end{itemize}
 
 Programming languages can also provide specialized abstractions to cope with other management requirements, 
-such as monitoring~\cite{voellmy2012,foster2011,tootoonchian2010-1}.
+such as monitoring\coloredtext{~\cite{voellmy2012,foster2011,tootoonchian2010-1,Narayana2014_4}}.
 For instance, the runtime system of a programming language can do all the ``laundry work'' of installing rules, polling 
 the counters, receiving the responses, combining the results as needed, and composing monitoring queries in 
 conjunction with other policies. Consequently, application developers can take advantage of the simplicity and 
@@ -1105,8 +1240,14 @@ HFT~\cite{ferguson2012}  & declarative (logic, functional) & Enables hierarchica
 Maple~\cite{voellmy2013} & declarative (functional) & Provides a highly-efficient multi-core scheduler that can scale efficiently to controllers with 40+ cores. \\\hline
 Merlin~\cite{soule2013} & declarative (logic) & Provides mechanisms for delegating management of sub-policies to tenants without violating global constraints. \\\hline
 nlog~\cite{koponen} & declarative (functional) &  Provides mechanisms for data log queries over a number of tables. Produces immutable tuples for reliable detection and propagation of updates. \\\hline
-Nettle~\cite{voellmy2011-1}   & declarative (functional, reactive) & Based on functional reactive programming  principles in order to allow programmers to deal with streams instead of events.   \\\hline
+
 NetCore~\cite{monsanto2012}  & declarative (functional) & High level programming language that provides means for expressing packet-forwarding policies in a high level.  \\\hline
+
+%\myrowcolor
+{NetKAT~\cite{Anderson2014_4}}  & {declarative (functional)} & {It is based on Kleene algebra for reasoning about network structure and supported by solid foundation on equational theory.} \\\hline
+
+Nettle~\cite{voellmy2011-1}   & declarative (functional, reactive) & Based on functional reactive programming  principles in order to allow programmers to deal with streams instead of events.   \\\hline
+
 Procera~\cite{voellmy2012}  & declarative (functional, reactive) & Incorporates a set of high level abstractions to make it easier to describe reactive and temporal behaviors.  \\\hline
 Pyretic~\cite{monsanto2013}  & imperative & Specifies network policies at a high level of abstraction, offering transparent composition and topology mapping. \\\hline
 \end{tabularx}
@@ -1188,6 +1329,12 @@ architectures~\cite{voellmy2013}.
 %is to offer support new ways of expressing network protocol message structures and constraints. With a smart 
 %enough compiler, these definitions can be used to identity and take countermeasures against known protocol 
 %vulnerabilities, for instance.
+\coloredtext{Nevertheless, there is still scope for further investigation and development on programming languages. 
+For instance, one recent research has revealed that current policy compilers generate unnecessary (redundant) rule updates, most of which modify only the priority field~\cite{Wen2014_4}.
+%This is clearly a concerning issue once updating rules on switches is one of the major sources of latency overhead during policy updates.
+%Similarly, other issues are expected to come up as the research community puts more effort towards building efficient and reliable software-defined networks.
+}
+%%% CH: discussion above does not add much at this point, it is implicit that these are research challenges.
 
 %One arguable dichotomy of SDN is its reliance on software artefacts expected to yield a high-level defined, 
 %flexible yet robust networking paradigm (cf.~\cite{doyle2005}).
@@ -1198,20 +1345,23 @@ interfaces (cf.~\cite{kuzniar2013}) and towards the realization of integrated de
 environments (e.g., NetIDE~\cite{facca2013}) with the goal of fostering the development of a myriad of SDN applications.
 We discuss these next.
 
-\subsection{Layer VIII: Management applications}
+\subsection{Layer VIII: \ManaApps}
 
-Management applications can be seen as the ``network brains''. 
+\Manaaapps can be seen as the ``network brains''. 
+%\coloredtext{While services can be considered as base network services and integration plugins (see Table~\ref{tab:controllerdesign}) for orchestration with other software-defined infrastructures and provider platforms, such as software-defined storage, software-define computing, and cloud platforms (e.g., OpenStack and CloudStack), applications are any program that represents network management, user or business level logic used for a variety of purposes.
+%Notwithstanding, some of the base network services may even be implemented in the network operating system, i.e., below the northbound API.}
 They implement the control-logic that will be translated into commands to be installed in the data plane, dictating the behavior of the forwarding devices.
-Taking a simple application as routing as an example. 
+Take a simple application as routing as an example. 
 The logic of this application is to define the path through which packets will flow from 
 a point A to a point B.
 To achieve this goal a routing application has to, based on the topology input, decide on the path to use and instruct the controller to install the 
 respective forwarding rules in all forwarding devices on the chosen path, from A to B.
 
 Software-defined networks can be deployed on any traditional network environment, from home and enterprise networks to data centers and Internet exchange points.
-Such variety of environments has led to a wide array of management applications.
-Existing network management applications perform traditional functionality such as routing, load balancing, and security policy enforcement, but also explore novel approaches, such as reducing power consumption . 
+Such variety of environments has led to a wide array of \manapps.
+Existing \manapps perform traditional functionality such as routing, load balancing, and security policy enforcement, but also explore novel approaches, such as reducing power consumption. 
 Other examples include fail-over and reliability functionalities to the data plane, end-to-end QoS enforcement, network virtualization, mobility management in wireless networks, among many others.
+\coloredtext{The variety of \manapps, combined with real use case deployments, is expected to be one of the major forces on fostering a broad adoption of SDN~\cite{Reinecke2014}.}
 
 %Figure~\ref{fig:controllerplusapps} illustrates a controller with a set of three independent groups of applications.
 %The first is a routing layer with two applications, discovery and intradomain routing.
@@ -1233,68 +1383,106 @@ Other examples include fail-over and reliability functionalities to the data pla
 %\end{figure}
 
 Despite the wide variety of use cases, most SDN applications can be grouped in one of five categories: traffic engineering, mobility and wireless, measurement and monitoring, security and dependability and data center networking.
-Table~\ref{tab:managementapplications} summarizes several applications categorized as such, stating their main purpose, controller where it was implemented/evaluated, and southbound API used.
+Tables~\ref{tab:managementapplications1} and~\ref{tab:managementapplications2} summarize several applications categorized as such, stating their main purpose, controller where it was implemented/evaluated, and southbound API used.
 
 {\renewcommand{\arraystretch}{1.4}
 \begin{table*}[!htp]
-\caption{Management applications and services}
-\label{tab:managementapplications}
+\caption{\ManaApps}
+\label{tab:managementapplications1}
 \begin{center}
 \footnotesize
 %\rowcolors{1}{lightgray}{white}
-\begin{tabularx}{\linewidth}{p{2cm}p{3.2cm}p{5.1cm}Xp{3.5cm}}
+\begin{tabularx}{\linewidth}{p{2cm}p{3.2cm}p{5.1cm}Xp{3.3cm}}
 \hline
 \textbf{Group} & \textbf{Solution/Application} & \textbf{Main purpose} & \textbf{Controller} & \textbf{Southbound API} \\
 \hline
-\multirow{12}{*}{\begin{minipage}{2cm}Traffic \\engineering\end{minipage}} 
+\multirow{20}{*}{\begin{minipage}{2cm}Traffic \\engineering\end{minipage}} 
 & ALTO VPN~\cite{scharf2013} & on-demand VPNs & NMS~\cite{stiemerling2014ALTODeployment,alimi2013} & SNMP \\
 & Aster*x~\cite{handigol2009}       & load balancing             &  NOX & OpenFlow      \\
 & ElasticTree~\cite{heller2010}   & energy aware routing       &  NOX & OpenFlow      \\
+
+%\myrowcolor
+& {FlowQoS~\cite{Seddiki2014_4}} & {QoS for broadband access networks} & {POX} & {OpenFlow}\\
+
 & Hedera~\cite{al-fares2010}        & scheduling / optimization  &  --- & OpenFlow  \\
 & In-packet Bloom filter~\cite{macapuna2010}        & load balancing  &  NOX & OpenFlow  \\
+
+%\myrowcolor
+& {MicroTE~\cite{benson2011mTE}} & {traffic engineering with minimal overhead} & {NOX} & {OpenFlow}\\
+
+%\myrowcolor
+& {Middlepipes~\cite{Jamjoom2014_4}} & {Middleboxes as a PaaS} & {middlepipe controller} & {---}\\
+
 & OpenQoS~\cite{egilmez2012} & dynamic QoS routing for multimedia apps & Floodlight  & OpenFlow \\
+
+%\myrowcolor
+& {OSP~\cite{sgambelluri2013opt}} & {fast recovery through fast-failover groups} & {NOX} & {OpenFlow}\\
+
+%\myrowcolor
+& {PolicyCop~\cite{bari2013pc}} & {QoS policy management framework} & {Floodlight} & {OpenFlow}\\
+
+%\myrowcolor
+& {ProCel~\cite{Nagaraj2014_4}} & {Efficient traffic handling for software EPC} & {ProCel controller} & {---}\\
+
+%\myrowcolor
+& {Pronto~\cite{Xiong2014pronto,Xiong2014pronto2}} & {Efficient queries on distributed data stores} & {Beacon} & {OpenFlow}\\
+%& {Pronto~\cite{Xiong2014pronto,Xiong2014pronto2}} & {Efficient analytical queries on distributed data stores} & {Beacon} & {OpenFlow}\\
+
 & Plug-n-Serve~\cite{handigol2009-1}  & load balancing             &  NOX & OpenFlow      \\
 & QNOX~\cite{jeong2012}          & QoS enforcement                &  NOX & Generalized OpenFlow \\
+
+%\myrowcolor
+& {QoS for SDN~\cite{Sharma2014}} & {QoS over heterogeneous networks} & {Floodlight} & {OpenFlow}\\
+
 & QoS framework~\cite{kim2010} & QoS enforcement                &  NOX & OF with QoS extensions \\
 & QoSFlow~\cite{ishimori2013} & multiple packet schedulers to improve QoS & --- & OpenFlow\\
+
+%\myrowcolor
+& {QueuePusher~\cite{Palma2014}} & {Queue management for QoS enforcement} & {Floodlight} & {OpenFlow}\\
+
 & SIMPLE~\cite{qazi2013-1}  & middlebox-specific ``traffic steering'' & Extended POX & OpenFlow  \\
 & ViAggre SDN~\cite{skoldstrom2013-1} & divide and spread forwarding tables & NOX & OpenFlow\\
+
 \hline
-\multirow{9}{*}{\begin{minipage}{2cm}Mobility \\\& \\Wireless\end{minipage}} 
+\multirow{10}{*}{\begin{minipage}{2cm}Mobility \\\& \\Wireless\end{minipage}} 
+& AeroFlux~\cite{schulz-zander2014-ons,schulz-zander2014-hotsdn} & scalable hierarchical WLAN control plane & Floodlight & OpenFlow, Odin \\
 & CROWD~\cite{ali-ahmad2013} & overlapping of LTE and WLAN cells & --- & OpenFlow \\
 & CloudMAC~\cite{vestin2013} & outsourced processing of WLAN MACs & --- & OpenFlow \\
+
+%\myrowcolor
+& {C-RAN~\cite{Dawson2014}} & {RAN~\cite{gudipati2013} virtualization for mobile nets} & {---} & {---} \\
+
 & FAMS~\cite{yamasaki2011} & flexible VLAN system based on OpenFlow & ProgrammableFlow & OpenFlow \\
 & MobileFlow~\cite{pentikousis2013} & flow-based model for mobile networks & MobileFlow & SDMN API\\
-& Odin~\cite{suresh2012} & smooth hand-off and load balancing & Floodlight & OpenFlow \\
+& Odin~\cite{schulz-zander2014-atc} & programmable virtualized WLANs & Floodlight & OpenFlow, Odin \\
 & OpenRAN~\cite{yang2013} & vertical programmability and virtualization & --- & --- \\
 & OpenRoads~\cite{yap2010-1} & control of the data path using OpenFlow & FlowVisor & OpenFlow \\
 & SoftRAN~\cite{gudipati2013} & load balancing and interference management & --- & Femto API~\cite{smallcellforum2013,Chandrasekhar2008} \\
+
 \hline
-\multirow{7}{*}{\begin{minipage}{2cm}Measurement \\\& \\Monitoring\end{minipage}} 
+\multirow{10}{*}{\begin{minipage}{2cm}Measurement \\\& \\Monitoring\end{minipage}} 
 & BISmark~\cite{kim2013} & active and passive measurements & Procera framework & OpenFlow \\
+
+%\myrowcolor
+& {DCM~\cite{Yu2014_4}} & {distributed and coactive traffic monitoring} & {DCM controller} & {OpenFlow} \\
+
 & FleXam~\cite{shirali-shahreza2013} & flexible sampling extension for OpenFlow & --- & --- \\
 & FlowSense~\cite{yu2013} & measure link utilization in OF networks & --- & OpenFlow \\
 & measurement model~\cite{jose2011} & model for OF switch measurement tasks & --- & OpenFlow \\
+
+%\myrowcolor
+& OpenNetMon~\cite{niels2014open} & monitoring of QoS parameters to improve TE & POX & OpenFlow \\
+
+%\myrowcolor
+& {OpenSample~\cite{suh2014os}} & {low-latency sampling-based measurements} & {Floodlight} & {modified sFlow~\cite{sflow.orgforum2012}} \\
+
 & OpenSketch\,\cite{yu2013-1} & separated measurement data plane & OpenSketch & ``OpenSketch sketches'' \\
 & OpenTM~\cite{tootoonchian2010-1} & traffic matrix estimation tool & NOX & OpenFlow \\
 & PaFloMon\,\cite{argyropoulos2012} & passive monitoring tools defined by users & FlowVisor & OpenFlow \\
-\hline
-\multirow{15}{*}{\begin{minipage}{2cm}Security \\\& \\Dependability\end{minipage}} 
-& Active security~\cite{hand2013} & integrated security using network feedback control & Floodlight & OpenFlow \\
-& AVANT-GUARD~\cite{shin2013-3} & DoS security specific extensions to OF & POX & OpenFlow \\
-& CloudWatcher~\cite{shin2012}  & framework for monitoring clouds & NOX & OpenFlow      \\
-& DDoS detection~\cite{braga2010-1}     & attacks detection and mitigation    &  NOX & OpenFlow      \\
-& Elastic IP and Security Group~\cite{stabler2012}  & an SDN based implementation of Amazon's Elastic IP and Security Groups & NOX & OpenFlow   \\
-& Ethane~\cite{casado2007-1}   & flow-rule enforcement (match/action)&  Ethane controller & first instance of OpenFlow  \\
-& FortNOX ~\cite{porras2012}    & security flow rules prioritization &  NOX & OpenFlow      \\
-& FRESCO ~\cite{shin2013-1}    & framework for security services composition & NOX & OpenFlow      \\
-& LiveSec~\cite{wang2012-1}       & security policy enforcement          &  NOX & OpenFlow      \\
-& NetFuse~\cite{wang2013} & protection against OF traffic overload & --- & OpenFlow \\
-& OF-RHM~\cite{jafarian2012}    & random host mutation (defense) &  NOX & OpenFlow      \\
-& OpenSAFE~\cite{ballard2010} & direct spanned net traffic in arbitrary ways & NOX & OpenFlow \\
-& Reliable multicasting~\cite{kotani2012} & reduce packet loss when failures occur & Trema & OpenFlow \\
-& SANE~\cite{casado2006}       & security policy enforcement         &  SANE controller & SANE header (pre-OpenFlow) \\
-& VAVE~\cite{yao2011} & source address validation with a global view & NOX & OpenFlow \\
+
+%\myrowcolor
+& {PayLess~\cite{chowdhury2014payless}} & {query-based real-time monitoring framework} & {Floodlight} & {OpenFlow} \\
+
 \hline
 \multirow{7}{*}{\begin{minipage}{2cm}Data Center \\Networking\end{minipage}} 
 & Big Data Apps ~\cite{wang2012} & optimize network utilization & --- & OpenFlow   \\
@@ -1304,6 +1492,62 @@ Table~\ref{tab:managementapplications} summarizes several applications categoriz
 & LIME~\cite{keller2012} & live network migration & Floodlight & OpenFlow      \\
 & NetGraph ~\cite{raghavendra2012} & graph queries for network management & --- & OpenFlow, SNMP   \\
 & OpenTCP~\cite{ghobadi2013} & dynamic and programmable TCP adaptation & --- & --- \\
+
+\hline
+
+\end{tabularx}
+\end{center}
+\end{table*}
+}
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{table*}[!htp]
+\caption{\ManaApps}
+\label{tab:managementapplications2}
+\begin{center}
+\footnotesize
+%\rowcolors{1}{lightgray}{white}
+\begin{tabularx}{\linewidth}{p{2cm}p{3.2cm}p{5.1cm}Xp{3.3cm}}
+\hline
+\textbf{Group} & \textbf{Solution/Application} & \textbf{Main purpose} & \textbf{Controller} & \textbf{Southbound API} \\
+\hline
+\multirow{20}{*}{\begin{minipage}{2cm}Security \\\& \\Dependability\end{minipage}} 
+& Active security~\cite{hand2013} & integrated security using feedback control & Floodlight & OpenFlow \\
+& AVANT-GUARD~\cite{shin2013-3} & DoS security specific extensions to OF & POX & OpenFlow \\
+& CloudWatcher~\cite{shin2012}  & framework for monitoring clouds & NOX & OpenFlow      \\
+
+%\myrowcolor
+& Cognition~\cite{tantar2014evolve} & cognitive functions to enhanced security mechanisms in network applications & {---} & {---} \\
+
+& DDoS detection~\cite{braga2010-1}     & attacks detection and mitigation    &  NOX & OpenFlow      \\
+& Elastic IP \& Security~\cite{stabler2012}  & SDN-based elastic IP and security groups & NOX & OpenFlow   \\
+& Ethane~\cite{casado2007-1}   & flow-rule enforcement (match/action)&  Ethane controller & first instance of OpenFlow  \\
+
+%\myrowcolor
+& {FlowNAC~\cite{Matias2014}} & {flow-based network access control} & {NOX} & {OpenFlow} \\
+
+& FortNOX ~\cite{porras2012}    & security flow rules prioritization &  NOX & OpenFlow      \\
+& FRESCO ~\cite{shin2013-1}    & framework for security services composition & NOX & OpenFlow      \\
+& LiveSec~\cite{wang2012-1}       & security policy enforcement          &  NOX & OpenFlow      \\
+
+%\myrowcolor
+& {MAPPER~\cite{Sapio2014}} & {fine-grained access control} & {---} & {---}\\
+
+& NetFuse~\cite{wang2013} & protection against OF traffic overload & --- & OpenFlow \\
+& OF-RHM~\cite{jafarian2012}    & random host mutation (defense) &  NOX & OpenFlow      \\
+& OpenSAFE~\cite{ballard2010} & direct spanned net traffic in arbitrary ways & NOX & OpenFlow \\
+
+%\myrowcolor
+& OrchSec~\cite{zaalouk2014} & architecture for developing security apps & \textit{any} & Flow-RT~\cite{sflowrt2014}, OpenFlow\\
+
+& Reliable multicasting~\cite{kotani2012} & reduce packet loss when failures occur & Trema & OpenFlow \\
+& SANE~\cite{casado2006}       & security policy enforcement         &  SANE controller & SANE header (pre-OF) \\
+
+%\myrowcolor
+& {SDN RTBH~\cite{Giotis2014}} & {DoS attack mitigation} & {POX} & {OpenFlow}\\
+
+& VAVE~\cite{yao2011} & source address validation with a global view & NOX & OpenFlow \\
+
 \hline
 \end{tabularx}
 \end{center}
@@ -1318,15 +1562,18 @@ ElasticTree~\cite{heller2010}, Hedera~\cite{al-fares2010},
 OpenFlow-based server load balancing~\cite{wang2011},
 Plug-n-Serve~\cite{handigol2009-1} and Aster*x~\cite{handigol2009},
 In-packet Bloom filter~\cite{macapuna2010},
-SIMPLE~\cite{qazi2013-1}, QNOX~\cite{jeong2012}, QoS framework~\cite{kim2010},
-ALTO~\cite{scharf2013}, and ViAggre SDN~\cite{skoldstrom2013-1}.
-The main goals of most applications is to engineer traffic with the aim of minimizing power consumption, maximizing aggregate network utilization, providing optimized load balancing, and other generic traffic optimization techniques.
+SIMPLE~\cite{qazi2013-1}, QNOX~\cite{jeong2012}, QoS framework~\cite{kim2010}, 
+\coloredtext{QoS for SDN~\cite{Sharma2014}}, 
+ALTO~\cite{scharf2013}, ViAggre SDN~\cite{skoldstrom2013-1},
+\coloredtext{ProCel~\cite{Nagaraj2014_4}, FlowQoS~\cite{Seddiki2014_4}, and Middlepipes~\cite{Jamjoom2014_4}.
+In addition to these, recent proposals include optimization of rules placement~\cite{Nguyen2014_4}, the use of MAC as an universal label for efficient routing in data centers~\cite{Schwabe2014_4}, among other techniques for flow management, fault tolerance, topology update, and traffic characterization~\cite{Akyildiz2014traffic}}.
+The main goal of most applications is to engineer traffic with the aim of minimizing power consumption, maximizing aggregate network utilization, providing optimized load balancing, and other generic traffic optimization techniques.
 
 Load balancing was one of the first applications envisioned for SDN/OpenFlow.
 Different algorithms and techniques have been proposed for this purpose~\cite{wang2011,handigol2009,handigol2009-1}. 
 One particular concern is the scalability of these solutions.
 A technique to allow this type of applications to scale is to use wildcard-based rules to perform proactive load balancing~\cite{wang2011}.
-Wildcards can be utilized for aggregating clients requests based on the ranges of IP prefixes, for instance, allowing the distribution and directing of large groups of client requests without requiring controller intervention for every new flow
+Wildcards can be utilized for aggregating clients requests based on the ranges of IP prefixes, for instance, allowing the distribution and directing of large groups of client requests without requiring controller intervention for every new flow.
 In tandem, operation in reactive mode may still be used when traffic bursts are detected.
 The controller application needs to monitor the network traffic and use some sort of 
 threshold in the flow counters to redistribute clients among the servers when bottlenecks are likely to happen.
@@ -1356,7 +1603,7 @@ topology.
 Such technique has been proposed in an SDN setting, allowing the maximization of aggregated network utilization with minimal scheduling overhead~\cite{al-fares2010}. 
 
 SDN can also be used to provide a fully automated system for controlling the configuration of routers.
-This can be particularly useful in scenarios that apply virtual aggregation~\cite{ballani2009} .
+This can be particularly useful in scenarios that apply virtual aggregation~\cite{ballani2009}.
 This technique allows network operators to reduce the data replicated on routing tables, which 
 is one of the causes of routing tables' growth~\cite{meyer2007}. 
 A specialized routing application~\cite{skoldstrom2013-1} can calculate, divide and configure the routing tables of the different routing devices through a southbound API such 
@@ -1365,10 +1612,16 @@ as OpenFlow.
 Traffic optimization is another interesting application for large scale service providers, where dynamic scale-out 
 is required. For instance, the dynamic and scalable provisioning of VPNs in cloud infrastructures, using protocolols
 such as ALTO~\cite{alimi2013}, can be simplified through an SDN-based approach~\cite{scharf2013}.
+\coloredtext{Recent work has also shown that optimizing rules placement can increase network efficiency~\cite{Nguyen2014_4}.
+Solutions such as ProCel~\cite{Nagaraj2014_4}, designed for cellular core networks, are capable of reducing the signaling traffic up to 70\%, which represents a significant achievement.}
 
 Other applications that perform routing and traffic engineering include application-aware 
-networking for video streaming~\cite{jarschel2013} and improved QoS by employing multiple packet 
+networking for \coloredtext{video and data streaming~\cite{jarschel2013,Edwards2014_4}} and improved QoS by employing multiple packet 
 schedulers~\cite{ishimori2013} and other techniques~\cite{kim2010,jeong2012,egilmez2012, kumar2013}.
+%Differently from previous approaches, optimization of rules placement gives more emphasis on where to forward traffic, instead of how to do it.
+%Additionally, it also allows operators to utilize CDN~\cite{Pallis2006_4} caches in a smarter way and deploy virtualized network functions~\cite{onf2014-1}.
+As traffic engineering is a crucial issue in all kinds of networks, upcoming methods, techniques and innovations can be expected in the context of SDNs.
+
 
 \vspace{2mm}
 \noindent \textit{Mobility \& wireless}
@@ -1376,13 +1629,11 @@ schedulers~\cite{ishimori2013} and other techniques~\cite{kim2010,jeong2012,egil
 The current distributed control plane of wireless networks is suboptimal for managing the limited 
 spectrum, allocating radio resources, implementing handover mechanisms, managing interference, and performing efficient load-balancing between cells.
 SDN-based approaches represent an opportunity for making it easier to deploy and manage different types of wireless networks, such as WLANs and cellular 
-networks~\cite{suresh2012,yap2010-1,ali-ahmad2013,gudipati2013,li2012,jin2013}.
+networks~\cite{schulz-zander2014-atc,yap2010-1,ali-ahmad2013,gudipati2013,li2012,jin2013}.
 Traditionally hard-to-implement but desired features are indeed becoming a reality with the SDN-based wireless networks. 
-These include seamless mobility through efficient hand-overs~\cite{suresh2012,dely2011,li2012}, load balancing~\cite{suresh2012,gudipati2013}, creation of on-demand virtual access points (VAPs)~\cite{suresh2012,vestin2013}, downlink scheduling (e.g., an OpenFlow switch can do a rate shaping or time division) ~\cite{vestin2013}, dynamic spectrum usage~\cite{vestin2013}, enhanced inter-cell 
-interference coordination~\cite{vestin2013,li2012}, device to device offloading (i.e., decide in when and how LTE transmissions should be offloaded to users adopting the D2D paradigm~\cite{yang2013d2d})~\cite{ali-ahmad2013}, per client and/or base station resource block allocations (i.e.,  time and frequency slots in LTE/OFDMA networks, which are known as resource blocks)~\cite{gudipati2013,ali-ahmad2013,jin2013}, control and assign 
-transmission and power parameters in devices or in a group basis (e.g., algorithms to optimize the transmission and power parameters of
-transmission and power parameters of WLAN devices, define and assign transmission power values to each resource block, at each base station, in LTE/OFDMA networks) ~\cite{ali-ahmad2013,gudipati2013}, simplified administration~\cite{suresh2012,yap2010-1,gudipati2013}, easy management of heterogenous network technologies~\cite{yap2010-1,gudipati2013,yap2010-2}, interoperability between different networks~\cite{yap2010-2,jin2013}, shared wireless infrastructures~\cite{yap2010-2}, seamless subscriber mobility and cellular networks~\cite{li2012}, QoS and access control policies made feasible and easier~\cite{li2012,jin2013}, and easy deployment of new applications 
-~\cite{suresh2012,gudipati2013,yap2010-2}. 
+These include seamless mobility through efficient hand-overs~\cite{schulz-zander2014-atc,dely2011,li2012}, load balancing~\cite{schulz-zander2014-atc,gudipati2013}, creation of on-demand virtual access points (VAPs)~\cite{schulz-zander2014-atc,vestin2013}, downlink scheduling (e.g., an OpenFlow switch can do a rate shaping or time division) ~\cite{vestin2013}, dynamic spectrum usage~\cite{vestin2013}, enhanced inter-cell 
+interference coordination~\cite{vestin2013,li2012}, device to device offloading (i.e., decide when and how LTE transmissions should be offloaded to users adopting the D2D paradigm~\cite{yang2013d2d})~\cite{ali-ahmad2013}, per client and/or base station resource block allocations (i.e.,  time and frequency slots in LTE/OFDMA networks, which are known as resource blocks)~\cite{gudipati2013,ali-ahmad2013,jin2013}, control and assign 
+transmission and power parameters in devices or in a group basis (e.g., algorithms to optimize the transmission and power parameters of WLAN devices, define and assign transmission power values to each resource block, at each base station, in LTE/OFDMA networks) ~\cite{ali-ahmad2013,gudipati2013}, simplified administration~\cite{schulz-zander2014-atc,yap2010-1,gudipati2013}, easy management of heterogenous network technologies~\cite{yap2010-1,gudipati2013,yap2010-2}, interoperability between different networks~\cite{yap2010-2,jin2013}, shared wireless infrastructures~\cite{yap2010-2}, seamless subscriber mobility and cellular networks~\cite{li2012}, QoS and access control policies made feasible and easier~\cite{li2012,jin2013}, and easy deployment of new applications~\cite{schulz-zander2014-atc,gudipati2013,yap2010-2}. 
 
 %The current distributed control plane of wireless networks is suboptimal for managing the limited 
 %spectrum, allocating radio resources, implementing handover mechanisms, managing interference, and performing efficient load-balancing between cells.
@@ -1405,13 +1656,12 @@ optimize algorithms for better hand-overs, fine-grained control of transmit powe
 among other management tasks.
 
 Light virtual access points (LVAPs) is another interesting way of improving the management capabilities of 
-wireless networks, as proposed by Odin~\cite{suresh2012}. Differently from OpenRadio, 
-it works with existing wireless hardware and does not impose any change on IEEE 802.11 standards. An LVAP is 
-implemented as a unique BSSID associated with a specific client, which means that there is a one-to-one mapping 
-between LVAPs and clients. This empowers infrastructure operators to provide seamless mobility, load balancing 
-and hidden terminal mitigation. For instance, when a user moves from one access point (AP) to another, the 
-network mobility management application can automatically and proactively act and move the client LVAP from 
-AP to the other. In this way, a wireless client will not even notice that it started to use a different AP 
+wireless networks, as proposed by the Odin~\cite{schulz-zander2014-atc} framework. 
+In contrast to OpenRadio, 
+it works with existing wireless hardware and does not impose any change to IEEE 802.11 standards. An LVAP is implemented as a unique BSSID associated with a specific client, which means that there is a one-to-one mapping between LVAPs and clients. This per-client access point (AP) abstraction simplifies the handling of client associations, authentication, handovers, and unified slicing of both the wired and wireless portions of the network. Odin achieves control logic isolation between slices, since LVAPs are the primitive type upon which applications make control decisions, and applications do not have visibility of LVAPs from outside their slice.
+ This empowers infrastructure operators to provide services through Odin applications, such as a mobility manager, client-based load balancer, channel selection algorithm, and wireless troubleshooting application within different network slices. For instance, when a user moves from one AP to another, the
+ network mobility management application can automatically and proactively act and move the client LVAP from one
+AP to the other. In this way, a wireless client will not even notice that it started to use a different AP
 because there is no perceptive hand-off delay, as it would be the case in traditional wireless networks.
 
 %In~\cite{dely2011} the authors propose and demonstrate an OpenFlow based approach to settle the problem of client mobility in a wireless mesh network.
@@ -1455,8 +1705,8 @@ gateway can perform reactive traffic shaping considering the current measurement
 
 The second class of solutions typically involve different kinds of sampling and estimation 
 techniques to be applied, in order to reduce the burden of the control plane with respect to the collection of data plane statistics.
-Different techniques have been applied to achieve this goal, such as stochastic and deterministic packet sampling techniques~\cite{mehdi2011}, traffic matrix estimation~\cite{tootoonchian2010-1}, and fine-grained monitoring of 
-wildcard rules~\cite{wette2013}.
+Different techniques have been applied to achieve this goal, such as stochastic and deterministic packet sampling techniques~\cite{mehdi2011}, traffic matrix estimation~\cite{tootoonchian2010-1}, fine-grained monitoring of wildcard rules~\cite{wette2013}, \coloredtext{two-stage Bloom filters~\cite{DBLP:journals/comsur/TarkomaRL12} 
+to represent monitoring rules and provide high measurement accuracy without incurring in extra memory or control plane traffic overhead~\cite{Yu2014_4}, and special monitoring functions (extensions to OpenFlow) in forwarding devices to reduce traffic and processing load on the control plane~\cite{kempf2012}.}
 Point-to-point traffic matrix estimation, in particular, can help in network design and operational tasks such as load balancing, anomaly detection, capacity planning and 
 network provisioning.
 With information on the set of active flows in the network, routing information (e.g., from the routing application), flow paths, and flow counters in the switches it is possible to 
@@ -1481,15 +1731,21 @@ Finally, the match rule identifies a counting index, which is used to calculate 
 entries is enough for the classification stage, the flexible counters are stored in SRAM.
 This makes the OpenSketch's operation efficient (fast matching) and cost-effective (cheaper SRAMs to store counters).
 
+\coloredtext{Other monitoring frameworks, such as OpenSample~\cite{suh2014os} and PayLess~\cite{chowdhury2014payless}, propose different mechanisms for delivering real-time, low-latency and flexible monitoring capabilities to SDN without impairing the load and performance of the control plane. 
+The proposed solutions take advantage of sampling technologies like sFlow~\cite{sflow.orgforum2012} to monitor high-speed networks, and flexible collections of loosely coupled (plug-and-play) components to provide abstract network views
+%, and uniform ways to deal with highly variable tasks (e.g., data aggregation levels and sampling methods), altogether 
+yielding high-performance and efficient network monitoring approaches~\cite{suh2014os,chowdhury2014payless,wette2013}.
+}
+
 \vspace{2mm}
 \noindent \textit{Security \& Dependability}
 
 An already diverse set of security and dependability proposals is emerging in the context of SDNs.
 Most take advantage 
 of SDN for improving services required to secure systems and networks, such as policy enforcement (e.g., access 
-control, firewalling)~\cite{casado2006,wang2012-1,yao2011,stabler2012}, DoS attacks detection and mitigation~\cite{braga2010-1}, random host mutation (stabler2012) (i.e., randomly and frequently mutate the IP addresses of end-hosts to break the attackers' assumption about static IPs, which is the common case)~\cite{jafarian2012}, monitoring of cloud infrastructures for fine-grained security inspections (i.e., automatically analyze and detour suspected traffic to be  further inspected by specialized network security appliances, such as deep packet inspection systems) ~\cite{shin2012}, traffic anomaly detection~\cite{mehdi2011,braga2010-1}, and so forth~\cite{casado2006,wang2012-1,braga2010-1,jafarian2012,shin2012,stabler2012,yao2011,mehdi2011}.
-Others address OpenFlow-based networks issues, such as flow rule prioritization, security 
-services composition, and protection against traffic overload~\cite{porras2012,shin2013-1,shin2013-3,wang2013}.
+control, \coloredtext{firewalling, middleboxes as middlepipes~\cite{Jamjoom2014_4})~\cite{casado2006,wang2012-1,yao2011,stabler2012,Jamjoom2014_4}, DoS attacks detection and mitigation~\cite{braga2010-1,Giotis2014}}, random host mutation~\cite{stabler2012} (i.e., randomly and frequently mutate the IP addresses of end-hosts to break the attackers' assumption about static IPs, which is the common case)~\cite{jafarian2012}, monitoring of cloud infrastructures for fine-grained security inspections (i.e., automatically analyze and detour suspected traffic to be  further inspected by specialized network security appliances, such as deep packet inspection systems) ~\cite{shin2012}, \coloredtext{traffic anomaly detection~\cite{mehdi2011,braga2010-1,Giotis2014}}, \coloredtext{fine-grained flow-based network access control~\cite{Matias2014}, fine-grained policy enforcement for personal mobile applications~\cite{Sapio2014}} and so forth~\cite{casado2006,wang2012-1,braga2010-1,jafarian2012,shin2012,stabler2012,yao2011,mehdi2011}.
+Others address OpenFlow-based networks issues, \coloredtext{such as flow rule prioritization, security 
+services composition, protection against traffic overload, and protection against malicious administrators~\cite{porras2012,shin2013-1,shin2013-3,wang2013,Matsumoto2014_4}}.
 
 There are essentially two approaches, one involves using SDNs to improve network security, and another for improving the 
 security of the SDN \emph{itself}. 
@@ -1515,7 +1771,7 @@ With either application, malicious actions are blocked before entering the criti
 
 SDN has been successfully applied for other purposes, namely for the detection (and reaction) against DDoS flooding attacks~\cite{braga2010-1}, and active security~\cite{hand2013}.
 OpenFlow forwarding devices make it easier to collect a variety of information from the network, in a timely 
-manner, which is very handy for algorithms specialized in detecting DDoS flooding attacks
+manner, which is very handy for algorithms specialized in detecting DDoS flooding attacks.
 
 The capabilities offered by software-defined networks in increasing the ability to collect statistics data from the network and of allowing applications to actively program the forwarding devices, are powerful for proactive and smart 
 security policy enforcement techniques such as Active security~\cite{hand2013}.
@@ -1569,8 +1825,8 @@ agility in provisioning network resources, for example by means of network virtu
 and so forth~\cite{Kant20092939,greenberg2008cost,bari2013}.
 Not surprisingly, many of these issues remain open due to the complexity and inflexibility of traditional network architectures.
 
-The emergence of software-defined networks has been expected to change the current state of affairs.
-Early research efforts have indeed showed that data center networking can significantly benefit from SDN in solving different problems such as live network migration~\cite{keller2012}, improved network management~\cite{keller2012,arefin2013}, eminent failure avoidance~\cite{keller2012,arefin2013}, rapid deployment from development to production networks~\cite{keller2012}, troubleshooting~\cite{keller2012,raghavendra2012}, and optimization of network utilization~\cite{raghavendra2012,wang2012,das2013,arefin2013}.
+The emergence of SDN is expected to change the current state of affairs.
+Early research efforts have indeed showed that data center networking can significantly benefit from SDN in solving different problems such as live network migration~\cite{keller2012}, improved network management~\cite{keller2012,arefin2013}, eminent failure avoidance~\cite{keller2012,arefin2013}, rapid deployment from development to production networks~\cite{keller2012}, troubleshooting~\cite{keller2012,raghavendra2012},  optimization of network utilization~\cite{raghavendra2012,wang2012,das2013,arefin2013}, \coloredtext{dynamic and elastic provisioning of middleboxes-as-a-service~\cite{Jamjoom2014_4}, minimization of flow setup latency and reduction of controller operating costs~\cite{Krishnamurthy2014_4}}. 
 SDN can also offer networking primitives for cloud applications, solutions to predict network transfers of applications~\cite{wang2012,das2013}, mechanisms for fast reaction to operation problems, network-aware VM placement~\cite{raghavendra2012,benson2011},  QoS support~\cite{raghavendra2012,benson2011}, realtime network monitoring and problem detection~\cite{raghavendra2012,das2013,arefin2013}, security policy enforcement services and mechanisms~\cite{raghavendra2012,benson2011}, and enable programmatic adaptation of transport protocols~\cite{wang2012,ghobadi2013}.
 
 %Data center networking can benefit from SDN in solving problems such as live network migration~\cite{keller2012}, improved network management~\cite{keller2012,arefin2013}, eminent failure avoidance~\cite{keller2012,arefin2013}, rapid deployment from development to production networks~\cite{keller2012}, troubleshooting~\cite{keller2012,raghavendra2012}, and optimization of network utilization~\cite{raghavendra2012,wang2012,das2013,arefin2013}.
@@ -1588,14 +1844,14 @@ SDN can also offer networking primitives for cloud applications, solutions to pr
 %SDN can also offer networking primitives for cloud applications, solutions to predict network transfers of applications, mechanisms for fast reaction to operation problems, and enable programmatic adaptation of transport protocols~\cite{keller2012,raghavendra2012,wang2012,benson2011,das2013,arefin2013,ghobadi2013}.
 
 SDN can help infrastructure providers to expose more networking primitives to their customers, by allowing virtual network isolation, custom addressing, and the placement of middleboxes and virtual desktop cloud applications~\cite{benson2011,calyam2013}. 
-To fully explore the potential of virtual networks in clouds, an essential features is virtual network migration. 
+To fully explore the potential of virtual networks in clouds, an essential feature is virtual network migration. 
 Similarly to traditional virtual machine migration, a virtual network may need to be migrated when its virtual machines move from one place to another. Integrating live migration of virtual 
 machines and virtual networks is one of the forefront challenges~\cite{keller2012}.
 To achieve this goal it is necessary to dynamically reconfigure all affected networking devices (physical or 
 virtual).
-This as shown to be possible with SDN platforms, such as NVP~\cite{koponen}.
+This was shown to be possible with SDN platforms, such as NVP~\cite{koponen}.
 
-Another potential application of SDN in data centers is in detecting abnormal behaviors of the network 
+Another potential application of SDN in data centers is in detecting abnormal behaviors in network 
 operation~\cite{arefin2013}. By using different behavioral models and collecting the necessary 
 information from elements involved in the operation of a data center (infrastructure, operators, applications), 
 it is possible to continuously build signatures for applications by passively capturing control traffic.
@@ -1607,21 +1863,21 @@ infrastructure.
 \vspace{2mm}
 \noindent \textit{Towards SDN App Stores}
 
-As can be observed in Table~\ref{tab:managementapplications}, most SDN applications rely on NOX and OpenFlow.
+As can be observed in Tables~\ref{tab:managementapplications1} and~\ref{tab:managementapplications2}, most SDN applications rely on NOX and OpenFlow.
 NOX was the first controller available for general use, making it a natural choice for most use-cases so far.
 As indicated by the sheer number of security-related applications, security is probably one of the killer 
 applications for SDNs. Curiously, while most use cases rely on OpenFlow, new solutions such as SoftRAN are 
 considering different APIs, as is the case of the Femto API~\cite{smallcellforum2013,Chandrasekhar2008}. This diversity of 
 applications and APIs will most probably keep growing in SDN.
 
-There are other kinds of management applications that do not easily fit in our taxonomy, such as Avior~\cite{parraga2013}, OESS~\cite{globalnoc2013}, and SDN App Store~\cite{duckett2013,hp2013-2}.
+There are other kinds of \manapps that do not easily fit in our taxonomy, such as Avior~\cite{parraga2013}, OESS~\cite{globalnoc2013}, and SDN App Store~\cite{duckett2013,hp2013-2}.
 Avior and OESS are graphical interfaces and sets of software tools that make it easier to configure and manage controllers (e.g., Floodlight) and OpenFlow-enabled switches, respectively.
 By leveraging their graphical functions it is possible to program OpenFlow enabled devices without coding in a particular programming language.
 
 The SDN App Store~\cite{duckett2013,hp2013-2}, owned by HP, is probably the first SDN 
 application market store. Customers using HP's OpenFlow controller have access to the online SDN App Store 
 and are able to select applications to be dynamically downloaded and installed in the controller. 
-The idea is similar to the Android Market or the Apple Store, making is easier for developers to provide 
+The idea is similar to the Android Market or the Apple Store, making it easier for developers to provide 
 new applications and for customers to obtain them.
 
 \subsection{Cross-layer issues}
@@ -1662,8 +1918,8 @@ by different types of devices, technologies and vendor specific components and f
 As a consequence, 
 these solutions may find it hard to be widely implemented and deployed in current networks.
 
-Software-defined networks' capability of programming the network offers some hope in this respect.
-Its software-based control and the use of open standards for control communication can potentially make debug and troubleshoot easier.
+\coloredtext{
+SDN offers some hope in this respect. The hardware-agnostic software-based control capabilities} and the use of open standards for control communication can potentially make debug and troubleshoot easier.
 The flexibility and 
 programmability introduced by SDN is indeed opening new avenues for developing better tools to debug, troubleshoot, 
 verify and test networks~\cite{handigol2012-1,wundsam2011,canini2012-1,rotsos2012-1,al-shaer2010,khurshid2012,kuzniar2012,altekar2010,kuzniar2012}.
@@ -1689,12 +1945,13 @@ This tool allows operators to
 perform fine-grained tracing of network behavior, being able to decide which subsets of the network will 
 be recorded and, afterwards, select specific parts of the traces to be replayed. These replays provide 
 valuable information to find the root cause of the network misbehavior.
+\coloredtext{Likewise, NetRevert~\cite{Zhang2014_42} also records the state of OpenFlow networks. However, the primary goal is not to reproduce network behavior, but rather to provide rollback recovery in case of failures, which is a common approach used in distributed systems for eliminating transient errors in nodes~\cite{Plank1995,Plank1999}.}
 
 Despite the availability of these debugging and verification tools, it is still difficult to answer questions such as: What is happening to my packets that are flowing from point A to point B? What path do they follow? What header modifications do they undergo on the way? 
 To answer some of these questions one could recur to the \emph{history} of the packets. A packet's history corresponds 
 to the paths it uses to traverse the network, and the header modifications in each hop of the path.
 NetSight~\cite{handigol2014} is a platform whose primary goal is to allow applications that use the history of the packets to be built, in order to find out problems in a network.
-This platform is composed of three essential elements: (1) NetSight, with its dedicate servers that receive and 
+This platform is composed of three essential elements: (1) NetSight, with its dedicated servers that receive and 
 process the postcards for building the packet history, (2) the NetSigh-SwitchAssist, which can be used in 
 switches to reduce the processing burden on the dedicated servers, and (3) the NetSight-HostAssist to generate 
 and process postcards on end hosts (e.g., in the hypervisor on a virtualized infrastructure).
@@ -1713,7 +1970,12 @@ traffic patterns and routing decisions that might be contributing to link load.
 Verification and testing tools can complement debugging and troubleshooting.
 Recent research~\cite{khurshid2012,altekar2010,al-shaer2010,canini2012-1,kuzniar2012,ruchansky2013,zeng2014} 
 has shown that verification techniques can be applied to detect and avoid problems in SDN, 
-such as forwarding loops and black holes. Verification can be done at different layers (at the controllers, management applications, or network devices).
+such as forwarding loops and black holes. Verification can be done at different layers (at the controllers, \manapps, or network devices).
+\coloredtext{Additionally, there are different network properties  -- mostly topology-specific -- that can be formally verified, provided a network model is available.
+Examples of such properties are connectivity, loop freedom, and access control~\cite{Casado2014_4}.
+A number of tools have also been proposed to evaluate the performance of OpenFlow controllers by emulating the load of large-scale networks (e.g., Cbench~\cite{sherwood2011}, OFCBenchmark~\cite{jarschel2012}, PktBlaster~\cite{veryxtech}).
+Similarly, benchmarking tools for OpenFlow switches are also available (e.g., OFLOPS~\cite{rotsos2012-1}, FLOPS-Turbo~\cite{Rotsos2014}).}
+
 
 %Most of the existing testing and verification solutions can be classified in correctness verification 
 %through pre-defined properties and constraints~\cite{canini2012-1,kuzniar2012,son2013}, off-line analysis and verification of specific configuration (e.g., rules of the flow tables)~\cite{al-shaer2010}, online checking of network invariants and %policies~\cite{khurshid2012,kazemian2013}, compliance and performance evaluation of devices by measuring capabilities and bottlenecks~\cite{rotsos2012-1}, formal models for identifying unexpected behavior~\cite{ruchansky2013}, and fast %and scalable verification of the correctness of the entire forwarding state in very large networks~\cite{zeng2014}.
@@ -1738,7 +2000,7 @@ With this tool, users are able to observe and evaluate forwarding table consiste
 flow space granularity, packet modification types, and traffic monitoring capabilities (e.g., counters).
 
 FlowChecker~\cite{al-shaer2010}, OFTEN~\cite{kuzniar2012}, and VeriFlow~\cite{khurshid2012} are three examples of tools to verify correctness 
-properties violations on the system. While the former two do offline analysis, the latter is capable of 
+properties violations on the system. While the former two are based on offline analysis, the latter is capable of 
 online checking of network invariants. Verification constraints include security and reachability issues, 
 configuration updates on the network, loops, black holes, etc.
 
@@ -1748,10 +2010,21 @@ when it under-specifies some aspects of the protocol or due to a very specific s
 In such situations, model checking techniques such as Alloy can help to find and correct unexpected 
 behaviors.
 
+\coloredtext{Tools such as FLOWGUARD~\cite{Hu2014_4} are specifically designed to detect and resolve security policy violations in OpenFlow-enabled networks.
+FLOWGUARD is able to examine on-the-fly network policy updates, check indirect security violations (e.g., OpenFlow's \texttt{Set-Field} actions modification) and perform stateful monitoring.
+The framework uses five resolution strategies for real-time security policy violation resolution,
+flow rejecting, dependency breaking, update rejecting, flow removing, and packet blocking~\cite{Hu2014_4}.
+These resolutions are applied over diverse update situations in OpenFlow-enabled networks.
+
+More recently, tools such as VeriCon~\cite{ball2014vericon} have been designed to verify the correctness of SDN applications in a large range of network topologies and by analyzing a broad range of sequences of network events.
+In particular, VeriCon confirms, or not, the correct execution of the SDN program.
+%This type of tools are essential to guarantee the correct network operation once applications are considered the new ``brains of the network''.
+}
+
 One of the challenges in testing and verification is to verify forwarding tables in very large networks to find routing errors, which can cause traffic losses and security breaches, as quickly as possible.
 In large scale networks, it is not possible to assume that the network snapshot, at any point, is consistent, 
 due to the frequent changes in routing state.
-Therefore, solutions such as HSA~\cite{kazemian2012}, Anteater~\cite{mai2011}, NetPlumber~\cite{kazemian2013} and VeriFlow~\cite{khurshid2012} are not suited for this kind of environment.
+Therefore, solutions such as HSA~\cite{kazemian2012}, Anteater~\cite{mai2011}, NetPlumber~\cite{kazemian2013}, VeriFlow~\cite{khurshid2012}, \coloredtext{and assertion languages~\cite{Beckett2014_4}} are not suited for this kind of environment.
 Another important issue is related on how fast the verification process is done, especially in modern data centers
 that have very tight timing requirements. Libra~\cite{zeng2014} represents one of the first attempts to address 
 these particular challenges of large scale networks. 
@@ -1761,44 +2034,46 @@ to increase the scalability of the system.
 By using MapReduce computations, Libra is capable of verifying the correctness of a 
 network with up to 10k nodes within one minute.
 
+\coloredtext{
+%It is also worth noting that other debugging and verification tools, such as Anteater~\cite{mai2011}, can be applied to SDN.
+Anteater~\cite{mai2011} is a tool that analyzes the data plane state of network devices by encoding switch configurations as boolean satisfiability problems (SAT) instances, allowing to use a SAT solver to analyze the network state.
+The tool is capable of verifying violations of invariants such as loop-free forwarding, connectivity, and consistency.
+These invariants usually indicate a bug in the network, i.e., their detection helps to increase the reliability of the network data plane.
+}
+
 \vspace{2mm}
-\noindent \textit{Simulation and emulation}
+\noindent \textit{Simulation and Emulation}
 
 Simulation and emulation software is of particular importance for fast prototyping and testing without the need for expensive physical devices.
-Mininet~\cite{lantz2010} is the first system that provides a quick and 
-easy way to prototype and evaluate SDN protocols and applications.
-One of the key properties of Mininet 
-is its use of software-based OpenFlow switches in virtualized containers, providing the exact same semantics of hardware-based OpenFlow  switches. This means that controllers or applications developed and tested in the emulated environment can be (in theory) deployed in an OpenFlow-enabled network without any modification. Users can easily emulate an OpenFlow network with hundreds of nodes and dozens of switches by using a single personal computer.
+Mininet~\cite{lantz2010} is the first system that provides a quick and easy way to prototype and evaluate SDN protocols and applications.
+One of the key properties of Mininet is its use of software-based OpenFlow switches in virtualized containers, providing the exact same semantics of hardware-based OpenFlow  switches.
+This means that controllers or applications developed and tested in the emulated environment can be (in theory) deployed in an OpenFlow-enabled network without any modification. Users can easily emulate an OpenFlow network with hundreds of nodes and dozens of switches by using a single personal computer.
 Mininet-HiFi~\cite{handigol2012} is an evolution of Mininet that enhances the container-based (lightweight) 
 virtualization with mechanisms to enforce performance isolation, resource provisioning, and accurate monitoring for 
 performance fidelity. 
-One of the main goals of Mininet-HiFi is to enable repeatable and realistic network experiments.
+One of the main goals of Mininet-HiFi is to improve the reproducibility of networking research.
 
 Mininet CE~\cite{antonenko2013} and SDN Cloud DC~\cite{teixeira2013} are extensions 
-to Mininet for enabling large scale simulations. Mininet CE combines groups of Mininet instances into one cluster 
-of simulator instances to model global scale networks. SDN Cloud DC enhances Mininet and POX to emulate an SDN-based 
+to Mininet for enabling large scale simulations.
+Mininet CE combines groups of Mininet instances into one cluster 
+of simulator instances to model global scale networks.
+SDN Cloud DC enhances Mininet and POX to emulate an SDN-based 
 intra-DC network by implementing new software modules such as data center topology discovery and network traffic generation. 
+\coloredtext{Recent emulation platform proposals that enable large scale experiments following a distributed approach include MaxiNet~\cite{wette2014}, DOT~\cite{roy2014}, and CityFlow~\cite{Carter2014}.
+The latter is a project with the main goal of building an emulated control plane for a city of one million inhabitants. 
+%In the CityFlow project they are interested in autonomous systems, virtual path slice engines and the application of quality of service, for instance.
+Such initiatives are a starting point to provide experimental insights for large-scale SDN deployments.
+}
 
-The capability of simulating OpenFlow devices has been added to the popular ns-3 simulator~\cite{ns3project2013}.  
+The capability of simulating OpenFlow devices has also been added to the popular ns-3 simulator~\cite{ns3project2013}.  
 %allow programmers to simulate OpenFlow based networks using Open vSwitch. 
 %Applications developed on this kind 
 %of simulators can be deployed on physical OpenFlow compliant environments without surprises.
-Another example of large scale simulation is \textit{fs-sdn}, which extends the \textit{fs} simulation engine~\cite{sommers2011} by incorporating a controller and switching components with OpenFlow support.
+Another simulator is \textit{fs-sdn}, which extends the \textit{fs} simulation engine~\cite{sommers2011} by incorporating a controller and switching components with OpenFlow support.
 Its main goal is to provide a more realistic and scalable simulation platform as compared to Mininet.
 %As an example, \textit{fs-sdn} generates SNMP-like counters byte/packet/flow measurements to improve the 
 %accuracy of the simulation.
-STS~\cite{ucbsts2013} is a simulator designed to allow developers to specify and apply a variety of test cases, while allowing them to interactively examine the state of the network.
-
-%Mininet~\cite{lantz2010},
-%Mininet-HiFi~\cite{handigol2012},
-%ns-3~\cite{ns3project2013}, 
-%STS~\cite{ucbsts2013},
-%ns-3~\cite{ns3project2013}, 
-%\textit{fs-sdn}~\cite{gupta2013}, 
-%Mininet CE~\cite{antonenko2013}, and 
-%SDN Cloud DC~\cite{teixeira2013} 
-%are examples of simulation tools conceive or adapted to software-defined networks.
-
+Finally, STS~\cite{ucbsts2013} is a simulator designed to allow developers to specify and apply a variety of test cases, while allowing them to interactively examine the state of the network.
 
 {\renewcommand{\arraystretch}{1.4}
 \begin{table*}[!htp]
@@ -1811,30 +2086,75 @@ STS~\cite{ucbsts2013} is a simulator designed to allow developers to specify and
 \hline
 \textbf{Group} & \textbf{Solution} & \textbf{Main purpose} & \textbf{Short description} \\
 \hline
-\multirow{5}{*}{Debugging} 
-& \texttt{ndb}~\cite{handigol2012-1} & \textit{gdb} alike debugging for networks & It provides basic debugging primitives that help developers to debug their networks. \\
-& NetSight~\cite{handigol2014} & multi purpose packet history & Allows operators to build flexible debugging, monitoring and profiling applications. \\ 
+\multirow{6}{*}{Debugging} 
+& \texttt{ndb}~\cite{handigol2012-1} & \textit{gdb} alike SDN debugging  & Basic debugging primitives that help developers to debug their networks. \\
+& NetSight~\cite{handigol2014} & multi purpose packet history & Allows to build flexible debugging, monitoring and profiling applications. \\ 
 & OFRewind~\cite{wundsam2011} & tracing and replay & OFRewind allows operators to do a fine-grained tracing of the network behavior. Operators can decide which subsets of the network will be recorded. \\
+
+%\myrowcolor
+& PathletTracer~\cite{Zhang2014_4} & inspect layer 2 paths & Allows to inspect low-level forwarding behavior through on-demand packet tracing capabilities.\\
+
+%\myrowcolor
+& SDN traceroute~\cite{Agarwal2014_4} & query OpenFlow paths & Allows users to discover the forwarding behavior of any Ethernet packet and debug problems regarding both forwarding devices and applications.\\
+
 \hline
-\multirow{15}{*}{Verification} 
+\multirow{26}{*}{Verification} 
+%\myrowcolor
+& Assertion language~\cite{Beckett2014_4} & debug SDN apps & Enables assertions about the data plane on the apps with support to dynamic changing verification conditions.\\
+
 & Cbench~\cite{sherwood2011} & evaluate OpenFlow controllers & The Cbench framework can be used to emulate OpenFlow switches which are configured to generate workload to the controller.\\
+
 & FLOVER~\cite{son2013} & model checking for security policies & FLOVER provides a provably correct and automatic method for verifying security properties with respect to a set of flow rules committed by an OF controller.\\
-& FlowChecker~\cite{al-shaer2010} & flow table configuration verification & A tool used to verify generic properties of global behaviors based on flow tables.  \\
+& FlowChecker~\cite{al-shaer2010} & flow table config verification & A tool used to verify generic properties of global behaviors based on flow tables.  \\
+
+%\myrowcolor
+& FLOWGUARD~\cite{Hu2014_4} & verify security policy & Provides mechanisms for accurate detection and resolution of firewall policy violations in OpenFlow-based networks.\\
+
+%\myrowcolor
+& FlowTest~\cite{Fayaz2014_4} & verify network policies & Provides the means for testing stateful and dynamic network policies by systematically exploring the state space of the network data plane. \\
+
 & NetPlumber~\cite{kazemian2013} & real time policy checking & NetPlumber uses a set of policies and invariants to do real time checking. It leverages header space analysis and keeps a dependency graph between rules.\\
 & NICE~\cite{canini2012-1} & remove bugs in controllers & Its main goal is to test controller programs without requiring any type of modification or extra work for application programmers. \\
 & OFCBenchmark~\cite{jarschel2012} & evaluate OpenFlow controllers & creates independent virtual switches, making is possible to emulate different scenarios. Each switch has its how configuration and statistics.\\
 & OFTEN~\cite{kuzniar2012} & catch correctness property violations & A framework designed to check SDN systems, analyzing controller and switch interaction, looking for correctness condition violation. \\
  & OFLOPS~\cite{rotsos2012-1} & evaluate OpenFlow switches & A framework with a rich set of tests for OpenFlow protocol, enabling to measure capabilities of both switch and applications. \\
+
+%\myrowcolor
+& OFLOPS-Turbo~\cite{Rotsos2014} & evaluate OpenFlow switches & A framework that integrates OFLOPS with OSNT~\cite{Shahbaz2013}, a 10GbE traffic generation and monitoring system based on NetFPGA. \\
+
+%\myrowcolor
+& PktBlaster~\cite{veryxtech} & emulation / benchmarking & Integrated test and benchmarking solution that emulates large scale software-defined networks.\\
+
+%\myrowcolor
+& SDLoad~\cite{Laurent2014_4} & evaluate OpenFlow controllers & A traffic generation framework with customizable workloads to realistically represent different types of applications. \\
+
+%\myrowcolor
+& VeriCon~\cite{ball2014vericon} & verify SDN apps & Is a tool for verifying the correctness of SDN applications on large range of topologies and sequences of network events. \\
+
 & VeriFlow~\cite{khurshid2012} & online invariant verification & It provides real time verification capabilities, while the network state is still evolving. \\
+
 \hline
-\multirow{12}{*}{Simulation} 
+\multirow{16}{*}{\begin{minipage}{1.2cm}Simulation \& \\Emulation\end{minipage}} 
+
+%\myrowcolor
+& DOT~\cite{roy2014} & network emulation & Leverages VMs for large scale OpenFlow-based network emulations with resource allocation guarantees.\\
+
 & \textit{fs-sdn}~\cite{gupta2013} & fast simulation & Like Mininet, it provides a simulation environment, but with speed and scalability advantages.\\
+
+%\myrowcolor
+& MaxiNet~\cite{wette2014} & network simulation & Similarly to Mininet CE, it is a combination of Mininet tools  for large scale simulation of network topologies and architectures.\\
+
 & Mininet~\cite{lantz2010} & fast prototyping & It emulates and OpenFlow network using Open vSwitches to provide the exact same semantics of hardware devices. \\
 & Mininet CE~\cite{antonenko2013} & global network modeling & It is a combination of tools to create a Mininet cluster for large scale simulation of network topologies and architectures.\\
-& Mininet-HiFi~\cite{handigol2012} & fast prototyping for reproducibility & An evolution of Mininet to enable repeatable and high fidelity network experiments. \\
+& Mininet-HiFi~\cite{handigol2012} & reproducible experimentation & Evolution of Mininet to enable repeatable and high fidelity  experiments. \\
 & ns-3~\cite{ns3project2013} & network simulation & The latest version of ns-3 simulator provides support to OpenFlow, enabling to create programmable network devices. \\
 & SDN Cloud DC~\cite{teixeira2013} & cloud data center emulation & The SDN Cloud DC solution allows users to evaluate the performance of their controllers at scale.\\
 & STS~\cite{ucbsts2013} & troubleshooting & It simulates a network, allows to generate tricky test cases, and allows interactively examine the state of the network.\\
+
+%\myrowcolor
+& VND-SDN~\cite{fontes2014auth} & simulation and analysis & Makes it easier to define experiments via 
+GUI authoring of SDN scenarios and automatic generation of NSDL.\\
+
 \hline
 \end{tabularx}
 \end{center}

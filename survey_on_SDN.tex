@@ -89,311 +89,52 @@
 %\fi
 \usepackage{xspace}
 \usepackage{array}
-\usepackage{tabularx}
+\usepackage{tabularx,colortbl}
 \usepackage{color}
 \usepackage{makeidx}
-\usepackage[colorlinks=true,urlcolor=SteelBlue4,linkcolor=Firebrick4,hyperindex,breaklinks]{hyperref}
+\usepackage[colorlinks=true,citecolor=green,urlcolor=SteelBlue4,linkcolor=Firebrick4,hyperindex,breaklinks]{hyperref}
+\usepackage[urlcolor=SteelBlue4,linkcolor=Firebrick4,hyperindex,breaklinks]{hyperref}
 \usepackage[hyphenbreaks]{breakurl}
 \usepackage[table,hyperref,x11names]{xcolor}
 \usepackage{multirow}
 \usepackage{comment}
+\usepackage{array}
+\usepackage{xcolor}
 
 %\usepackage[show]{chato-notes}
 \usepackage[hide]{chato-notes}
 
-% Some very useful LaTeX packages include:
-% (uncomment the ones you want to load)
+% turn on color
+% \newcommand{\coloredtext}[1]{{\color{red}#1}\xspace}
+% turn off color
+\newcommand{\coloredtext}[1]{#1\xspace}
 
+%\newcommand{\myrowcolor}{\rowcolor{red!50}}
+\newcommand{\myrowcolor}{\rowcolor{white}}
 
-% *** MISC UTILITY PACKAGES ***
-%
-%\usepackage{ifpdf}
-% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
-% compilation based on whether the output is pdf or dvi.
-% usage:
-% \ifpdf
-%   % pdf code
-% \else
-%   % dvi code
-% \fi
-% The latest version of ifpdf.sty can be obtained from:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
-% Also, note that IEEEtran.cls V1.7 and later provides a builtin
-% \ifCLASSINFOpdf conditional that works the same way.
-% When switching from latex to pdflatex and vice-versa, the compiler may
-% have to be run twice to clear warning/error messages.
-
-
-
-
-
-
-% *** CITATION PACKAGES ***
-%
-%\usepackage{cite}
-% cite.sty was written by Donald Arseneau
-% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
-% \cite{} output to follow that of IEEE. Loading the cite package will
-% result in citation numbers being automatically sorted and properly
-% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
-% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
-% \cite will automatically add leading space, if needed. Use cite.sty's
-% noadjust option (cite.sty V3.8 and later) if you want to turn this off
-% such as if a citation ever needs to be enclosed in parenthesis.
-% cite.sty is already installed on most LaTeX systems. Be sure and use
-% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
-% not currently provide for hyperlinked citations.
-% The latest version can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
-% The documentation is contained in the cite.sty file itself.
-
-
-
-
-
-
-% *** GRAPHICS RELATED PACKAGES ***
-%
-\ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
-  % declare the path(s) where your graphic files are
-  % \graphicspath{{../pdf/}{../jpeg/}}
-  % and their extensions so you won't have to specify these with
-  % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
-\else
-  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
-  % will default to the driver specified in the system graphics.cfg if no
-  % driver is specified.
-  % \usepackage[dvips]{graphicx}
-  % declare the path(s) where your graphic files are
-  % \graphicspath{{../eps/}}
-  % and their extensions so you won't have to specify these with
-  % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.eps}
-\fi
-% graphicx was written by David Carlisle and Sebastian Rahtz. It is
-% required if you want graphics, photos, etc. graphicx.sty is already
-% installed on most LaTeX systems. The latest version and documentation
-% can be obtained at: 
-% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
-% Another good source of documentation is "Using Imported Graphics in
-% LaTeX2e" by Keith Reckdahl which can be found at:
-% http://www.ctan.org/tex-archive/info/epslatex/
-%
-% latex, and pdflatex in dvi mode, support graphics in encapsulated
-% postscript (.eps) format. pdflatex in pdf mode supports graphics
-% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
-% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
-% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
-% which can result in "jaggedy"/blurry rendering of lines and letters as
-% well as large increases in file sizes.
-%
-% You can find documentation about the pdfTeX application at:
-% http://www.tug.org/applications/pdftex
-
-
-
-
-
-% *** MATH PACKAGES ***
-%
-%\usepackage[cmex10]{amsmath}
-% A popular package from the American Mathematical Society that provides
-% many useful and powerful commands for dealing with mathematics. If using
-% it, be sure to load this package with the cmex10 option to ensure that
-% only type 1 fonts will utilized at all point sizes. Without this option,
-% it is possible that some math symbols, particularly those within
-% footnotes, will be rendered in bitmap form which will result in a
-% document that can not be IEEE Xplore compliant!
-%
-% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
-% thus preventing page breaks from occurring within multiline equations. Use:
-%\interdisplaylinepenalty=2500
-% after loading amsmath to restore such page breaks as IEEEtran.cls normally
-% does. amsmath.sty is already installed on most LaTeX systems. The latest
-% version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
-
-
-
-
-
-% *** SPECIALIZED LIST PACKAGES ***
-%
-%\usepackage{algorithmic}
-% algorithmic.sty was written by Peter Williams and Rogerio Brito.
-% This package provides an algorithmic environment fo describing algorithms.
-% You can use the algorithmic environment in-text or within a figure
-% environment to provide for a floating algorithm. Do NOT use the algorithm
-% floating environment provided by algorithm.sty (by the same authors) or
-% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
-% algorithm float types and packages that provide these will not provide
-% correct IEEE style captions. The latest version and documentation of
-% algorithmic.sty can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
-% There is also a support site at:
-% http://algorithms.berlios.de/index.html
-% Also of interest may be the (relatively newer and more customizable)
-% algorithmicx.sty package by Szasz Janos:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
-
-
-
-
-% *** ALIGNMENT PACKAGES ***
-%
-%\usepackage{array}
-% Frank Mittelbach's and David Carlisle's array.sty patches and improves
-% the standard LaTeX2e array and tabular environments to provide better
-% appearance and additional user controls. As the default LaTeX2e table
-% generation code is lacking to the point of almost being broken with
-% respect to the quality of the end results, all users are strongly
-% advised to use an enhanced (at the very least that provided by array.sty)
-% set of table tools. array.sty is already installed on most systems. The
-% latest version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/required/tools/
-
-
-% IEEEtran contains the IEEEeqnarray family of commands that can be used to
-% generate multiline equations as well as matrices, tables, etc., of high
-% quality.
-
-
-
-
-% *** SUBFIGURE PACKAGES ***
-%\ifCLASSOPTIONcompsoc
-%  \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
-%\else
-%  \usepackage[caption=false,font=footnotesize]{subfig}
-%\fi
-% subfig.sty, written by Steven Douglas Cochran, is the modern replacement
-% for subfigure.sty, the latter of which is no longer maintained and is
-% incompatible with some LaTeX packages including fixltx2e. However,
-% subfig.sty requires and automatically loads Axel Sommerfeldt's caption.sty
-% which will override IEEEtran.cls' handling of captions and this will result
-% in non-IEEE style figure/table captions. To prevent this problem, be sure
-% and invoke subfig.sty's "caption=false" package option (available since
-% subfig.sty version 1.3, 2005/06/28) as this is will preserve IEEEtran.cls
-% handling of captions.
-% Note that the Computer Society format requires a larger sans serif font
-% than the serif footnote size font used in traditional IEEE formatting
-% and thus the need to invoke different subfig.sty package options depending
-% on whether compsoc mode has been enabled.
-%
-% The latest version and documentation of subfig.sty can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
-
-
-
-
-% *** FLOAT PACKAGES ***
-%
-%\usepackage{fixltx2e}
-% fixltx2e, the successor to the earlier fix2col.sty, was written by
-% Frank Mittelbach and David Carlisle. This package corrects a few problems
-% in the LaTeX2e kernel, the most notable of which is that in current
-% LaTeX2e releases, the ordering of single and double column floats is not
-% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
-% single column figure to be placed prior to an earlier double column
-% figure. The latest version and documentation can be found at:
-% http://www.ctan.org/tex-archive/macros/latex/base/
-
-
-%\usepackage{stfloats}
-% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
-% the ability to do double column floats at the bottom of the page as well
-% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
-% LaTeX2e). It also provides a command:
-%\fnbelowfloat
-% to enable the placement of footnotes below bottom floats (the standard
-% LaTeX2e kernel puts them above bottom floats). This is an invasive package
-% which rewrites many portions of the LaTeX2e float routines. It may not work
-% with other packages that modify the LaTeX2e float routines. The latest
-% version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
-% Do not use the stfloats baselinefloat ability as IEEE does not allow
-% \baselineskip to stretch. Authors submitting work to the IEEE should note
-% that IEEE rarely uses double column equations and that authors should try
-% to avoid such use. Do not be tempted to use the cuted.sty or midfloat.sty
-% packages (also by Sigitas Tolusis) as IEEE does not format its papers in
-% such ways.
-% Do not attempt to use stfloats with fixltx2e as they are incompatible.
-% Instead, use Morten Hogholm'a dblfloatfix which combines the features
-% of both fixltx2e and stfloats:
-%
-% \usepackage{dblfloatfix}
-% The latest version can be found at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/dblfloatfix/
-
-
-
-
-%\ifCLASSOPTIONcaptionsoff
-%  \usepackage[nomarkers]{endfloat}
-% \let\MYoriglatexcaption\caption
-% \renewcommand{\caption}[2][\relax]{\MYoriglatexcaption[#2]{#2}}
-%\fi
-% endfloat.sty was written by James Darrell McCauley, Jeff Goldberg and 
-% Axel Sommerfeldt. This package may be useful when used in conjunction with 
-% IEEEtran.cls'  captionsoff option. Some IEEE journals/societies require that
-% submissions have lists of figures/tables at the end of the paper and that
-% figures/tables without any captions are placed on a page by themselves at
-% the end of the document. If needed, the draftcls IEEEtran class option or
-% \CLASSINPUTbaselinestretch interface can be used to increase the line
-% spacing as well. Be sure and use the nomarkers option of endfloat to
-% prevent endfloat from "marking" where the figures would have been placed
-% in the text. The two hack lines of code above are a slight modification of
-% that suggested by in the endfloat docs (section 8.4.1) to ensure that
-% the full captions always appear in the list of figures/tables - even if
-% the user used the short optional argument of \caption[]{}.
-% IEEE papers do not typically make use of \caption[]'s optional argument,
-% so this should not be an issue. A similar trick can be used to disable
-% captions of packages such as subfig.sty that lack options to turn off
-% the subcaptions:
-% For subfig.sty:
-% \let\MYorigsubfloat\subfloat
-% \renewcommand{\subfloat}[2][\relax]{\MYorigsubfloat[]{#2}}
-% However, the above trick will not work if both optional arguments of
-% the \subfloat command are used. Furthermore, there needs to be a
-% description of each subfigure *somewhere* and endfloat does not add
-% subfigure captions to its list of figures. Thus, the best approach is to
-% avoid the use of subfigure captions (many IEEE journals avoid them anyway)
-% and instead reference/explain all the subfigures within the main caption.
-% The latest version of endfloat.sty and its documentation can obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/endfloat/
-%
-% The IEEEtran \ifCLASSOPTIONcaptionsoff conditional can also be used
-% later in the document, say, to conditionally put the References on a 
-% page by themselves.
-
-
-
-
-% *** PDF, URL AND HYPERLINK PACKAGES ***
-%
-%\usepackage{url}
-% url.sty was written by Donald Arseneau. It provides better support for
-% handling and breaking URLs. url.sty is already installed on most LaTeX
-% systems. The latest version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/url/
-% Basically, \url{my_url_here}.
-
-
-
-
-% *** Do not adjust lengths that control margins, column widths, etc. ***
-% *** Do not use packages that alter fonts (such as pslatex).         ***
-% There should be no need to do such things with IEEEtran.cls V1.6 and later.
-% (Unless specifically asked to do so by the journal or conference you plan
-% to submit to, of course. )
+%\newcommand{\manapps}{{\color{red}network applications}\xspace}
+%\newcommand{\manapp}{{\color{red}network application}\xspace}
+%\newcommand{\ManaApps}{{\color{red}Network Applications}\xspace}
+%\newcommand{\Manaaapps}{{\color{red}Network applications}\xspace}
+%\newcommand{\manapporservice}{{\color{red}network applications}\xspace}
+\newcommand{\manapps}{network applications\xspace}
+\newcommand{\manapp}{network application\xspace}
+\newcommand{\ManaApps}{Network Applications\xspace}
+\newcommand{\Manaaapps}{Network applications\xspace}
+\newcommand{\manapporservice}{network applications\xspace}
 
 
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 \hyphenation{high-per-for-man-ce}
 \hyphenation{con-trol-ler}
+
+\makeatletter
+
+\def\zapcolorreset{\let\reset@color\relax\ignorespaces}
+\def\colorrows#1{\noalign{\aftergroup\zapcolorreset#1}\ignorespaces}
+
+\makeatother
 
 \begin{document}
 %
@@ -424,12 +165,15 @@
         Christian~Esteve~Rothenberg,~\IEEEmembership{Member,~IEEE,}        
         Siamak~Azodolmolky,~\IEEEmembership{Senior Member,~IEEE,}        
         and~Steve~Uhlig,~\IEEEmembership{Member,~IEEE}% <-this % stops a space
-\thanks{D. Kreutz, F. Ramos and P. Ver\'{i}ssimo are with the Department of Informatics of Faculty of Sciences, University of Lisbon, Lisbon
-    1749-016 Portugal e-mail: kreutz@lasige.di.fc.ul.pt, fvramos@fc.ul.pt, pjv@di.fc.ul.pt.}
+\thanks{D. Kreutz and F. Ramos are with the Department of Informatics of Faculty of Sciences, University of Lisbon, Lisbon,
+	1749-016 Portugal e-mail: kreutz@lasige.di.fc.ul.pt, fvramos@fc.ul.pt.}
+\thanks{P. Ver\'{i}ssimo is with the Interdisciplinary Centre for Security, Reliability and Trust (SnT), University of Luxembourg,
+	4 rue Alphonse Weicker,  L-2721 Luxembourg. e-mail: paulo.verissimo@uni.lu.}    
 \thanks{C. Esteve Rothenberg is with the School of Electrical and Computer Engineering (FEEC, University of Campinas, Brazil. e-mail: chesteve@dca.fee.unicamp.br.}
-\thanks{S. Azodolmolky is with Gesellschaft f\"{u}r Wissenschaftliche Datenverarbeitung mbH G\"{o}ttingen (GWDG), Am Fa{\ss}berg 11, 37077 G\"{o}ttigen, Germany e-mail: siamak.azodolmolky@gwdg.de.}
-\thanks{S. Uhlig is with Queen Mary University of London. is with Queen Mary, University of London, Mile End Road, London E1 4NS, United Kingdom e-mail steve@eecs.qmul.ac.uk.}% <-this % stops a space
-\thanks{Manuscript received May 31, 2014.}}
+\thanks{S. Azodolmolky is with Gesellschaft f\"{u}r Wissenschaftliche Datenverarbeitung mbH G\"{o}ttingen (GWDG), Am Fa{\ss}berg 11, 37077 G\"{o}ttigen, Germany. e-mail: siamak.azodolmolky@gwdg.de.}
+\thanks{S. Uhlig is with Queen Mary University of London. is with Queen Mary, University of London, Mile End Road, London E1 4NS, United Kingdom. e-mail steve@eecs.qmul.ac.uk.}% <-this % stops a space
+%\thanks{Manuscript received May 31, 2014.}
+\thanks{Revision submitted on October 6, 2014.}}
 
 % note the % following the last \IEEEmembership and also \thanks - 
 % these prevent an unwanted space from occurring between the last author name
@@ -504,16 +248,16 @@ the network control problem into tractable pieces, SDN makes it easier
 to create and introduce new abstractions in networking, simplifying
 network management and facilitating network evolution.
 
-Today, SDN is both a hot research topic and a concept gaining wide
-acceptance in industry, which justifies the comprehensive survey
-presented in this paper.  We start by introducing the motivation for
+\coloredtext{In this paper we present a comprehensive survey on SDN.
+We start by introducing the motivation for
 SDN, explain its main concepts and how it differs from traditional
-networking.  Next, we present the key building blocks of an SDN
+networking, its roots, and the standardization activities regarding this novel paradigm.}
+Next, we present the key building blocks of an SDN
 infrastructure using a bottom-up, layered approach.  We provide an
 in-depth analysis of the hardware infrastructure, southbound and
 northbounds APIs, network virtualization layers, network operating
 systems (SDN controllers), network programming languages, and
-management applications.  We also look at cross-layer problems such as
+network applications.  We also look at cross-layer problems such as
 debugging and troubleshooting.  In an effort to antecipate the future
 evolution of this new paradigm, we discuss the main ongoing research
 efforts and challenges of SDN.  In particular, we address the design
@@ -528,11 +272,15 @@ position of SDN as a key enabler of a software-defined environment.
 %% (ii) i'd rather leave it be as is for reviewing
 
 
+\begin{IEEEkeywords}
+Software-defined networking, OpenFlow, network virtualization, network operating systems, programmable networks, network hypervisor, programming languages, flow-based networking, scalability, dependability, carrier-grade networks, software-defined environments.
+\end{IEEEkeywords}
+
 
 % Note that keywords are not normally used for peerreview papers.
-\begin{IEEEkeywords}
-Software-defined networking, flexibility, decoupled control and data plane, network virtualization, network operating systems, programming and interoperability interfaces, network hypervisor, programming languages, flow-based network control, survey, scalability and dependability, carrier-grade networks, software-defined environments.
-\end{IEEEkeywords}
+%\begin{IEEEkeywords}
+%Software-defined networking, control and data plane, network virtualization, network operating systems, programming and interoperability interfaces, network hypervisor, programming languages, flow-based network control, survey, scalability and dependability, carrier-grade networks, software-defined environments.
+%\end{IEEEkeywords}
 
 
 % For peer review papers, you can put extra information on the cover
@@ -681,7 +429,12 @@ Software-defined networking, flexibility, decoupled control and data plane, netw
 % use section* for acknowledgement
 \section*{Acknowledgment}
 
-The authors would like to thank Jennifer Rexford for her feedback on an early version of this work and encouragement to get it finished, Srini Seetharaman for reviewing the draft and providing inputs to alternative SDN views, David Meyer for his inspiration on the organizational challenges that are part of the migration path towards SDN, Thomas Nadeau for his inputs on the OpenDaylight initiative, Raphael Rosa and Regivaldo Costa for their various contributions, and the anonymous reviewers.
+The authors would like to thank the anonymous reviewers and a number of fellows that have contributed to this work. 
+Jennifer Rexford for her feedback on an early version of this work and encouragement to get it finished. 
+Srini Seetharaman for reviewing the draft and providing inputs to alternative SDN views. David Meyer for his thoughts on organizational challenges. 
+\coloredtext{Thomas Nadeau for his inputs on OpenDaylight. 
+Luis Miguel Contreras Murillo for his contributions to SDN standardization. 
+In addition, we would like also to acknowledge the several contributions from the community, namely from Aurel A. Lazar, Carmelo Cascone, Gyanesh Patra, Haleplidis Evangelos, Javier Ancieta, Joe Stringer, Kostas Pentikousis, Luciano de Paula, Marco Canini, Philip Wette, Ramon Fontes, Raphael Rosa, Regivaldo Costa, Ricardo de Freitas Gesuatto, Wolfgang John.}
 
 % Can use something like this to put references on a page
 % by themselves when using endfloat and the captionsoff option.
@@ -749,7 +502,7 @@ His main research interests are in network control platforms, software-defined n
 
 % if you will not have a photo at all:
 \begin{IEEEbiographynophoto}{Fernando M. V. Ramos}
-Fernando M. V. Ramos is an Assistant Professor in the University of Lisbon. Previous academic positions include  those of Teaching Assistant (supervisor) in the University of Cambridge, in the ISEL and in the University of Aveiro. Over the past 12 years he has taught over a dozen courses: from physics (Electromagnetism) to EE (digital electronics, electric circuits, telecommunication systems and foundations) to CS (operating and distributed systems, computer networks, algorithms, programming languages).
+ is an Assistant Professor in the University of Lisbon. Previous academic positions include  those of Teaching Assistant (supervisor) in the University of Cambridge, in the ISEL and in the University of Aveiro. Over the past 12 years he has taught over a dozen courses: from physics (Electromagnetism) to EE (digital electronics, electric circuits, telecommunication systems and foundations) to CS (operating and distributed systems, computer networks, algorithms, programming languages).
 Periods outside academia include working as a researcher in Portugal Telecom and in Telefonica Research.
 He holds a PhD degree from the University of Cambridge where he worked on IPTV networks.
 His current research interests are: software-defined networking, network virtualization, and cloud computing, with security and dependability as an orthogonal concern.
@@ -760,11 +513,10 @@ His current research interests are: software-defined networking, network virtual
 %\newpage
 
 \begin{IEEEbiographynophoto}{Paulo Ver\'{i}ssimo}
-Paulo Ver\'{i}ssimo is a Professor of the Department of Computer Science and Engineering, U. of Lisbon Faculty of Sciences (FCUL-http://www.di.fc.ul.pt/~pjv), elected member of the Board of the U. of Lisbon and Director of LaSIGE (http://lasige.di.fc.ul.pt). He is currently Chair of the IFIP WG 10.4 on Dependable Computing and Fault-Tolerance and vice-Chair of the Steering Committee of the IEEE/IFIP DSN conference. PJV is Fellow of the IEEE and Fellow of the ACM. He is associate editor of the Elsevier Int'l Journal on Critical Infrastructure Protection. Ver\'{i}ssimo leads the Navigators group of LaSIGE, and is currently interested in distributed architectures, middleware and algorithms for: adaptability and safety of real-time networked embedded systems; and resilience of secure and dependable large-scale systems. He is author of over 170 peer-refereed publications and co-author of 5 books. 
+is a Professor of the 	Interdisciplinary Centre for Security, Reliability and Trust (SnT), University of Luxembourg\footnote{This work was performed whilst this author was at the U. of Lisbon Faculty of Sciences}. He is currently Chair of the IFIP WG 10.4 on Dependable Computing and Fault-Tolerance and vice-Chair of the Steering Committee of the IEEE/IFIP DSN conference. PJV is Fellow of the IEEE and Fellow of the ACM. He is associate editor of the Elsevier Int'l Journal on Critical Infrastructure Protection. Ver\'{i}ssimo is currently interested in distributed architectures, middleware and algorithms for: adaptability and safety of real-time networked embedded systems; and resilience of secure and dependable large-scale systems. He is author of over 170 peer-refereed publications and co-author of 5 books. 
 \end{IEEEbiographynophoto}
 
-\begin{IEEEbiographynophoto}{Christian Esteve Rothenberg}
-Christian Esteve Rothenberg is an Assistant Professor in the Faculty of Electrical and Computer Engineering at University of Campinas (UNICAMP), where he received his Ph.D. in 2010. 
+\begin{IEEEbiographynophoto}{Christian Esteve Rothenberg} is an Assistant Professor in the Faculty of Electrical and Computer Engineering at University of Campinas (UNICAMP), where he received his Ph.D. in 2010. 
 From 2010 to 2013, he worked as Senior Research Scientist in the areas of IP systems and networking at CPqD Research and Development Center in Telecommunications (Campinas, Brazil), where he was technical lead of R\&D acitivities in the field of OpenFlow/SDN such as the RouteFlow project, the OpenFlow 1.3 Ericsson/CPqD softswitch, or the ONF Driver competition. 
 Christian holds the Telecommunication Engineering degree from Universidad Polit\'{e}cnica de Madrid (ETSIT - UPM), Spain, and the M.Sc. (Dipl. Ing.) degree in Electrical Engineering and Information Technology from the Darmstadt University of Technology (TUD), Germany, 2006. Christian holds two international patents and has over 50 publications including scientific journals and top-tier networking conferences such as SIGCOMM and INFOCOM. Since April 2013, Christian is an ONF Research Associate.
 \end{IEEEbiographynophoto}
@@ -773,8 +525,7 @@ Christian holds the Telecommunication Engineering degree from Universidad Polit\
 received his Computer Engineering degree from Tehran University and his first MSc. degree in Computer Architecture from Azad University in 1994 and 1998 respectively. He was employed by Data Processing Iran Co. (IBM in Iran) as a Software Developer, Systems Engineer, and as a Senior R\& D Engineer during 1992-2001. He received his second MSc. degree with distinction from Carnegie Mellon University in 2006. He joined Athens Information Technology (AIT) as a Research Scientist and Software Developer in 2007, while pursuing his PhD degree. In August 2010, he joined the High Performance Networks research group of the School of Computer Science and Electronic Engineering (CSEE) of the University of Essex as a Senior Research Officer. He received his PhD from Universitat Polit\'{e}cnica de Catalunya (UPC) in 2011. He has been the technical investigator of various national and EU funded projects. Software Defined Networking (SDN) has been one of his research interests since 2010, in which he has been investigating the extension of OpenFlow towards its application in core transport (optical) networks. He has published more than 50 scientific papers in international conferences, journals, and books. Software Defined Networking with OpenFlow is one of his recent books. Currently, he is with Gesellschaft f\"{u}r Wissenschaftliche Datenverarbeitung mbH G\"{o}ttingen (GWDG) as a Senior Researcher and has lead SDN related activities since September 2012. He is a professional member of ACM and a senior member of IEEE.
 \end{IEEEbiographynophoto}
 
-\begin{IEEEbiographynophoto}{Steve Uhlig}
-Steve Uhlig obtained a Ph.D. degree in Applied Sciences from the University of Louvain, Belgium, in 2004. From 2004 to 2006, he was a Postdoctoral Fellow of the Belgian National Fund for Scientific Research (F.N.R.S.). His thesis won the annual IBM Belgium/F.N.R.S. Computer Science Prize 2005. Between 2004 and 2006, he was a visiting scientist at Intel Research Cambridge, UK, and at the Applied Mathematics Department of University of Adelaide, Australia. Between 2006 and 2008, he was with Delft University of Technology, the Netherlands. Prior to joining Queen Mary, he was a Senior Research Scientist with Technische Universit\"{a}t Berlin/Deutsche Telekom Laboratories, Berlin, Germany. Starting in January 2012, he is the Professor of Networks and Head of the Networks Research group at Queen Mary, University of London.
+\begin{IEEEbiographynophoto}{Steve Uhlig} obtained a Ph.D. degree in Applied Sciences from the University of Louvain, Belgium, in 2004. From 2004 to 2006, he was a Postdoctoral Fellow of the Belgian National Fund for Scientific Research (F.N.R.S.). His thesis won the annual IBM Belgium/F.N.R.S. Computer Science Prize 2005. Between 2004 and 2006, he was a visiting scientist at Intel Research Cambridge, UK, and at the Applied Mathematics Department of University of Adelaide, Australia. Between 2006 and 2008, he was with Delft University of Technology, the Netherlands. Prior to joining Queen Mary, he was a Senior Research Scientist with Technische Universit\"{a}t Berlin/Deutsche Telekom Laboratories, Berlin, Germany. Starting in January 2012, he is the Professor of Networks and Head of the Networks Research group at Queen Mary, University of London.
 \end{IEEEbiographynophoto}
 
 % You can push biographies down or up by placing
